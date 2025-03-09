@@ -106,10 +106,12 @@ public class TaskManagerView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(isValidCategoryToAdd()) {
+
                     String category = (String) addCategoryTextField.getText();
                     categoryComboBox.addItem(category);
+
                 } else{
-                    System.out.println("No se puede agregar el categoria");
+                    JOptionPane.showMessageDialog(null, "La categoria: '" + addCategoryTextField.getText() + "' ya existe.", "¡Error!", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -163,8 +165,19 @@ public class TaskManagerView extends JFrame {
     }
 
     public boolean isValidCategoryToAdd() {
+
+        boolean found = false;
+
+        for (int i = 0; i < categoryComboBox.getItemCount(); i++) {
+            if (categoryComboBox.getItemAt(i).equals(addCategoryTextField.getText())) {
+                found = true;
+                break;
+            }
+        }
+
         return !(addCategoryTextField.getText().isEmpty()) &&
-                addCategoryTextField.getText().length() <= 10;
+                addCategoryTextField.getText().length() <= 10 &&
+                !found;
     }
 
     public boolean isValidPriority() {
