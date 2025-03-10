@@ -102,10 +102,9 @@
                 </constraints>
                 <properties>
                   <model>
-                    <item value="Seleccionar opción"/>
-                    <item value="Alta"/>
-                    <item value="Media"/>
                     <item value="Baja"/>
+                    <item value="Media "/>
+                    <item value="Alta"/>
                   </model>
                 </properties>
               </component>
