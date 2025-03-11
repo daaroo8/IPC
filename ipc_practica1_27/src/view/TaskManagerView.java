@@ -4,14 +4,19 @@ import com.toedter.calendar.JDateChooser;
 import model.Task;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TaskManagerView extends JFrame {
     private JTextField nameTextField;
@@ -55,14 +60,17 @@ public class TaskManagerView extends JFrame {
     private JPanel leftPanel;
     private JPanel rightPanel;
     private JTextField headerListTextField;
-    private JButton searchButton;
     private JTextField addCategoryTextField;
     private JButton addCategoryButton;
     private JPanel calendarPanel;
+    private JPanel rightTopPanel;
+    private JPanel rightBottomPanel;
+    private JLabel searchLabel;
     private JDateChooser dateChooser;
 
 
     private int lastPercentage = 50;
+    private boolean editing = false;
 
     private ArrayList<Task> tasks;
 
@@ -75,9 +83,20 @@ public class TaskManagerView extends JFrame {
 
         tasks = new ArrayList<>();
 
+        mainPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
+        mainPanel.setBackground(Color.CYAN);
+        rightTopPanel.setBorder(new EmptyBorder(0, 0, 30, 0));
+        rightTopPanel.setBackground(Color.CYAN);
+//        rightBottomPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
+//        rightBottomPanel.setBackground(Color.CYAN);
+
+        leftPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
+//        rightPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
+
         taskListModel = new DefaultListModel<>();
         taskList.setModel(taskListModel);
-
+        taskList.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        updateJList();
         completedCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,11 +127,6 @@ public class TaskManagerView extends JFrame {
         priorityInfoTextField.setEditable(false);
         headerListTextField.setEditable(false);
 
-//        dateFormattedTextField.setFormatterFactory(
-//            new javax.swing.text.DefaultFormatterFactory(
-//            new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))
-//            )
-//        );
         addCategoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -150,24 +164,49 @@ public class TaskManagerView extends JFrame {
                     return;
                 }
 
-                if (isRepeatedtask()) {
+                if (isRepeatedTask() && !editing) {
                     JOptionPane.showMessageDialog(null, "La tarea: '" + nameTextField.getText() + "' ya existe.", "¡Error!", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 String taskName = nameTextField.getText();
-                subtaskComboBox.addItem(taskName);
 
-                tasks.add(new Task(
-                        taskName,
-                        descriptionTextArea.getText(),
-                        Task.PRIORITY.LOW,
-                        dateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-                        percentageSlider.getValue(),
-                        categoryComboBox.getSelectedItem().toString(),
-                        subtaskComboBox.getSelectedItem().toString()
-                ));
+                if (!editing) {
+                    subtaskComboBox.addItem(taskName);
+                    tasks.add(new Task(
+                            taskName,
+                            descriptionTextArea.getText(),
+                            Task.PRIORITY.LOW,
+                            dateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                            percentageSlider.getValue(),
+                            categoryComboBox.getSelectedItem().toString(),
+                            subtaskComboBox.getSelectedItem().toString()
+                    ));
+                } else {
+                    Task task = taskList.getSelectedValue();
 
+                    System.out.println(percentageSlider.getValue());
+
+                    task.setName(nameTextField.getText());
+                    task.setDescription(descriptionTextArea.getText());
+                    task.setDeadline(dateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                    task.setPriority(Task.PRIORITY.HIGH);
+                    task.setPercentage(percentageSlider.getValue());
+                    task.setCategory(categoryComboBox.getSelectedItem().toString());
+                    task.setSubtask(subtaskComboBox.getSelectedItem().toString());
+                }
+
+                categoryComboBox.addItem("Seleccionar opción");
+
+                nameTextField.setText("");
+                descriptionTextArea.setText("");
+                dateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                priorityComboBox.setSelectedIndex(0);
+                percentageSlider.setValue(50);
+                categoryComboBox.setSelectedItem("Seleccionar opción");
+                subtaskComboBox.setSelectedItem("No es subtarea");
+
+                editing = false;
                 updateJList();
             }
         });
@@ -176,13 +215,63 @@ public class TaskManagerView extends JFrame {
         categoryComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                //TODO
                 categoryComboBox.removeItem("Seleccionar opción");
+            }
+        });
+
+
+        taskList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                Task taskSelected = taskList.getSelectedValue();
+
+                if (taskSelected == null) return;
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+                System.out.println(taskSelected.toString());
+                nameInfoTextField.setText(taskSelected.getName());
+                completedProgressBar.setValue(taskSelected.getPercentage());
+                descriptionInfoTextArea.setText(taskSelected.getDescription());
+                priorityInfoTextField.setText(taskSelected.getPriority().toString());
+                dateCreationFormattedTextField.setText(taskSelected.getCreationDate().format(formatter));
+                deadlineInfoFormattedTextField.setText(taskSelected.getDeadline().format(formatter));
+                categoryInfoTextField.setText(taskSelected.getCategory());
+                subtaskInfoTextField.setText(taskSelected.getSubtask());
+            }
+        });
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tasks.remove(taskList.getSelectedValue());
+                updateJList();
+            }
+        });
+
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editing = true;
+
+                Task selectedTask = taskList.getSelectedValue();
+
+                nameTextField.setText(selectedTask.getName());
+                descriptionTextArea.setText(selectedTask.getDescription());
+                priorityInfoTextField.setText(selectedTask.getPriority().toString());
+                dateChooser.setDate(Date.from(selectedTask.getDeadline().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                percentageSlider.setValue(selectedTask.getPercentage());
+                categoryComboBox.setSelectedItem(selectedTask.getCategory());
+                subtaskComboBox.setSelectedItem(selectedTask.getSubtask());
             }
         });
     }
 
     public void updateJList() {
+
+        taskListModel.clear();
+
         for (Task task : tasks) {
             taskListModel.addElement(task);
         }
@@ -243,7 +332,7 @@ public class TaskManagerView extends JFrame {
      * @return true: en caso de que ya exista
      * false: en caso de que no
      */
-    public boolean isRepeatedtask() {
+    public boolean isRepeatedTask() {
         boolean found = false;
 
         for (int i = 0; i < subtaskComboBox.getItemCount(); i++) {

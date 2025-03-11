@@ -1,12 +1,23 @@
 package model;
 
 
+import java.awt.*;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Task {
     public enum PRIORITY {
-        LOW, MEDIUM, HIGH
+        LOW, MEDIUM, HIGH;
+
+        @Override
+        public String toString() {
+            return switch (this) {
+                case LOW -> "Baja";
+                case MEDIUM -> "Media";
+                case HIGH -> "Alta";
+            };
+        }
     }
 
     public enum STATUS {
@@ -23,14 +34,70 @@ public class Task {
         }
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public PRIORITY getPriority() {
+        return priority;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getSubtask() {
+        return subtask;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPriority(PRIORITY priority) {
+        this.priority = priority;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setSubtask(String subtask) {
+        this.subtask = subtask;
+    }
+
     private String name;
     private String description;
     private PRIORITY priority;
-    private LocalDate creation;
+    private LocalDate creationDate;
     private LocalDate deadline;
-    int percentage;
-    String category;
-    String subtask;
+    private int percentage;
+    private String category;
+    private String subtask;
 
     public Task(String name, String description, PRIORITY priority, LocalDate deadline, int percentage, String category, String subtask) {
         if (!isValidPercentage(percentage))
@@ -40,7 +107,7 @@ public class Task {
         this.name = name;
         this.description = description;
         this.priority = priority;
-        this.creation = LocalDate.now();
+        this.creationDate = LocalDate.now();
         this.deadline = deadline;
         this.percentage = percentage;
         this.category = category;
@@ -49,7 +116,7 @@ public class Task {
 
 
     public void setPercentage(int percentage) {
-        if (isValidPercentage(percentage))
+        if (!isValidPercentage(percentage))
             throw new IllegalArgumentException("percentage must be between 0 and 100");
 
         this.percentage = percentage;
@@ -71,6 +138,12 @@ public class Task {
 
     @Override
     public String toString() {
-        return name + "\t" + deadline.toString() + "\t" + getStatus().toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        Font font = new Font("Dialog", Font.PLAIN, 12); // Usa la fuente que estás usando en el JList
+        FontMetrics fm = Toolkit.getDefaultToolkit().getFontMetrics(font);
+
+        return String.format("%-10s | %-10s | %-11s", name, deadline.format(formatter), getStatus());
     }
+
 }
