@@ -103,7 +103,7 @@
                 <properties>
                   <model>
                     <item value="Baja"/>
-                    <item value="Media "/>
+                    <item value="Media"/>
                     <item value="Alta"/>
                   </model>
                 </properties>

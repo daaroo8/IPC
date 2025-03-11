@@ -1,6 +1,7 @@
 package view;
 
 import com.toedter.calendar.JDateChooser;
+import model.Task;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -9,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.util.ArrayList;
 
 public class TaskManagerView extends JFrame {
     private JTextField nameTextField;
@@ -29,7 +32,8 @@ public class TaskManagerView extends JFrame {
     private JButton saveButton;
     private JTextField searchTextField;
     private JButton filtersButton;
-    private JList taskList;
+    private JList<Task> taskList;
+    private DefaultListModel<Task> taskListModel;
     private JTextField nameInfoTextField;
     private JLabel nameInfoLabel;
     private JTextArea descriptionInfoTextArea;
@@ -57,7 +61,10 @@ public class TaskManagerView extends JFrame {
     private JPanel calendarPanel;
     private JDateChooser dateChooser;
 
+
     private int lastPercentage = 50;
+
+    private ArrayList<Task> tasks;
 
     public TaskManagerView() {
 
@@ -66,10 +73,14 @@ public class TaskManagerView extends JFrame {
         calendarPanel.setLayout(new BorderLayout());
         calendarPanel.add(dateChooser, BorderLayout.CENTER);
 
+        tasks = new ArrayList<>();
+
+        taskListModel = new DefaultListModel<>();
+        taskList.setModel(taskListModel);
+
         completedCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(completedCheckBox.isSelected());
                 if (completedCheckBox.isSelected()) {
                     percentageSlider.setValue(100);
                 } else {
@@ -105,12 +116,12 @@ public class TaskManagerView extends JFrame {
         addCategoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(isValidCategoryToAdd()) {
+                if (isValidCategoryToAdd()) {
 
                     String category = (String) addCategoryTextField.getText();
                     categoryComboBox.addItem(category);
 
-                } else{
+                } else {
                     JOptionPane.showMessageDialog(null, "La categoria: '" + addCategoryTextField.getText() + "' ya existe.", "¡Error!", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -119,39 +130,67 @@ public class TaskManagerView extends JFrame {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(isValidName() && isValidDescription() && isValidPriority() && isValidCategory() && isValidDate() && !isRepeatedtask()) {
-
-                    String task = (String) nameTextField.getText();
-                    subtaskComboBox.addItem(task);
-
-                } else {
-                    if(!isValidName()){
-                        JOptionPane.showMessageDialog(null, "El nombre debe tener entre 1 y 10 caracteres.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-
-                    } else if(!isValidDescription()){
-                        JOptionPane.showMessageDialog(null, "La descripción debe tener 100 o menos caracteres.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-
-                    } else if(!isValidDate()){
-                        JOptionPane.showMessageDialog(null, "La fecha ha de tener el siguiente formato:\ndd/mm/aaaa\nY ser posterior a la actual.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-
-                    } else if(!isValidPriority()){
-                        JOptionPane.showMessageDialog(null, "Seleccione la prioridad.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-
-                    } else if(!isValidCategory()){
-                        JOptionPane.showMessageDialog(null, "Seleccione la categoría.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-
-                    } else if(isRepeatedtask()){
-                        JOptionPane.showMessageDialog(null, "La tarea: '" + nameTextField.getText() + "' ya existe.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-
-                    }
+                if (!isValidName()) {
+                    JOptionPane.showMessageDialog(null, "El nombre debe tener entre 1 y 10 caracteres.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
+
+                if (!isValidDescription()) {
+                    JOptionPane.showMessageDialog(null, "La descripción debe tener 100 o menos caracteres.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (!isValidDate()) {
+                    JOptionPane.showMessageDialog(null, "La fecha ha de tener el siguiente formato:\ndd/mm/aaaa\nY ser posterior a la actual.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (!isValidCategory()) {
+                    JOptionPane.showMessageDialog(null, "Seleccione la categoría.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (isRepeatedtask()) {
+                    JOptionPane.showMessageDialog(null, "La tarea: '" + nameTextField.getText() + "' ya existe.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                String taskName = nameTextField.getText();
+                subtaskComboBox.addItem(taskName);
+
+                tasks.add(new Task(
+                        taskName,
+                        descriptionTextArea.getText(),
+                        Task.PRIORITY.LOW,
+                        dateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                        percentageSlider.getValue(),
+                        categoryComboBox.getSelectedItem().toString(),
+                        subtaskComboBox.getSelectedItem().toString()
+                ));
+
+                updateJList();
+            }
+        });
+
+
+        categoryComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                categoryComboBox.removeItem("Seleccionar opción");
             }
         });
     }
 
+    public void updateJList() {
+        for (Task task : tasks) {
+            taskListModel.addElement(task);
+        }
+    }
+
     public boolean isValidName() {
         return !(nameTextField.getText().isEmpty()) &&
-                    nameTextField.getText().length() <= 10;
+                nameTextField.getText().length() <= 10;
     }
 
     public boolean isValidDescription() {
@@ -180,23 +219,34 @@ public class TaskManagerView extends JFrame {
                 !found;
     }
 
-    public boolean isValidPriority() {
-        return priorityComboBox.getSelectedIndex() != 0;
-    }
 
     public boolean isValidCategory() {
-        return categoryComboBox.getSelectedIndex() != 0;
+        if (categoryComboBox.getSelectedItem() == null) return false;
+
+        return !categoryComboBox.getSelectedItem().equals("Seleccionar opción");
     }
 
-    public boolean isValidDate(){
+    /**
+     * Consulta si la fecha sea valida (posterior a la actual)
+     *
+     * @return true: en caso de que sea valida
+     * false: en caso de que no lo sea
+     */
+    public boolean isValidDate() {
         return dateChooser.getDate() != null &&
                 dateChooser.getDate().toInstant().isAfter(Instant.now());
     }
 
+    /**
+     * Consulta si la tarea a añadir, ya ha sido añadida previamente
+     *
+     * @return true: en caso de que ya exista
+     * false: en caso de que no
+     */
     public boolean isRepeatedtask() {
         boolean found = false;
 
-        for(int i = 0; i < subtaskComboBox.getItemCount(); i++) {
+        for (int i = 0; i < subtaskComboBox.getItemCount(); i++) {
             if (subtaskComboBox.getItemAt(i).equals(nameTextField.getText())) {
                 found = true;
                 break;
