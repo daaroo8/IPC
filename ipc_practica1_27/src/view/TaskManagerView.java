@@ -1,6 +1,7 @@
 package view;
 
 import com.toedter.calendar.JDateChooser;
+import model.PRIORITY;
 import model.Task;
 
 import javax.swing.*;
@@ -18,12 +19,14 @@ import java.util.Date;
 
 import controller.TaskManagerController;
 
+// TODO: que se quite la categoría seleccionada al guardar "Selecciona opcion"
+
 public class TaskManagerView extends JFrame {
     private JTextField nameTextField;
     private JLabel nameLabel;
     private JTextArea descriptionTextArea;
     private JLabel descriptionLabel;
-    private JComboBox<Task.PRIORITY> priorityComboBox;
+    private JComboBox<PRIORITY> priorityComboBox;
     private JLabel dateLabel;
     private JLabel priorityLabel;
     private JSlider percentageSlider;
@@ -68,6 +71,9 @@ public class TaskManagerView extends JFrame {
     private JLabel searchLabel;
     private JDateChooser dateChooser;
 
+    public static final String SELECT_CATEGORY_PLACEHOLDER = "Seleccionar opción";
+    public static final String SELECT_NOT_SUBTASK_PLACEHOLDER = "No es subtarea";
+
     private final TaskManagerController taskManagerController;
 
     public TaskManagerView() {
@@ -81,6 +87,10 @@ public class TaskManagerView extends JFrame {
 
     public void setCheckBoxSelected(boolean selected) {
         completedCheckBox.setSelected(selected);
+    }
+
+    public void setAddCategoryTextFieldValue(String text) {
+        addCategoryTextField.setText(text);
     }
 
     public int getPercentageSliderValue() {
@@ -108,6 +118,9 @@ public class TaskManagerView extends JFrame {
     }
 
     public LocalDate getDateValue() {
+        if (dateChooser.getDate() == null)
+            return null;
+
         return dateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
@@ -120,14 +133,15 @@ public class TaskManagerView extends JFrame {
         return (String) subtaskComboBox.getSelectedItem();
     }
 
-    public Task.PRIORITY getPriorityValue() {
-        return (Task.PRIORITY) priorityComboBox.getSelectedItem();
+    public PRIORITY getPriorityValue() {
+        //return Task.PRIORITY.valueOf((String) priorityComboBox.getSelectedItem());
+        return PRIORITY.valueOf("HIGH");
     }
 
     public void restartTaskTextFields() {
         nameTextField.setText("");
         descriptionTextArea.setText("");
-        dateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        dateChooser.setDate(new Date());
         priorityComboBox.setSelectedIndex(0);
         percentageSlider.setValue(50);
         categoryComboBox.setSelectedIndex(0);
@@ -145,6 +159,8 @@ public class TaskManagerView extends JFrame {
     public void updateCategoriesList(ArrayList<String> categories) {
         categoryComboBox.removeAllItems();
 
+        categoryComboBox.addItem(TaskManagerView.SELECT_CATEGORY_PLACEHOLDER);
+
         for (String category : categories) {
             categoryComboBox.addItem(category);
         }
@@ -154,15 +170,15 @@ public class TaskManagerView extends JFrame {
         subtaskComboBox.removeAllItems();
 
         // TODO: Mirar magic string
-        subtaskComboBox.addItem("No es subtarea");
+        subtaskComboBox.addItem(TaskManagerView.SELECT_NOT_SUBTASK_PLACEHOLDER);
 
         for (Task subtask : subtasks) {
             subtaskComboBox.addItem(subtask.getName());
         }
     }
 
-    public void removeCategoryItem(String category) {
-        categoryComboBox.removeItem(category);
+    public void removeCategoryItemAt(int categoryIndex) {
+        categoryComboBox.removeItemAt(categoryIndex);
     }
 
     public Task getTaskSelected() {
@@ -181,11 +197,11 @@ public class TaskManagerView extends JFrame {
         descriptionTextArea.setText(text);
     }
 
-    public void setPriorityComboBoxValue(Task.PRIORITY priority) {
+    public void setPriorityComboBoxValue(PRIORITY priority) {
         priorityComboBox.setSelectedItem(priority);
     }
 
-    public void setDateCreationFormattedTextFieldValue(LocalDate value) {
+    public void setDateChooserValue(LocalDate value) {
         dateChooser.setDate(Date.from(value.atStartOfDay(ZoneId.systemDefault()).toInstant()));
     }
 
@@ -229,6 +245,18 @@ public class TaskManagerView extends JFrame {
         deadLineInfoFormattedTextField.setText(text);
     }
 
+    public String getSearchTextFieldValue() {
+        return searchTextField.getText();
+    }
+
+    public void showErrorModal(String title, String message) {
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void showErrorModal(String message) {
+        JOptionPane.showMessageDialog(null, message, "¡Error!", JOptionPane.ERROR_MESSAGE);
+    }
+
     public boolean isValidSearch() {
         return !(searchTextField.getText().isEmpty()) &&
                 searchTextField.getText().length() <= 10;
@@ -267,9 +295,9 @@ public class TaskManagerView extends JFrame {
 
         dateChooser = new JDateChooser();
         dateChooser.setDateFormatString("dd/MM/yyyy");
+        dateChooser.setDate(new Date());
         calendarPanel.setLayout(new BorderLayout());
         calendarPanel.add(dateChooser, BorderLayout.CENTER);
-
 
         mainPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
         mainPanel.setBackground(Color.CYAN);
@@ -348,30 +376,47 @@ public class TaskManagerView extends JFrame {
                 taskManagerController.handleEditButtonEvent();
             }
         });
+
+        searchTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                taskManagerController.handleKeyTypedSearchInputEvent(e.getKeyChar());
+            }
+        });
+
+        filtersButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     private boolean anyComponentIsNull() {
         return (
                 mainPanel == null ||
-                        rightTopPanel == null ||
-                        leftPanel == null ||
-                        calendarPanel == null ||
-                        taskList == null ||
-                        nameInfoTextField == null ||
-                        descriptionInfoTextArea == null ||
-                        categoryInfoTextField == null ||
-                        subtaskInfoTextField == null ||
-                        dateCreationInfoFormattedTextField == null ||
-                        deadLineInfoFormattedTextField == null ||
-                        priorityInfoTextField == null ||
-                        headerListTextField == null ||
-                        completedCheckBox == null ||
-                        percentageSlider == null ||
-                        addCategoryButton == null ||
-                        saveButton == null ||
-                        categoryComboBox == null ||
-                        deleteButton == null ||
-                        editButton == null
+                rightTopPanel == null ||
+                leftPanel == null ||
+                calendarPanel == null ||
+                taskList == null ||
+                nameInfoTextField == null ||
+                descriptionInfoTextArea == null ||
+                categoryInfoTextField == null ||
+                subtaskInfoTextField == null ||
+                dateCreationInfoFormattedTextField == null ||
+                deadLineInfoFormattedTextField == null ||
+                priorityInfoTextField == null ||
+                headerListTextField == null ||
+                completedCheckBox == null ||
+                percentageSlider == null ||
+                addCategoryButton == null ||
+                saveButton == null ||
+                categoryComboBox == null ||
+                deleteButton == null ||
+                editButton == null ||
+                searchTextField == null ||
+                filtersButton == null
         );
 
     }

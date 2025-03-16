@@ -4,8 +4,6 @@ import model.Task;
 import model.TaskManagerModel;
 import view.TaskManagerView;
 
-import javax.swing.*;
-
 public class TaskManagerController {
     private final TaskManagerView view;
     private final TaskManagerModel model;
@@ -24,7 +22,7 @@ public class TaskManagerController {
     }
 
     public void handlePercentageSliderChangeEvent() {
-        view.setCheckBoxSelected(view.getPercentageSliderValue() != view.getMaximumPercentageSliderValue());
+        view.setCheckBoxSelected(view.getPercentageSliderValue() == view.getMaximumPercentageSliderValue());
 
         if (view.getPercentageSliderValue() != view.getMaximumPercentageSliderValue())
             model.setLastPercentage(view.getPercentageSliderValue());
@@ -34,39 +32,41 @@ public class TaskManagerController {
         String newCategory = view.getAddCategoryTextFieldValue();
 
         if (!model.isValidCategoryToAdd(newCategory)) {
-            JOptionPane.showMessageDialog(null, "La categoría: '" + newCategory + "' ya existe.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+            view.showErrorModal("La categoría: '" + newCategory + "' ya existe.");
             return;
         }
 
         model.addCategory(newCategory);
         view.updateCategoriesList(model.getCategories());
+        view.setAddCategoryTextFieldValue("");
+        view.setCategoryComboBoxValue(newCategory);
     }
 
     public void handleSaveButtonEvent() {
         if (!model.isValidName(view.getNameTextFieldValue())) {
-            JOptionPane.showMessageDialog(null, "El nombre debe tener entre 1 y 10 caracteres.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+            view.showErrorModal("El nombre debe tener entre 1 y 10 caracteres.");
             return;
         }
 
         if (!model.isValidDescription(view.getDescriptionTextAreaValue())) {
-            JOptionPane.showMessageDialog(null, "La descripción debe tener 100 o menos caracteres.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+            view.showErrorModal("La descripción debe tener 100 o menos caracteres.");
             return;
         }
 
         if (!model.isValidDate(view.getDateValue())) {
-            JOptionPane.showMessageDialog(null, "La fecha ha de tener el siguiente formato:\ndd/mm/aaaa\nY ser posterior a la actual.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+            view.showErrorModal("La fecha ha de tener el siguiente formato:\n" + TaskManagerModel.FORMAT_DATE_TIME_FORMATTER + "\nY ser posterior a la actual.");
             return;
         }
 
         if (!model.isValidCategory(view.getSelectedCategory())) {
-            JOptionPane.showMessageDialog(null, "Seleccione la categoría.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+            view.showErrorModal("Seleccione la categoría.");
             return;
         }
 
         Task newTask = new Task(view.getNameTextFieldValue(), view.getDescriptionTextAreaValue(), view.getPriorityValue(), view.getDateValue(), view.getPercentageSliderValue(), view.getSelectedCategory(), view.getSelectedSubTask());
 
         if (!model.isValidTask(newTask) && model.getTaskEditing() != null) {
-            JOptionPane.showMessageDialog(null, "La tarea: '" + view.getNameTextFieldValue() + "' ya existe.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+            view.showErrorModal("La tarea: '" + view.getNameTextFieldValue() + "' ya existe.");
             return;
         }
 
@@ -85,7 +85,6 @@ public class TaskManagerController {
             view.setEditButtonEnabled(true);
         }
 
-        model.addCategory("Seleccionar opción");
 
         view.updateCategoriesList(model.getCategories());
         view.updateSubtasksList(model.getTasks());
@@ -95,7 +94,10 @@ public class TaskManagerController {
     }
 
     public void handleSelectComboBoxEvent() {
-        view.removeCategoryItem("Seleccionar opción");
+        if (view.getSelectedCategory() == null || view.getSelectedCategory().equals("Seleccionar opción"))
+            return;
+
+        view.removeCategoryItemAt(0);
     }
 
     public void handleSelectTaskEvent() {
@@ -125,7 +127,7 @@ public class TaskManagerController {
         view.setNameTextFieldValue(model.getTaskEditing().getName());
         view.setDescriptionTextAreaValue(model.getTaskEditing().getDescription());
         view.setPriorityComboBoxValue(model.getTaskEditing().getPriority());
-        view.setDateCreationFormattedTextFieldValue(model.getTaskEditing().getCreationDate());
+        view.setDateChooserValue(model.getTaskEditing().getDeadline());
         view.setPercentageSliderValue(model.getTaskEditing().getPercentage());
         view.setCategoryComboBoxValue(model.getTaskEditing().getCategory());
         view.setSubtaskComboBoxValue(model.getTaskEditing().getSubtask());
@@ -133,4 +135,13 @@ public class TaskManagerController {
         view.setEditButtonEnabled(false);
     }
 
+    public void handleKeyTypedSearchInputEvent(char newCharacter) {
+        if (Character.isLetter(newCharacter)) {
+            model.filterTasks(view.getSearchTextFieldValue() + newCharacter);
+        } else {
+            model.filterTasks(view.getSearchTextFieldValue());
+        }
+
+        view.updateTaskList(model.getTasksFiltered());
+    }
 }
