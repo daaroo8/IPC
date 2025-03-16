@@ -6,12 +6,13 @@ import java.awt.event.*;
 import java.util.Date;
 
 import com.toedter.calendar.JDateChooser;
+import model.PRIORITY;
 
 public class TaskManagerFilterDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JComboBox priorityFilterComboBox;
+    private JComboBox<String> priorityFilterComboBox;
     private JSlider percentageFilterSlider;
     private JComboBox categoryFilterComboBox;
     private JComboBox subtaskFilterComboBox;
@@ -20,15 +21,13 @@ public class TaskManagerFilterDialog extends JDialog {
     private JPanel sinceDateCreationPanel;
     private JPanel sinceDeadLinePanel;
     private JPanel fromPercentagePanel;
-    private JRadioButton untilPercentajeRadioButton;
+    private JRadioButton untilPercentageRadioButton;
     private JRadioButton fromPercentageRadioButton;
     private JRadioButton untilDateCreationRadioButton;
     private JRadioButton sinceDateCreationRadioButton;
     private JRadioButton untilDeadLineRadioButton;
     private JRadioButton sinceDeadLineRadioButton;
     private JRadioButton noPercentageRadioButton;
-    private JDateChooser dateCreationChooser;
-    private JDateChooser deadLineChooser;
     private JToggleButton dateCreationToggleButton;
     private JToggleButton deadLineToggleButton;
     private JToggleButton percentageToggleButton;
@@ -89,8 +88,8 @@ public class TaskManagerFilterDialog extends JDialog {
     }
 
     private void initComponents() {
-        dateCreationChooser = new JDateChooser();
-        deadLineChooser = new JDateChooser();
+        JDateChooser dateCreationChooser = new JDateChooser();
+        JDateChooser deadLineChooser = new JDateChooser();
 
         dateCreationChooser.setDateFormatString("dd/MM/yyyy");
         deadLineChooser.setDateFormatString("dd/MM/yyyy");
