@@ -19,8 +19,6 @@ import java.util.Date;
 
 import controller.TaskManagerController;
 
-// TODO: que se quite la categoría seleccionada al guardar "Selecciona opcion"
-
 public class TaskManagerView extends JFrame {
     private JTextField nameTextField;
     private JLabel nameLabel;
@@ -125,7 +123,6 @@ public class TaskManagerView extends JFrame {
     }
 
     public String getSelectedCategory() {
-        // TODO: mirar si se puede eliminar el cast
         return (String) categoryComboBox.getSelectedItem();
     }
 
@@ -134,6 +131,7 @@ public class TaskManagerView extends JFrame {
     }
 
     public PRIORITY getPriorityValue() {
+        // TODO: esto habrá que mirarlo
         //return Task.PRIORITY.valueOf((String) priorityComboBox.getSelectedItem());
         return PRIORITY.valueOf("HIGH");
     }
@@ -169,7 +167,6 @@ public class TaskManagerView extends JFrame {
     public void updateSubtasksList(ArrayList<Task> subtasks) {
         subtaskComboBox.removeAllItems();
 
-        // TODO: Mirar magic string
         subtaskComboBox.addItem(TaskManagerView.SELECT_NOT_SUBTASK_PLACEHOLDER);
 
         for (Task subtask : subtasks) {
@@ -256,13 +253,6 @@ public class TaskManagerView extends JFrame {
     public void showErrorModal(String message) {
         JOptionPane.showMessageDialog(null, message, "¡Error!", JOptionPane.ERROR_MESSAGE);
     }
-
-    public boolean isValidSearch() {
-        return !(searchTextField.getText().isEmpty()) &&
-                searchTextField.getText().length() <= 10;
-        //TODO: añadir que exista el nombre en la lista de tareas
-    }
-
 
     /**
      * Consulta si la tarea a añadir, ya ha sido añadida previamente
