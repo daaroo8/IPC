@@ -2,7 +2,15 @@ package controller;
 
 import model.Task;
 import model.TaskManagerModel;
+import view.TaskManagerFilterDialog;
 import view.TaskManagerView;
+
+// TODO: cuando se da a editar una tarea, y sin tocar nada, deberia no hacer nada, y sale el error de que
+// TODO: ya existe
+
+// TODO: no se como poner el mensaje de actionStatusLabel cuando se esta creando por primera vez la tarea
+
+//TODO: quitar el actionStatusLabel cuando se termine de buscar, filtrar...
 
 public class TaskManagerController {
     private final TaskManagerView view;
@@ -13,6 +21,15 @@ public class TaskManagerController {
         this.model = new TaskManagerModel();
     }
 
+    public void handleOpenFilterDialogEvent(){
+        view.setActionStatusLabel("Filtrando...");
+
+        TaskManagerFilterDialog filterDialog = new TaskManagerFilterDialog();
+        filterDialog.pack();
+        filterDialog.setLocationRelativeTo(null);
+        filterDialog.setVisible(true);
+
+    }
     public void handleSelectCheckBoxEvent() {
         if (view.getCheckBoxSelected()) {
             view.setPercentageSliderValue(view.getMaximumPercentageSliderValue());
@@ -62,7 +79,7 @@ public class TaskManagerController {
             view.showErrorModal("Seleccione la categoría.");
             return;
         }
-
+        view.setActionStatusLabel("Tarea '" + view.getNameTextFieldValue() + "' guardada.");
         Task newTask = new Task(view.getNameTextFieldValue(), view.getDescriptionTextAreaValue(), view.getPriorityValue(), view.getDateValue(), view.getPercentageSliderValue(), view.getSelectedCategory(), view.getSelectedSubTask());
 
         if (!model.isValidTask(newTask) && model.getTaskEditing() != null) {
@@ -105,6 +122,7 @@ public class TaskManagerController {
 
         if (taskSelected == null) return;
 
+        view.setActionStatusLabel("Mostrando información de: " + taskSelected.getName() + ".");
         view.setNameInfoTextFieldValue(taskSelected.getName());
         view.setDescriptionInfoTextAreaValue(taskSelected.getDescription());
         view.setCategoryInfoTextFieldValue(taskSelected.getCategory());
@@ -116,6 +134,8 @@ public class TaskManagerController {
     }
 
     public void handleDeleteButtonEvent() {
+        view.setActionStatusLabel("Tarea '" + view.getTaskSelected().getName() + "' borrada.");
+
         model.removeTask(view.getTaskSelected());
         view.updateTaskList(model.getTasks());
         view.updateSubtasksList(model.getTasks());
@@ -132,6 +152,7 @@ public class TaskManagerController {
         view.setCategoryComboBoxValue(model.getTaskEditing().getCategory());
         view.setSubtaskComboBoxValue(model.getTaskEditing().getSubtask());
 
+        view.setActionStatusLabel("Editando '" + view.getTaskSelected().getName() + "'.");
         view.setEditButtonEnabled(false);
     }
 
@@ -143,6 +164,6 @@ public class TaskManagerController {
         }
 
         view.updateTaskList(model.getTasksFiltered());
-        view.setActionStatusLabel("Filtrando...");
+        view.setActionStatusLabel("Buscando...");
     }
 }

@@ -6,7 +6,6 @@ import java.awt.event.*;
 import java.util.Date;
 
 import com.toedter.calendar.JDateChooser;
-import model.PRIORITY;
 
 public class TaskManagerFilterDialog extends JDialog {
     private JPanel contentPane;
@@ -28,9 +27,8 @@ public class TaskManagerFilterDialog extends JDialog {
     private JRadioButton untilDeadLineRadioButton;
     private JRadioButton sinceDeadLineRadioButton;
     private JRadioButton noPercentageRadioButton;
-    private JToggleButton dateCreationToggleButton;
-    private JToggleButton deadLineToggleButton;
-    private JToggleButton percentageToggleButton;
+    private JRadioButton noDateCreationRadioButton;
+    private JRadioButton noDeadLineRadioButton;
 
     public static final String SELECT_CATEGORY_PLACEHOLDER = "Seleccionar opción";
     public static final String SELECT_NOT_SUBTASK_PLACEHOLDER = "No es subtarea";

@@ -67,6 +67,7 @@ public class TaskManagerView extends JFrame {
     private JPanel rightTopPanel;
     private JPanel rightBottomPanel;
     private JLabel searchLabel;
+    private JLabel actionStatusLabel;
     private JDateChooser dateChooser;
 
     public static final String SELECT_CATEGORY_PLACEHOLDER = "Seleccionar opción";
@@ -254,6 +255,10 @@ public class TaskManagerView extends JFrame {
         JOptionPane.showMessageDialog(null, message, "¡Error!", JOptionPane.ERROR_MESSAGE);
     }
 
+    public void setActionStatusLabel(String str){
+        actionStatusLabel.setText(str);
+    }
+
     /**
      * Consulta si la tarea a añadir, ya ha sido añadida previamente
      *
@@ -334,6 +339,7 @@ public class TaskManagerView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 taskManagerController.handleSaveButtonEvent();
+
             }
         });
 
@@ -378,7 +384,7 @@ public class TaskManagerView extends JFrame {
         filtersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                taskManagerController.handleOpenFilterDialogEvent();
             }
         });
     }
