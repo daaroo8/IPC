@@ -1,18 +1,20 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TaskManagerModel {
-    private ArrayList<Task> tasks;
-    private ArrayList<String> categories;
+    private final ArrayList<Task> tasks;
+    private final ArrayList<String> categories;
     private int lastPercentage = 50;
     private Task taskEditing = null;
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public TaskManagerModel() {
         tasks = new ArrayList<>();
-        categories = new ArrayList<>(Arrays.asList(""));
+        categories = new ArrayList<>(Arrays.asList("Seleccionar opción", "Escuela", "Trabajo", "Personal"));
         // crear un arraylist a partir de un array
 
     }
@@ -38,8 +40,16 @@ public class TaskManagerModel {
         return taskEditing;
     }
 
+    public void removeTask(Task task) {
+        tasks.remove(task);
+    }
+
+    public void setTaskEditing(Task taskEditing) {
+        this.taskEditing = taskEditing;
+    }
+
     public boolean isValidCategoryToAdd(String category) {
-        return !categories.contains(category) && category.length() >= 10;
+        return !categories.contains(category) && category.length() <= 10;
     }
 
     public boolean isValidName(String name) {

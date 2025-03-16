@@ -5,11 +5,10 @@ import model.TaskManagerModel;
 import view.TaskManagerView;
 
 import javax.swing.*;
-import java.time.ZoneId;
 
 public class TaskManagerController {
-    private TaskManagerView view;
-    private TaskManagerModel model;
+    private final TaskManagerView view;
+    private final TaskManagerModel model;
 
     public TaskManagerController(TaskManagerView view) {
         this.view = view;
@@ -81,23 +80,57 @@ public class TaskManagerController {
             model.getTaskEditing().setPercentage(view.getPercentageSliderValue());
             model.getTaskEditing().setCategory(view.getSelectedCategory());
             model.getTaskEditing().setSubtask(view.getSelectedSubTask());
+
+            model.setTaskEditing(null);
+            view.setEditButtonEnabled(true);
         }
 
+        model.addCategory("Seleccionar opción");
+
+        view.updateCategoriesList(model.getCategories());
         view.updateSubtasksList(model.getTasks());
         view.updateTaskList(model.getTasks());
 
-        // TODO: MAL, SOLUCIONAR CON LAS FUNCIONES DE CADA PARTE
-//        categoryComboBox.addItem("Seleccionar opción");
-//
-//        nameTextField.setText("");
-//        descriptionTextArea.setText("");
-//        dateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//        priorityComboBox.setSelectedIndex(0);
-//        percentageSlider.setValue(50);
-//        categoryComboBox.setSelectedItem("Seleccionar opción");
-//        subtaskComboBox.setSelectedItem("No es subtarea");
-//
-//        taskEditing = null;
-//        updateTaskList();
+        view.restartTaskTextFields();
     }
+
+    public void handleSelectComboBoxEvent() {
+        view.removeCategoryItem("Seleccionar opción");
+    }
+
+    public void handleSelectTaskEvent() {
+        Task taskSelected = view.getTaskSelected();
+
+        if (taskSelected == null) return;
+
+        view.setNameInfoTextFieldValue(taskSelected.getName());
+        view.setDescriptionInfoTextAreaValue(taskSelected.getDescription());
+        view.setCategoryInfoTextFieldValue(taskSelected.getCategory());
+        view.setSubtaskInfoTextFieldValue(taskSelected.getSubtask());
+        view.setCompletedProgressBarValue(taskSelected.getPercentage());
+        view.setPriorityInfoTextFieldValue(taskSelected.getPriority().toString());
+        view.setDateCreationInfoFormattedTextFieldValue(taskSelected.getCreationDate().format(TaskManagerModel.DATE_TIME_FORMATTER));
+        view.setDeadLineInfoTextFieldValue(taskSelected.getDeadline().format(TaskManagerModel.DATE_TIME_FORMATTER));
+    }
+
+    public void handleDeleteButtonEvent() {
+        model.removeTask(view.getTaskSelected());
+        view.updateTaskList(model.getTasks());
+        view.updateSubtasksList(model.getTasks());
+    }
+
+    public void handleEditButtonEvent() {
+        model.setTaskEditing(view.getTaskSelected());
+
+        view.setNameTextFieldValue(model.getTaskEditing().getName());
+        view.setDescriptionTextAreaValue(model.getTaskEditing().getDescription());
+        view.setPriorityComboBoxValue(model.getTaskEditing().getPriority());
+        view.setDateCreationFormattedTextFieldValue(model.getTaskEditing().getCreationDate());
+        view.setPercentageSliderValue(model.getTaskEditing().getPercentage());
+        view.setCategoryComboBoxValue(model.getTaskEditing().getCategory());
+        view.setSubtaskComboBoxValue(model.getTaskEditing().getSubtask());
+
+        view.setEditButtonEnabled(false);
+    }
+
 }

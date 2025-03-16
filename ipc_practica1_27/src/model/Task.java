@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Task {
+    // TODO: mover enums
     public enum PRIORITY {
         LOW, MEDIUM, HIGH;
 
