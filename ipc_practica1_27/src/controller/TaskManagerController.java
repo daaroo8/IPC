@@ -143,5 +143,6 @@ public class TaskManagerController {
         }
 
         view.updateTaskList(model.getTasksFiltered());
+        view.setActionStatusLabel("Filtrando...");
     }
 }
