@@ -7,33 +7,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Task {
-    public enum PRIORITY {
-        LOW, MEDIUM, HIGH;
-
-        @Override
-        public String toString() {
-            return switch (this) {
-                case LOW -> "Baja";
-                case MEDIUM -> "Media";
-                case HIGH -> "Alta";
-            };
-        }
-    }
-
-    public enum STATUS {
-        NOT_STARTED, IN_PROGRESS, COMPLETED;
-
-        @Override
-        public String toString() {
-            return switch (this) {
-                case NOT_STARTED -> "Sin empezar";
-                case IN_PROGRESS -> "En progreso";
-                case COMPLETED -> "Completada";
-            };
-
-        }
-    }
-
     public String getDescription() {
         return description;
     }
@@ -93,7 +66,7 @@ public class Task {
     private String name;
     private String description;
     private PRIORITY priority;
-    private LocalDate creationDate;
+    private final LocalDate creationDate;
     private LocalDate deadline;
     private int percentage;
     private String category;
