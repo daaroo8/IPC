@@ -1,16 +1,44 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
+import java.util.Date;
+
+import com.toedter.calendar.JDateChooser;
 
 public class TaskManagerFilterDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JComboBox comboBox1;
-    private JSlider slider1;
+    private JComboBox priorityFilterComboBox;
+    private JSlider percentageFilterSlider;
+    private JComboBox categoryFilterComboBox;
+    private JComboBox subtaskFilterComboBox;
+    private JPanel dateCreationPanel;
+    private JPanel deadLinePanel;
+    private JPanel sinceDateCreationPanel;
+    private JPanel sinceDeadLinePanel;
+    private JPanel fromPercentagePanel;
+    private JRadioButton untilPercentajeRadioButton;
+    private JRadioButton fromPercentageRadioButton;
+    private JRadioButton untilDateCreationRadioButton;
+    private JRadioButton sinceDateCreationRadioButton;
+    private JRadioButton untilDeadLineRadioButton;
+    private JRadioButton sinceDeadLineRadioButton;
+    private JRadioButton noPercentageRadioButton;
+    private JDateChooser dateCreationChooser;
+    private JDateChooser deadLineChooser;
+    private JToggleButton dateCreationToggleButton;
+    private JToggleButton deadLineToggleButton;
+    private JToggleButton percentageToggleButton;
+
+    public static final String SELECT_CATEGORY_PLACEHOLDER = "Seleccionar opción";
+    public static final String SELECT_NOT_SUBTASK_PLACEHOLDER = "No es subtarea";
 
     public TaskManagerFilterDialog() {
+        initComponents();
+
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -58,5 +86,22 @@ public class TaskManagerFilterDialog extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
+    }
+
+    private void initComponents() {
+        dateCreationChooser = new JDateChooser();
+        deadLineChooser = new JDateChooser();
+
+        dateCreationChooser.setDateFormatString("dd/MM/yyyy");
+        deadLineChooser.setDateFormatString("dd/MM/yyyy");
+
+        dateCreationChooser.setDate(new Date());
+        deadLineChooser.setDate(new Date());
+
+        dateCreationPanel.setLayout(new BorderLayout());
+        dateCreationPanel.add(dateCreationChooser, BorderLayout.CENTER);
+
+        deadLinePanel.setLayout(new BorderLayout());
+        deadLinePanel.add(deadLineChooser, BorderLayout.CENTER);
     }
 }
