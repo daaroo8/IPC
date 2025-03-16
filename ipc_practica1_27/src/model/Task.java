@@ -1,8 +1,5 @@
 package model;
 
-
-import java.awt.*;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -73,7 +70,7 @@ public class Task {
     private String subtask;
 
     public Task(String name, String description, PRIORITY priority, LocalDate deadline, int percentage, String category, String subtask) {
-        if (!isValidPercentage(percentage))
+        if (isInvalidPercentage(percentage))
             throw new IllegalArgumentException("percentage must be between 0 and 100");
 
 
@@ -89,7 +86,7 @@ public class Task {
 
 
     public void setPercentage(int percentage) {
-        if (!isValidPercentage(percentage))
+        if (isInvalidPercentage(percentage))
             throw new IllegalArgumentException("percentage must be between 0 and 100");
 
         this.percentage = percentage;
@@ -105,17 +102,13 @@ public class Task {
         return STATUS.IN_PROGRESS;
     }
 
-    private boolean isValidPercentage(int percentage) {
-        return (percentage >= 0 && percentage <= 100);
+    private boolean isInvalidPercentage(int percentage) {
+        return (percentage < 0 || percentage > 100);
     }
 
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        Font font = new Font("Dialog", Font.PLAIN, 12); // Usa la fuente que estás usando en el JList
-        FontMetrics fm = Toolkit.getDefaultToolkit().getFontMetrics(font);
-
         return String.format("%-10s | %-10s | %-11s", name, deadline.format(formatter), getStatus());
     }
 
