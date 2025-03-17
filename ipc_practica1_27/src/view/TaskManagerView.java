@@ -78,30 +78,56 @@ public class TaskManagerView extends JFrame {
     private final TaskManagerController taskManagerController;
     private final TaskManagerFilterDialog filterDialogView;
 
+    /**
+     * Constructor de la vista del gestor de tareas.
+     */
     public TaskManagerView() {
         initComponents();
         taskManagerController = new TaskManagerController(this);
         filterDialogView = new TaskManagerFilterDialog(taskManagerController);
     }
 
+    /**
+     * Muestra el cuadro de diálogo para los filtros de tareas.
+     */
     public void showFilterDialog() {
         filterDialogView.pack();
         filterDialogView.setLocationRelativeTo(null);
         filterDialogView.setVisible(true);
     }
 
+    /**
+     * Cierra el cuadro de diálogo de filtros de tareas.
+     */
+
     public void closeFilterDialog() {
         filterDialogView.setVisible(false);
     }
+
+    /**
+     * Obtiene el valor del filtro de prioridad desde el cuadro de diálogo.
+     *
+     * @return El valor del filtro de prioridad.
+     */
 
     public String getPriorityFilterValue() {
         return filterDialogView.getPriorityFilterValue();
     }
 
+    /**
+     * Obtiene el modo de filtro de porcentaje desde el cuadro de diálogo.
+     *
+     * @return El modo de filtro de porcentaje.
+     */
     public RANGE_SELECTIONS getPercentageFilterMode() {
         return filterDialogView.getPercentageFilterMode();
     }
 
+    /**
+     * Obtiene el valor del filtro de porcentaje desde el cuadro de diálogo.
+     *
+     * @return El valor del filtro de porcentaje.
+     */
     public int getPercentageFilterValue() {
         return filterDialogView.getPercentageFilterValue();
     }
@@ -110,62 +136,137 @@ public class TaskManagerView extends JFrame {
         return filterDialogView.getCreationChooserFilterMode();
     }
 
+    /**
+     * Obtiene la fecha seleccionada en el selector de fecha de creación desde el cuadro de diálogo.
+     *
+     * @return La fecha seleccionada en el selector de fecha de creación.
+     */
     public LocalDate getCreationChooserDate() {
         return filterDialogView.getCreationChooserDate();
     }
 
+    /**
+     * Obtiene el modo de filtro de la fecha límite desde el cuadro de diálogo.
+     *
+     * @return El modo de filtro de la fecha límite.
+     */
     public RANGE_SELECTIONS getDeadlineChooserFilterMode() {
         return filterDialogView.getDeadlineChooserFilterMode();
     }
 
+    /**
+     * Obtiene la fecha seleccionada en el selector de fecha límite desde el cuadro de diálogo.
+     *
+     * @return La fecha seleccionada en el selector de fecha límite.
+     */
     public LocalDate getDeadlineChooserDate() {
         return filterDialogView.getDeadlineChooserDate();
     }
 
+    /**
+     * Obtiene el valor del filtro de categoría desde el cuadro de diálogo.
+     *
+     * @return El valor del filtro de categoría.
+     */
     public String getSelectCategoryFilterValue() {
         return filterDialogView.getSelectCategoryFilterValue();
     }
 
+    /**
+     * Obtiene el valor del filtro de subtareas desde el cuadro de diálogo.
+     *
+     * @return El valor del filtro de subtareas.
+     */
     public String getSubtaskFilterValue() {
         return filterDialogView.getSubtaskFilterValue();
     }
 
+    /**
+     * Obtiene el estado de selección del checkbox de tareas completadas.
+     *
+     * @return true si el checkbox está seleccionado, false en caso contrario.
+     */
     public boolean getCheckBoxSelected() {
         return completedCheckBox.isSelected();
     }
 
+    /**
+     * Establece el estado de selección del checkbox de tareas completadas.
+     *
+     * @param selected El estado de selección a establecer (true o false).
+     */
     public void setCheckBoxSelected(boolean selected) {
         completedCheckBox.setSelected(selected);
     }
 
+    /**
+     * Establece el valor del campo de texto para agregar una categoría.
+     *
+     * @param text El texto a establecer en el campo de texto.
+     */
     public void setAddCategoryTextFieldValue(String text) {
         addCategoryTextField.setText(text);
     }
 
+    /**
+     * Obtiene el valor actual del slider de porcentaje.
+     *
+     * @return El valor del slider de porcentaje.
+     */
     public int getPercentageSliderValue() {
         return percentageSlider.getValue();
     }
 
+    /**
+     * Establece el valor del slider de porcentaje.
+     *
+     * @param percentage El valor a establecer en el slider de porcentaje.
+     */
     public void setPercentageSliderValue(int percentage) {
         percentageSlider.setValue(percentage);
     }
 
+    /**
+     * Obtiene el valor máximo del slider de porcentaje.
+     *
+     * @return El valor máximo del slider de porcentaje.
+     */
     public int getMaximumPercentageSliderValue() {
         return percentageSlider.getMaximum();
     }
 
+    /**
+     * Obtiene el valor actual del campo de texto para agregar una categoría.
+     *
+     * @return El texto del campo de texto.
+     */
     public String getAddCategoryTextFieldValue() {
         return addCategoryTextField.getText();
     }
 
+    /**
+     * Obtiene el valor actual del campo de texto para el nombre.
+     *
+     * @return El texto del campo de texto para el nombre.
+     */
     public String getNameTextFieldValue() {
         return nameTextField.getText();
     }
 
+    /**
+     * Obtiene el valor actual del área de texto para la descripción.
+     *
+     * @return El texto del área de texto para la descripción.
+     */
     public String getDescriptionTextAreaValue() {
         return descriptionTextArea.getText();
     }
 
+    /**
+     * Obtiene el valor de la fecha seleccionada en el selector de fecha.
+     *
+     * @return La fecha seleccionada, o null si no se ha seleccionado ninguna.
+     */
     public LocalDate getDateValue() {
         if (dateChooser.getDate() == null)
             return null;
@@ -173,18 +274,36 @@ public class TaskManagerView extends JFrame {
         return dateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
+    /**
+     * Obtiene la categoría seleccionada en el combo box de categorías.
+     *
+     * @return La categoría seleccionada.
+     */
     public String getSelectedCategory() {
         return (String) categoryComboBox.getSelectedItem();
     }
 
+    /**
+     * Obtiene la subtarea seleccionada en el combo box de subtareas.
+     *
+     * @return La subtarea seleccionada.
+     */
     public String getSelectedSubTask() {
         return (String) subtaskComboBox.getSelectedItem();
     }
 
+    /**
+     * Obtiene el valor de prioridad seleccionado en el combo box de prioridad.
+     *
+     * @return El valor de prioridad seleccionado.
+     */
     public PRIORITY getPriorityValue() {
         return priorityComboBox.getItemAt(priorityComboBox.getSelectedIndex());
     }
 
+    /**
+     * Reinicia los campos de texto y controles relacionados con la tarea.
+     */
     public void restartTaskTextFields() {
         nameTextField.setText("");
         descriptionTextArea.setText("");
@@ -195,6 +314,11 @@ public class TaskManagerView extends JFrame {
         subtaskComboBox.setSelectedIndex(0);
     }
 
+    /**
+     * Actualiza la lista de tareas en la vista.
+     *
+     * @param tasks La lista de tareas a mostrar en la vista.
+     */
     public void updateTaskList(ArrayList<Task> tasks) {
         taskListModel.clear();
 
@@ -203,6 +327,11 @@ public class TaskManagerView extends JFrame {
         }
     }
 
+    /**
+     * Actualiza la lista de categorías en el combo box de categorías.
+     *
+     * @param categories La lista de categorías a mostrar en el combo box.
+     */
     public void updateCategoriesList(ArrayList<String> categories) {
         categoryComboBox.removeAllItems();
 
@@ -215,6 +344,11 @@ public class TaskManagerView extends JFrame {
         filterDialogView.updateCategoriesList(categories);
     }
 
+    /**
+     * Actualiza la lista de subtareas en el combo box de subtareas.
+     *
+     * @param subtasks La lista de subtareas a mostrar en el combo box.
+     */
     public void updateSubtasksList(ArrayList<Task> subtasks) {
         subtaskComboBox.removeAllItems();
 
@@ -227,6 +361,9 @@ public class TaskManagerView extends JFrame {
         filterDialogView.updateSubtaskList(subtasks);
     }
 
+    /**
+     * Actualiza la lista de prioridades en el combo box de prioridad.
+     */
     public void updatePriorityList() {
         priorityComboBox.removeAllItems();
 
@@ -235,86 +372,191 @@ public class TaskManagerView extends JFrame {
         }
     }
 
+    /**
+     * Elimina un ítem de la lista de categorías en el combo box.
+     *
+     * @param categoryIndex El índice del ítem a eliminar.
+     */
     public void removeCategoryItemAt(int categoryIndex) {
         categoryComboBox.removeItemAt(categoryIndex);
     }
 
+    /**
+     * Obtiene la tarea seleccionada de la lista de tareas.
+     *
+     * @return La tarea seleccionada.
+     */
     public Task getTaskSelected() {
         return taskList.getSelectedValue();
     }
 
+    /**
+     * Establece si el botón de edición está habilitado o deshabilitado.
+     *
+     * @param enabled true para habilitar el botón, false para deshabilitarlo.
+     */
     public void setEditButtonEnabled(boolean enabled) {
         editButton.setEnabled(enabled);
     }
 
+    /**
+     * Establece el valor del campo de texto para el nombre.
+     *
+     * @param text El texto a establecer en el campo de texto.
+     */
     public void setNameTextFieldValue(String text) {
         nameTextField.setText(text);
     }
 
+    /**
+     * Establece el valor del área de texto para la descripción.
+     *
+     * @param text El texto a establecer en el área de texto.
+     */
     public void setDescriptionTextAreaValue(String text) {
         descriptionTextArea.setText(text);
     }
 
+    /**
+     * Establece el valor del combo box de prioridad.
+     *
+     * @param priority El valor de prioridad a establecer en el combo box.
+     */
     public void setPriorityComboBoxValue(PRIORITY priority) {
         priorityComboBox.setSelectedItem(priority);
     }
 
+    /**
+     * Establece el valor del selector de fecha.
+     *
+     * @param value La fecha a establecer en el selector de fecha.
+     */
     public void setDateChooserValue(LocalDate value) {
         dateChooser.setDate(Date.from(value.atStartOfDay(ZoneId.systemDefault()).toInstant()));
     }
 
+    /**
+     * Establece el valor del combo box de categorías.
+     *
+     * @param category La categoría a establecer en el combo box.
+     */
     public void setCategoryComboBoxValue(String category) {
         categoryComboBox.setSelectedItem(category);
     }
 
+    /**
+     * Establece el valor del combo box de subtareas.
+     *
+     * @param subtask La subtarea a establecer en el combo box.
+     */
     public void setSubtaskComboBoxValue(String subtask) {
         subtaskComboBox.setSelectedItem(subtask);
     }
 
+    /**
+     * Establece el valor del campo de texto para la información del nombre.
+     *
+     * @param text El texto a establecer en el campo de texto.
+     */
     public void setNameInfoTextFieldValue(String text) {
         nameInfoTextField.setText(text);
     }
 
+    /**
+     * Establece el valor del área de texto para la información de la descripción.
+     *
+     * @param text El texto a establecer en el área de texto.
+     */
     public void setDescriptionInfoTextAreaValue(String text) {
         descriptionInfoTextArea.setText(text);
     }
 
+    /**
+     * Establece el valor del campo de texto para la información de la prioridad.
+     *
+     * @param text El texto a establecer en el campo de texto.
+     */
     public void setPriorityInfoTextFieldValue(String text) {
         priorityInfoTextField.setText(text);
     }
 
+    /**
+     * Establece el valor de la barra de progreso de tarea completada.
+     *
+     * @param progress El valor a establecer en la barra de progreso.
+     */
     public void setCompletedProgressBarValue(int progress) {
         completedProgressBar.setValue(progress);
     }
 
+    /**
+     * Establece el valor del campo de texto para la información de la categoría.
+     *
+     * @param text El texto a establecer en el campo de texto.
+     */
     public void setCategoryInfoTextFieldValue(String text) {
         categoryInfoTextField.setText(text);
     }
 
+    /**
+     * Establece el valor del campo de texto para la información de la subtarea.
+     *
+     * @param text El texto a establecer en el campo de texto.
+     */
     public void setSubtaskInfoTextFieldValue(String text) {
         subtaskInfoTextField.setText(text);
     }
 
+    /**
+     * Establece el valor del campo de texto con formato para la información de la fecha de creación.
+     *
+     * @param text El texto a establecer en el campo de texto con formato.
+     */
     public void setDateCreationInfoFormattedTextFieldValue(String text) {
         dateCreationInfoFormattedTextField.setText(text);
     }
 
+    /**
+     * Establece el valor del campo de texto para la información de la fecha límite.
+     *
+     * @param text El texto a establecer en el campo de texto.
+     */
     public void setDeadLineInfoTextFieldValue(String text) {
         deadLineInfoFormattedTextField.setText(text);
     }
 
+    /**
+     * Obtiene el valor actual del campo de texto para la búsqueda.
+     *
+     * @return El texto del campo de búsqueda.
+     */
     public String getSearchTextFieldValue() {
         return searchTextField.getText();
     }
 
+    /**
+     * Muestra un panel de error con el mensaje proporcionado.
+     *
+     * @param message El mensaje de error a mostrar en el modal.
+     */
     public void showErrorModal(String message) {
         JOptionPane.showMessageDialog(null, message, "¡Error!", JOptionPane.ERROR_MESSAGE);
     }
 
-    public void setActionStatusLabel(String str){
+    /**
+     * Establece el texto del label de estado de acción.
+     *
+     * @param str El texto a establecer en el label de estado de acción.
+     */
+    public void setActionStatusLabel(String str) {
         actionStatusLabel.setText(str);
     }
 
+    /**
+     * Inicializa los componentes de la interfaz de usuario.
+     *
+     * @throws RuntimeException Si alguno de los componentes no puede ser inicializado correctamente.
+     */
     private void initComponents() {
         if (anyComponentIsNull())
             throw new RuntimeException("No se puede inicializar el componente");
@@ -345,6 +587,12 @@ public class TaskManagerView extends JFrame {
 
         updatePriorityList();
 
+        /**
+         * Maneja el evento de acción del checkbox de tareas completadas.
+         *
+         * Este evento se dispara cuando el usuario selecciona o deselecciona el checkbox,
+         * y se encarga de llamar al controlador para manejar el cambio de estado de la tarea.
+         */
         completedCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -352,6 +600,12 @@ public class TaskManagerView extends JFrame {
             }
         });
 
+        /**
+         * Maneja el evento de cambio de valor del slider de porcentaje.
+         *
+         * Este evento se dispara cuando el usuario cambia el valor del slider de porcentaje,
+         * y se encarga de llamar al controlador para manejar el cambio en el porcentaje de la tarea.
+         */
         percentageSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -359,6 +613,12 @@ public class TaskManagerView extends JFrame {
             }
         });
 
+        /**
+         * Maneja el evento de acción del botón para agregar una categoría.
+         *
+         * Este evento se dispara cuando el usuario hace clic en el botón de agregar categoría,
+         * y se encarga de llamar al controlador para manejar la adición de una nueva categoría.
+         */
         addCategoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -366,6 +626,12 @@ public class TaskManagerView extends JFrame {
             }
         });
 
+        /**
+         * Maneja el evento de acción del botón de guardar.
+         *
+         * Este evento se dispara cuando el usuario hace clic en el botón de guardar,
+         * y se encarga de llamar al controlador para manejar el evento de guardar los cambios.
+         */
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -374,6 +640,12 @@ public class TaskManagerView extends JFrame {
             }
         });
 
+        /**
+         * Maneja el evento de selección de un ítem en el combo box de categorías.
+         *
+         * Este evento se dispara cuando el usuario selecciona una categoría del combo box,
+         * y se encarga de llamar al controlador para manejar la selección de la categoría.
+         */
         categoryComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -381,7 +653,12 @@ public class TaskManagerView extends JFrame {
             }
         });
 
-
+        /**
+         * Maneja el evento de selección de un ítem en la lista de tareas.
+         *
+         * Este evento se dispara cuando el usuario selecciona una tarea de la lista,
+         * y se encarga de llamar al controlador para manejar la selección de la tarea.
+         */
         taskList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -389,6 +666,12 @@ public class TaskManagerView extends JFrame {
             }
         });
 
+        /**
+         * Maneja el evento de acción del botón de eliminar.
+         *
+         * Este evento se dispara cuando el usuario hace clic en el botón de eliminar,
+         * y se encarga de llamar al controlador para manejar la eliminación de la tarea seleccionada.
+         */
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -396,6 +679,12 @@ public class TaskManagerView extends JFrame {
             }
         });
 
+        /**
+         * Maneja el evento de acción del botón de editar.
+         *
+         * Este evento se dispara cuando el usuario hace clic en el botón de editar,
+         * y se encarga de llamar al controlador para manejar la edición de la tarea seleccionada.
+         */
         editButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -403,6 +692,12 @@ public class TaskManagerView extends JFrame {
             }
         });
 
+        /**
+         * Maneja el evento de escritura en el campo de texto de búsqueda.
+         *
+         * Este evento se dispara cuando el usuario escribe un carácter en el campo de texto de búsqueda,
+         * y se encarga de llamar al controlador para manejar la entrada de búsqueda y filtrar los resultados.
+         */
         searchTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -411,6 +706,12 @@ public class TaskManagerView extends JFrame {
             }
         });
 
+        /**
+         * Maneja el evento de acción del botón de filtros.
+         *
+         * Este evento se dispara cuando el usuario hace clic en el botón de filtros,
+         * y se encarga de llamar al controlador para abrir el cuadro de diálogo de filtros.
+         */
         filtersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -419,30 +720,35 @@ public class TaskManagerView extends JFrame {
         });
     }
 
+    /**
+     * Verifica si alguno de los componentes de la interfaz de usuario es nulo.
+     *
+     * @return true si alguno de los componentes es nulo, false en caso contrario.
+     */
     private boolean anyComponentIsNull() {
         return (
-            mainPanel == null ||
-            rightTopPanel == null ||
-            leftPanel == null ||
-            calendarPanel == null ||
-            taskList == null ||
-            nameInfoTextField == null ||
-            descriptionInfoTextArea == null ||
-            categoryInfoTextField == null ||
-            subtaskInfoTextField == null ||
-            dateCreationInfoFormattedTextField == null ||
-            deadLineInfoFormattedTextField == null ||
-            priorityInfoTextField == null ||
-            headerListTextField == null ||
-            completedCheckBox == null ||
-            percentageSlider == null ||
-            addCategoryButton == null ||
-            saveButton == null ||
-            categoryComboBox == null ||
-            deleteButton == null ||
-            editButton == null ||
-            searchTextField == null ||
-            filtersButton == null
+                mainPanel == null ||
+                        rightTopPanel == null ||
+                        leftPanel == null ||
+                        calendarPanel == null ||
+                        taskList == null ||
+                        nameInfoTextField == null ||
+                        descriptionInfoTextArea == null ||
+                        categoryInfoTextField == null ||
+                        subtaskInfoTextField == null ||
+                        dateCreationInfoFormattedTextField == null ||
+                        deadLineInfoFormattedTextField == null ||
+                        priorityInfoTextField == null ||
+                        headerListTextField == null ||
+                        completedCheckBox == null ||
+                        percentageSlider == null ||
+                        addCategoryButton == null ||
+                        saveButton == null ||
+                        categoryComboBox == null ||
+                        deleteButton == null ||
+                        editButton == null ||
+                        searchTextField == null ||
+                        filtersButton == null
         );
     }
 
