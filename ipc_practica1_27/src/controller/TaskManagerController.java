@@ -4,19 +4,35 @@ import model.Task;
 import model.TaskManagerModel;
 import view.TaskManagerView;
 
+import java.util.Date;
+
+/**
+ * Clase que representa el controlador del Gestor de Tareas
+ */
 public class TaskManagerController {
     private final TaskManagerView view;
     private final TaskManagerModel model;
 
+    /**
+     * Constructor del controlador de la gestión de tareas.
+     *
+     * @param view La vista que será utilizada por el controlador.
+     */
     public TaskManagerController(TaskManagerView view) {
         this.view = view;
         this.model = new TaskManagerModel();
     }
 
+    /**
+     * Maneja el evento para abrir el diálogo de filtros.
+     */
     public void handleOpenFilterDialogEvent(){
         view.showFilterDialog();
     }
 
+    /**
+     * Maneja el evento de selección del checkbox.
+     */
     public void handleSelectCheckBoxEvent() {
         if (view.getCheckBoxSelected()) {
             view.setPercentageSliderValue(view.getMaximumPercentageSliderValue());
@@ -25,6 +41,9 @@ public class TaskManagerController {
         }
     }
 
+    /**
+     * Maneja el evento de cambio en el deslizador de porcentaje.
+     */
     public void handlePercentageSliderChangeEvent() {
         view.setCheckBoxSelected(view.getPercentageSliderValue() == view.getMaximumPercentageSliderValue());
 
@@ -32,6 +51,9 @@ public class TaskManagerController {
             model.setLastPercentage(view.getPercentageSliderValue());
     }
 
+    /**
+     * Maneja el evento de agregar una nueva categoría.
+     */
     public void handleAddCategoryEvent() {
         String newCategory = view.getAddCategoryTextFieldValue();
 
@@ -46,6 +68,9 @@ public class TaskManagerController {
         view.setCategoryComboBoxValue(newCategory);
     }
 
+    /**
+     * Maneja el evento de guardar una tarea.
+     */
     public void handleSaveButtonEvent() {
         if (!model.isValidName(view.getNameTextFieldValue().trim())) {
             view.showErrorModal("El nombre debe tener entre 1 y 10 caracteres.");
@@ -97,6 +122,9 @@ public class TaskManagerController {
         view.restartTaskTextFields();
     }
 
+    /**
+     * Maneja el evento de selección en el combo box de categorías.
+     */
     public void handleSelectComboBoxEvent() {
         if (view.getSelectedCategory() == null || view.getSelectedCategory().equals("Seleccionar opción"))
             return;
@@ -104,6 +132,9 @@ public class TaskManagerController {
         view.removeCategoryItemAt(0);
     }
 
+    /**
+     * Maneja el evento de selección de una tarea.
+     */
     public void handleSelectTaskEvent() {
         Task taskSelected = view.getTaskSelected();
 
@@ -120,6 +151,9 @@ public class TaskManagerController {
         view.setDeadLineInfoTextFieldValue(taskSelected.getDeadline().format(TaskManagerModel.DATE_TIME_FORMATTER));
     }
 
+    /**
+     * Maneja el evento de eliminar una tarea.
+     */
     public void handleDeleteButtonEvent() {
         view.setActionStatusLabel("Tarea '" + view.getTaskSelected().getName() + "' borrada.");
 
@@ -128,6 +162,9 @@ public class TaskManagerController {
         view.updateSubtasksList(model.getTasks());
     }
 
+    /**
+     * Maneja el evento de editar una tarea.
+     */
     public void handleEditButtonEvent() {
         model.setTaskEditing(view.getTaskSelected());
 
@@ -143,6 +180,9 @@ public class TaskManagerController {
         view.setEditButtonEnabled(false);
     }
 
+    /**
+     * Maneja el evento de escritura en el campo de búsqueda.
+     */
     public void handleKeyTypedSearchInputEvent(char newCharacter) {
         view.setActionStatusLabel("Buscando...");
 
@@ -169,6 +209,9 @@ public class TaskManagerController {
         view.setActionStatusLabel("");
     }
 
+    /**
+     * Maneja el evento de aceptar los filtros en el diálogo.
+     */
     public void handleAcceptFiltersDialog() {
         view.setActionStatusLabel("Buscando...");
 
@@ -190,12 +233,44 @@ public class TaskManagerController {
         view.setActionStatusLabel("");
     }
 
+    /**
+     * Maneja el evento de cancelar el diálogo de filtros.
+     */
     public void handleCancelFiltersDialog() {
         view.closeFilterDialog();
     }
 
+    /**
+     * Maneja el evento de resetear los filtros en el diálogo.
+     */
     public void handleResetFiltersDialog() {
-        //TODO: resetear filtros
+        view.setActionStatusLabel("Resetando filtros...");
+
+        view.setPriorityFilterValue(0);
+        view.setPercentageFilterNoButton(true);
+        view.setPercentageFilterValue(50);
+        view.setCreationDateFilterNoButton(true);
+        view.setCreationFilterChooserDate(new Date());
+        view.setDeadLineFilterNoButton(true);
+        view.setDeadlineFilterChooserDate(new Date());
+        view.setSelectCategoryFilterValue(0);
+        view.setSubtaskFilterValue(0);
+
+        model.filterTasks(
+                view.getSearchTextFieldValue(),
+                view.getPriorityFilterValue(),
+                view.getPercentageFilterMode(),
+                view.getPercentageFilterValue(),
+                view.getCreationChooserFilterMode(),
+                view.getCreationChooserDate(),
+                view.getDeadlineChooserFilterMode(),
+                view.getDeadlineChooserDate(),
+                view.getSelectCategoryFilterValue(),
+                view.getSubtaskFilterValue()
+        );
+
         view.closeFilterDialog();
+        view.updateTaskList(model.getTasksFiltered());
+        view.setActionStatusLabel("");
     }
 }

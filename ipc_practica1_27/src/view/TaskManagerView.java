@@ -20,6 +20,9 @@ import java.util.Date;
 import controller.TaskManagerController;
 import model.enums.RANGE_SELECTIONS;
 
+/**
+ * Clase que representa la vista del Gestor de Tareas
+ */
 public class TaskManagerView extends JFrame {
     private JTextField nameTextField;
     private JLabel nameLabel;
@@ -526,6 +529,87 @@ public class TaskManagerView extends JFrame {
     }
 
     /**
+     * Establece el valor del filtro de prioridad.
+     *
+     * @param indexPrior Indice de la prioridad seleccionada.
+     */
+    public void setPriorityFilterValue(int indexPrior){
+        filterDialogView.setPriorityFilterValue(indexPrior);
+    }
+
+    /**
+     * Establece el valor del filtro de categoría seleccionada.
+     *
+     * @param indexPrior Indice de la categoría seleccionada.
+     */
+    public void setSelectCategoryFilterValue(int indexPrior){
+        filterDialogView.setSelectCategoryFilterValue(indexPrior);
+    }
+
+    /**
+     * Establece el valor del filtro de subtarea.
+     *
+     * @param indexPrior Indice de la subtarea seleccionada.
+     */
+    public void setSubtaskFilterValue(int indexPrior){
+        filterDialogView.setSubtaskFilterValue(indexPrior);
+    }
+
+    /**
+     * Establece el estado del botón de filtro de porcentaje.
+     *
+     * @param mode true para activar el modo sin botón, false en caso contrario.
+     */
+    public void setPercentageFilterNoButton(boolean mode){
+        filterDialogView.setPercentageFilterNoButton(mode);
+    }
+
+    /**
+     * Establece el valor del filtro de porcentaje.
+     *
+     * @param percentage Valor del porcentaje a filtrar.
+     */
+    public void setPercentageFilterValue(int percentage){
+        filterDialogView.setPercentageFilterValue(percentage);
+    }
+
+    /**
+     * Establece el estado del botón de filtro de fecha de creación.
+     *
+     * @param mode true para activar el modo sin botón, false en caso contrario.
+     */
+    public void setCreationDateFilterNoButton(boolean mode){
+        filterDialogView.setCreationDateFilterNoButton(mode);
+    }
+
+    /**
+     * Establece la fecha seleccionada para el filtro de creación.
+     *
+     * @param date Fecha a establecer en el filtro de creación.
+     */
+    public void setCreationFilterChooserDate(Date date) {
+        filterDialogView.setCreationFilterChooserDate(date);
+    }
+
+    /**
+     * Establece el estado del botón de filtro de fecha límite.
+     *
+     * @param mode true para activar el modo sin botón, false en caso contrario.
+     */
+    public void setDeadLineFilterNoButton(boolean mode){
+        filterDialogView.setDeadLineFilterNoButton(mode);
+    }
+
+    /**
+     * Establece la fecha seleccionada para el filtro de fecha límite.
+     *
+     * @param date Fecha a establecer en el filtro de fecha límite.
+     */
+    public void setDeadlineFilterChooserDate(Date date) {
+        filterDialogView.setDeadlineFilterChooserDate(date);
+    }
+
+    /**
      * Obtiene el valor actual del campo de texto para la búsqueda.
      *
      * @return El texto del campo de búsqueda.
@@ -575,6 +659,7 @@ public class TaskManagerView extends JFrame {
         taskListModel = new DefaultListModel<>();
         taskList.setModel(taskListModel);
         taskList.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        headerListTextField.setFont(new Font("Monospaced", Font.PLAIN, 14));
 
         nameInfoTextField.setEditable(false);
         descriptionInfoTextArea.setEditable(false);

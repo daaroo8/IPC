@@ -13,9 +13,9 @@ import controller.TaskManagerController;
 import model.Task;
 import model.enums.RANGE_SELECTIONS;
 
-
-//TODO: reinciar filtros
-
+/**
+ * Clase que representa el dialogo de filtros de la vista
+ */
 public class TaskManagerFilterDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -48,12 +48,22 @@ public class TaskManagerFilterDialog extends JDialog {
 
     private final TaskManagerController taskManagerController;
 
+    /**
+     * Constructor de la clase TaskManagerFilterDialog.
+     *
+     * @param taskManagerController El controlador que gestiona la lógica del gestor de tareas.
+     */
     public TaskManagerFilterDialog(TaskManagerController taskManagerController) {
         initComponents();
 
         this.taskManagerController = taskManagerController;
     }
 
+    /**
+     * Actualiza la lista de categorías en el filtro de tareas.
+     *
+     * @param categories La lista de categorías a mostrar en el filtro.
+     */
     public void updateCategoriesList(ArrayList<String> categories) {
         categoryFilterComboBox.removeAllItems();
 
@@ -63,6 +73,11 @@ public class TaskManagerFilterDialog extends JDialog {
         }
     }
 
+    /**
+     * Actualiza la lista de subtareas en el filtro de tareas.
+     *
+     * @param subtasks La lista de subtareas a mostrar en el filtro.
+     */
     public void updateSubtaskList(ArrayList<Task> subtasks) {
         subtaskFilterComboBox.removeAllItems();
 
@@ -74,6 +89,11 @@ public class TaskManagerFilterDialog extends JDialog {
         }
     }
 
+    /**
+     * Obtiene el valor seleccionado en el filtro de prioridad.
+     *
+     * @return El valor de la prioridad seleccionada o null si no se ha seleccionado ninguna.
+     */
     public String getPriorityFilterValue() {
         if (priorityFilterComboBox.getSelectedItem() == null || priorityFilterComboBox.getSelectedItem().equals(NOT_FILTER_SELECTED_TEXT))
             return null;
@@ -81,6 +101,11 @@ public class TaskManagerFilterDialog extends JDialog {
         return priorityFilterComboBox.getSelectedItem().toString();
     }
 
+    /**
+     * Obtiene el modo de filtro seleccionado para el porcentaje.
+     *
+     * @return El modo de filtro de porcentaje seleccionado (UNTIL, SINCE o NO).
+     */
     public RANGE_SELECTIONS getPercentageFilterMode() {
         if (untilPercentageRadioButton.isSelected()) {
             return RANGE_SELECTIONS.UNTIL;
@@ -92,11 +117,20 @@ public class TaskManagerFilterDialog extends JDialog {
 
         return RANGE_SELECTIONS.NO;
     }
-
+    /**
+     * Obtiene el valor del filtro de porcentaje seleccionado.
+     *
+     * @return El valor actual del slider de porcentaje.
+     */
     public int getPercentageFilterValue() {
         return percentageFilterSlider.getValue();
     }
 
+    /**
+     * Obtiene el modo de filtro seleccionado para la fecha de creación.
+     *
+     * @return El modo de filtro de fecha de creación seleccionado (UNTIL, SINCE o NO).
+     */
     public RANGE_SELECTIONS getCreationChooserFilterMode() {
         if (untilDateCreationRadioButton.isSelected()) {
             return RANGE_SELECTIONS.UNTIL;
@@ -109,6 +143,11 @@ public class TaskManagerFilterDialog extends JDialog {
         return RANGE_SELECTIONS.NO;
     }
 
+    /**
+     * Obtiene la fecha seleccionada en el filtro de fecha de creación.
+     *
+     * @return La fecha de creación seleccionada o null si no se ha seleccionado ninguna.
+     */
     public LocalDate getCreationChooserDate() {
         if (dateCreationChooser.getDate() == null)
             return null;
@@ -116,6 +155,11 @@ public class TaskManagerFilterDialog extends JDialog {
         return dateCreationChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
+    /**
+     * Obtiene el modo de filtro seleccionado para la fecha de vencimiento.
+     *
+     * @return El modo de filtro de fecha de vencimiento seleccionado (UNTIL, SINCE o NO).
+     */
     public RANGE_SELECTIONS getDeadlineChooserFilterMode() {
         if (untilDeadLineRadioButton.isSelected()) {
             return RANGE_SELECTIONS.UNTIL;
@@ -128,6 +172,11 @@ public class TaskManagerFilterDialog extends JDialog {
         return RANGE_SELECTIONS.NO;
     }
 
+    /**
+     * Obtiene la fecha seleccionada en el filtro de fecha de vencimiento.
+     *
+     * @return La fecha de vencimiento seleccionada o null si no se ha seleccionado ninguna.
+     */
     public LocalDate getDeadlineChooserDate() {
         if (deadLineChooser.getDate() == null)
             return null;
@@ -135,6 +184,11 @@ public class TaskManagerFilterDialog extends JDialog {
         return deadLineChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
+    /**
+     * Obtiene el valor seleccionado en el filtro de categoría.
+     *
+     * @return El valor de la categoría seleccionada o null si no se ha seleccionado ninguna opción.
+     */
     public String getSelectCategoryFilterValue() {
         if (categoryFilterComboBox.getSelectedItem() == null || categoryFilterComboBox.getSelectedItem().equals(NOT_FILTER_SELECTED_TEXT))
             return null;
@@ -142,6 +196,11 @@ public class TaskManagerFilterDialog extends JDialog {
         return categoryFilterComboBox.getSelectedItem().toString();
     }
 
+    /**
+     * Obtiene el valor seleccionado en el filtro de subtareas.
+     *
+     * @return El valor de la subtarea seleccionada o null si no se ha seleccionado ninguna opción.
+     */
     public String getSubtaskFilterValue() {
         if (subtaskFilterComboBox.getSelectedItem() == null || subtaskFilterComboBox.getSelectedItem().equals(NOT_FILTER_SELECTED_TEXT))
             return null;
@@ -149,6 +208,102 @@ public class TaskManagerFilterDialog extends JDialog {
         return subtaskFilterComboBox.getSelectedItem().toString();
     }
 
+    /**
+     * Establece el valor del filtro de prioridad seleccionando el índice correspondiente en el combo box.
+     *
+     * @param indexPrior El índice de la prioridad que se debe seleccionar en el combo box.
+     */
+    public void setPriorityFilterValue(int indexPrior) {
+        priorityFilterComboBox.setSelectedIndex(indexPrior);
+    }
+
+    /**
+     * Establece el valor del filtro de categoría seleccionando el índice correspondiente en el combo box.
+     *
+     * @param indexPrior El índice de la categoría que se debe seleccionar en el combo box.
+     */
+    public void setSelectCategoryFilterValue(int indexPrior) {
+        categoryFilterComboBox.setSelectedIndex(indexPrior);
+    }
+
+    /**
+     * Establece el valor del filtro de subtarea seleccionando el índice correspondiente en el combo box.
+     *
+     * @param indexPrior El índice de la subtarea que se debe seleccionar en el combo box.
+     */
+    public void setSubtaskFilterValue(int indexPrior) {
+        subtaskFilterComboBox.setSelectedIndex(indexPrior);
+    }
+
+    /**
+     * Establece el estado del botón de filtro "sin porcentaje", seleccionando o deseleccionando el radio button correspondiente.
+     *
+     * @param mode El estado que debe tener el botón: true para seleccionarlo, false para deseleccionarlo.
+     */
+    public void setPercentageFilterNoButton(boolean mode) {
+        noPercentageRadioButton.setSelected(mode);
+    }
+
+    /**
+     * Establece el estado del botón de filtro "sin fecha límite", seleccionando o deseleccionando el radio button correspondiente.
+     *
+     * @param mode El estado que debe tener el botón: true para seleccionarlo, false para deseleccionarlo.
+     */
+    public void setDeadLineFilterNoButton(boolean mode) {
+        noDeadLineRadioButton.setSelected(mode);
+    }
+
+    /**
+     * Establece la fecha en el selector de fecha para el filtro de fecha de vencimiento.
+     *
+     * @param date La fecha a establecer en el selector de fecha.
+     */
+    public void setDeadlineFilterChooserDate(Date date) {
+        deadLineChooser.setDate(date);
+    }
+
+    /**
+     * Establece el estado del botón de radio para no aplicar el filtro de fecha de creación.
+     *
+     * @param mode El estado (verdadero o falso) para el botón de radio.
+     */
+    public void setCreationDateFilterNoButton(boolean mode) {
+        noDateCreationRadioButton.setSelected(mode);
+    }
+
+    /**
+     * Establece la fecha seleccionada en el selector de fecha de creación.
+     *
+     * @param date La fecha que se desea establecer en el selector de fecha de creación.
+     */
+    public void setCreationFilterChooserDate(Date date) {
+        dateCreationChooser.setDate(date);
+    }
+
+    /**
+     * Establece el estado del botón "sin porcentaje".
+     *
+     * @param mode El estado a establecer: verdadero para seleccionado, falso de lo contrario.
+     */
+    public void setPercentageNoButton(boolean mode) {
+        noDeadLineRadioButton.setSelected(mode);
+    }
+
+    /**
+     * Establece el valor del filtro de porcentaje.
+     *
+     * @param percentage El valor de porcentaje a establecer.
+     */
+    public void setPercentageFilterValue(int percentage) {
+        percentageFilterSlider.setValue(percentage);
+    }
+
+    /**
+     * Inicializa los componentes de la interfaz de usuario para el diálogo de filtros.
+     * Establece las configuraciones predeterminadas y asigna las acciones de los botones.
+     *
+     * @throws RuntimeException Si algún componente es nulo al intentar inicializar.
+     */
     private void initComponents() {
         if (anyComponentIsNull())
             throw new RuntimeException("No se puede inicializar el componente");
@@ -173,6 +328,10 @@ public class TaskManagerFilterDialog extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
 
         buttonReset.addActionListener(new ActionListener() {
+            /**
+             * Acción para el botón de resetear filtros.
+             * Llama al controlador para resetear los filtros aplicados.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 taskManagerController.handleResetFiltersDialog();
@@ -180,6 +339,10 @@ public class TaskManagerFilterDialog extends JDialog {
         });
 
         buttonOK.addActionListener(new ActionListener() {
+            /**
+             * Acción para el botón de aceptar filtros.
+             * Llama al controlador para aplicar los filtros seleccionados.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 taskManagerController.handleAcceptFiltersDialog();
@@ -187,6 +350,10 @@ public class TaskManagerFilterDialog extends JDialog {
         });
 
         buttonCancel.addActionListener(new ActionListener() {
+            /**
+             * Acción para el botón de cancelar filtros.
+             * Llama al controlador para cancelar la selección de filtros y cerrar el diálogo.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 taskManagerController.handleCancelFiltersDialog();
@@ -194,6 +361,11 @@ public class TaskManagerFilterDialog extends JDialog {
         });
     }
 
+    /**
+     * Verifica si algún componente necesario es nulo.
+     *
+     * @return true si algún componente es nulo, false si todos los componentes están inicializados.
+     */
     private boolean anyComponentIsNull() {
         return (
             dateCreationPanel == null ||
