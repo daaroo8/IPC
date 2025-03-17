@@ -587,118 +587,108 @@ public class TaskManagerView extends JFrame {
 
         updatePriorityList();
 
-        /**
-         * Maneja el evento de acción del checkbox de tareas completadas.
-         *
-         * Este evento se dispara cuando el usuario selecciona o deselecciona el checkbox,
-         * y se encarga de llamar al controlador para manejar el cambio de estado de la tarea.
-         */
         completedCheckBox.addActionListener(new ActionListener() {
+            /**
+             * Maneja el evento de acción del checkbox de tareas completadas.
+             * Este evento se dispara cuando el usuario selecciona o deselecciona el checkbox,
+             * y se encarga de llamar al controlador para manejar el cambio de estado de la tarea.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 taskManagerController.handleSelectCheckBoxEvent();
             }
         });
 
-        /**
-         * Maneja el evento de cambio de valor del slider de porcentaje.
-         *
-         * Este evento se dispara cuando el usuario cambia el valor del slider de porcentaje,
-         * y se encarga de llamar al controlador para manejar el cambio en el porcentaje de la tarea.
-         */
         percentageSlider.addChangeListener(new ChangeListener() {
+            /**
+             * Maneja el evento de cambio de valor del slider de porcentaje.
+             * Este evento se dispara cuando el usuario cambia el valor del slider de porcentaje,
+             * y se encarga de llamar al controlador para manejar el cambio en el porcentaje de la tarea.
+             */
             @Override
             public void stateChanged(ChangeEvent e) {
                 taskManagerController.handlePercentageSliderChangeEvent();
             }
         });
 
-        /**
-         * Maneja el evento de acción del botón para agregar una categoría.
-         *
-         * Este evento se dispara cuando el usuario hace clic en el botón de agregar categoría,
-         * y se encarga de llamar al controlador para manejar la adición de una nueva categoría.
-         */
         addCategoryButton.addActionListener(new ActionListener() {
+            /**
+             * Maneja el evento de acción del botón para agregar una categoría.
+             * Este evento se dispara cuando el usuario hace clic en el botón de agregar categoría,
+             * y se encarga de llamar al controlador para manejar la adición de una nueva categoría.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 taskManagerController.handleAddCategoryEvent();
             }
         });
 
-        /**
-         * Maneja el evento de acción del botón de guardar.
-         *
-         * Este evento se dispara cuando el usuario hace clic en el botón de guardar,
-         * y se encarga de llamar al controlador para manejar el evento de guardar los cambios.
-         */
         saveButton.addActionListener(new ActionListener() {
+            /**
+             * Maneja el evento de acción del botón de guardar.
+             * Este evento se dispara cuando el usuario hace clic en el botón de guardar,
+             * y se encarga de llamar al controlador para manejar el evento de guardar los cambios.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 taskManagerController.handleSaveButtonEvent();
-
             }
         });
 
-        /**
-         * Maneja el evento de selección de un ítem en el combo box de categorías.
-         *
-         * Este evento se dispara cuando el usuario selecciona una categoría del combo box,
-         * y se encarga de llamar al controlador para manejar la selección de la categoría.
-         */
         categoryComboBox.addActionListener(new ActionListener() {
+            /**
+             * Maneja el evento de selección de un ítem en el combo box de categorías.
+             * Este evento se dispara cuando el usuario selecciona una categoría del combo box,
+             * y se encarga de llamar al controlador para manejar la selección de la categoría.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 taskManagerController.handleSelectComboBoxEvent();
             }
         });
 
-        /**
-         * Maneja el evento de selección de un ítem en la lista de tareas.
-         *
-         * Este evento se dispara cuando el usuario selecciona una tarea de la lista,
-         * y se encarga de llamar al controlador para manejar la selección de la tarea.
-         */
         taskList.addListSelectionListener(new ListSelectionListener() {
+            /**
+             * Maneja el evento de selección de un ítem en la lista de tareas.
+             * Este evento se dispara cuando el usuario selecciona una tarea de la lista,
+             * y se encarga de llamar al controlador para manejar la selección de la tarea.
+             */
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 taskManagerController.handleSelectTaskEvent();
             }
         });
 
-        /**
-         * Maneja el evento de acción del botón de eliminar.
-         *
-         * Este evento se dispara cuando el usuario hace clic en el botón de eliminar,
-         * y se encarga de llamar al controlador para manejar la eliminación de la tarea seleccionada.
-         */
         deleteButton.addActionListener(new ActionListener() {
+            /**
+             * Maneja el evento de acción del botón de eliminar.
+             * Este evento se dispara cuando el usuario hace clic en el botón de eliminar,
+             * y se encarga de llamar al controlador para manejar la eliminación de la tarea seleccionada.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 taskManagerController.handleDeleteButtonEvent();
             }
         });
 
-        /**
-         * Maneja el evento de acción del botón de editar.
-         *
-         * Este evento se dispara cuando el usuario hace clic en el botón de editar,
-         * y se encarga de llamar al controlador para manejar la edición de la tarea seleccionada.
-         */
         editButton.addActionListener(new ActionListener() {
+            /**
+             * Maneja el evento de acción del botón de editar.
+             * Este evento se dispara cuando el usuario hace clic en el botón de editar,
+             * y se encarga de llamar al controlador para manejar la edición de la tarea seleccionada.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 taskManagerController.handleEditButtonEvent();
             }
         });
 
-        /**
-         * Maneja el evento de escritura en el campo de texto de búsqueda.
-         *
-         * Este evento se dispara cuando el usuario escribe un carácter en el campo de texto de búsqueda,
-         * y se encarga de llamar al controlador para manejar la entrada de búsqueda y filtrar los resultados.
-         */
         searchTextField.addKeyListener(new KeyAdapter() {
+            /**
+             * Maneja el evento de escritura en el campo de texto de búsqueda.
+             * Este evento se dispara cuando el usuario escribe un carácter en el campo de texto de búsqueda,
+             * y se encarga de llamar al controlador para manejar la entrada de búsqueda y filtrar los resultados.
+             */
             @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
@@ -706,13 +696,12 @@ public class TaskManagerView extends JFrame {
             }
         });
 
-        /**
-         * Maneja el evento de acción del botón de filtros.
-         *
-         * Este evento se dispara cuando el usuario hace clic en el botón de filtros,
-         * y se encarga de llamar al controlador para abrir el cuadro de diálogo de filtros.
-         */
         filtersButton.addActionListener(new ActionListener() {
+            /**
+             * Maneja el evento de acción del botón de filtros.
+             * Este evento se dispara cuando el usuario hace clic en el botón de filtros,
+             * y se encarga de llamar al controlador para abrir el cuadro de diálogo de filtros.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 taskManagerController.handleOpenFilterDialogEvent();
