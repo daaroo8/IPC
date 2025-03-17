@@ -3,6 +3,6 @@ package model.enums;
 /**
  * Enum que representa las opciones de selección de rango.
  */
-public enum RANGE_SELECTIONS {
+public enum RangeSelections {
     UNTIL, SINCE, NO
 }

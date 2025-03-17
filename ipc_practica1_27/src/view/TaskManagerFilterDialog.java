@@ -11,7 +11,7 @@ import java.util.Date;
 import com.toedter.calendar.JDateChooser;
 import controller.TaskManagerController;
 import model.Task;
-import model.enums.RANGE_SELECTIONS;
+import model.enums.RangeSelections;
 
 /**
  * Clase que representa el dialogo de filtros de la vista
@@ -106,16 +106,16 @@ public class TaskManagerFilterDialog extends JDialog {
      *
      * @return El modo de filtro de porcentaje seleccionado (UNTIL, SINCE o NO).
      */
-    public RANGE_SELECTIONS getPercentageFilterMode() {
+    public RangeSelections getPercentageFilterMode() {
         if (untilPercentageRadioButton.isSelected()) {
-            return RANGE_SELECTIONS.UNTIL;
+            return RangeSelections.UNTIL;
         }
 
         if (fromPercentageRadioButton.isSelected()) {
-            return RANGE_SELECTIONS.SINCE;
+            return RangeSelections.SINCE;
         }
 
-        return RANGE_SELECTIONS.NO;
+        return RangeSelections.NO;
     }
     /**
      * Obtiene el valor del filtro de porcentaje seleccionado.
@@ -131,16 +131,16 @@ public class TaskManagerFilterDialog extends JDialog {
      *
      * @return El modo de filtro de fecha de creación seleccionado (UNTIL, SINCE o NO).
      */
-    public RANGE_SELECTIONS getCreationChooserFilterMode() {
+    public RangeSelections getCreationChooserFilterMode() {
         if (untilDateCreationRadioButton.isSelected()) {
-            return RANGE_SELECTIONS.UNTIL;
+            return RangeSelections.UNTIL;
         }
 
         if (sinceDateCreationRadioButton.isSelected()) {
-            return RANGE_SELECTIONS.SINCE;
+            return RangeSelections.SINCE;
         }
 
-        return RANGE_SELECTIONS.NO;
+        return RangeSelections.NO;
     }
 
     /**
@@ -160,16 +160,16 @@ public class TaskManagerFilterDialog extends JDialog {
      *
      * @return El modo de filtro de fecha de vencimiento seleccionado (UNTIL, SINCE o NO).
      */
-    public RANGE_SELECTIONS getDeadlineChooserFilterMode() {
+    public RangeSelections getDeadlineChooserFilterMode() {
         if (untilDeadLineRadioButton.isSelected()) {
-            return RANGE_SELECTIONS.UNTIL;
+            return RangeSelections.UNTIL;
         }
 
         if (sinceDeadLineRadioButton.isSelected()) {
-            return RANGE_SELECTIONS.SINCE;
+            return RangeSelections.SINCE;
         }
 
-        return RANGE_SELECTIONS.NO;
+        return RangeSelections.NO;
     }
 
     /**

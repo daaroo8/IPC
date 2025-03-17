@@ -1,7 +1,7 @@
 package view;
 
 import com.toedter.calendar.JDateChooser;
-import model.enums.PRIORITY;
+import model.enums.Priority;
 import model.Task;
 
 import javax.swing.*;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import controller.TaskManagerController;
-import model.enums.RANGE_SELECTIONS;
+import model.enums.RangeSelections;
 
 /**
  * Clase que representa la vista del Gestor de Tareas
@@ -28,7 +28,7 @@ public class TaskManagerView extends JFrame {
     private JLabel nameLabel;
     private JTextArea descriptionTextArea;
     private JLabel descriptionLabel;
-    private JComboBox<PRIORITY> priorityComboBox;
+    private JComboBox<Priority> priorityComboBox;
     private JLabel dateLabel;
     private JLabel priorityLabel;
     private JSlider percentageSlider;
@@ -122,7 +122,7 @@ public class TaskManagerView extends JFrame {
      *
      * @return El modo de filtro de porcentaje.
      */
-    public RANGE_SELECTIONS getPercentageFilterMode() {
+    public RangeSelections getPercentageFilterMode() {
         return filterDialogView.getPercentageFilterMode();
     }
 
@@ -135,7 +135,7 @@ public class TaskManagerView extends JFrame {
         return filterDialogView.getPercentageFilterValue();
     }
 
-    public RANGE_SELECTIONS getCreationChooserFilterMode() {
+    public RangeSelections getCreationChooserFilterMode() {
         return filterDialogView.getCreationChooserFilterMode();
     }
 
@@ -153,7 +153,7 @@ public class TaskManagerView extends JFrame {
      *
      * @return El modo de filtro de la fecha límite.
      */
-    public RANGE_SELECTIONS getDeadlineChooserFilterMode() {
+    public RangeSelections getDeadlineChooserFilterMode() {
         return filterDialogView.getDeadlineChooserFilterMode();
     }
 
@@ -300,7 +300,7 @@ public class TaskManagerView extends JFrame {
      *
      * @return El valor de prioridad seleccionado.
      */
-    public PRIORITY getPriorityValue() {
+    public Priority getPriorityValue() {
         return priorityComboBox.getItemAt(priorityComboBox.getSelectedIndex());
     }
 
@@ -370,7 +370,7 @@ public class TaskManagerView extends JFrame {
     public void updatePriorityList() {
         priorityComboBox.removeAllItems();
 
-        for (PRIORITY p : PRIORITY.values()) {
+        for (Priority p : Priority.values()) {
             priorityComboBox.addItem(p);
         }
     }
@@ -425,7 +425,7 @@ public class TaskManagerView extends JFrame {
      *
      * @param priority El valor de prioridad a establecer en el combo box.
      */
-    public void setPriorityComboBoxValue(PRIORITY priority) {
+    public void setPriorityComboBoxValue(Priority priority) {
         priorityComboBox.setSelectedItem(priority);
     }
 

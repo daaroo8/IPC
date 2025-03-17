@@ -3,7 +3,7 @@ package model.enums;
 /**
  * Enum que representa los estados de una tarea.
  */
-public enum STATUS {
+public enum Status {
     NOT_STARTED, IN_PROGRESS, COMPLETED;
 
     /**

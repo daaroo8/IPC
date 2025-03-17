@@ -3,7 +3,7 @@ package model.enums;
 /**
  * Enum que representa los niveles de prioridad de una tarea.
  */
-public enum PRIORITY {
+public enum Priority {
     LOW, MEDIUM, HIGH;
 
     /**

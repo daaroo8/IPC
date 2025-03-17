@@ -1,7 +1,7 @@
 package model;
 
-import model.enums.PRIORITY;
-import model.enums.STATUS;
+import model.enums.Priority;
+import model.enums.Status;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -34,7 +34,7 @@ public class Task {
      *
      * @return La prioridad de la tarea.
      */
-    public PRIORITY getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
@@ -106,7 +106,7 @@ public class Task {
      *
      * @param priority La prioridad de la tarea.
      */
-    public void setPriority(PRIORITY priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 
@@ -139,7 +139,7 @@ public class Task {
 
     private String name;
     private String description;
-    private PRIORITY priority;
+    private Priority priority;
     private final LocalDate creationDate;
     private LocalDate deadline;
     private int percentage;
@@ -158,7 +158,7 @@ public class Task {
      * @param subtask La subtarea asociada a la tarea.
      * @throws IllegalArgumentException Si el porcentaje no está entre 0 y 100.
      */
-    public Task(String name, String description, PRIORITY priority, LocalDate deadline, int percentage, String category, String subtask) {
+    public Task(String name, String description, Priority priority, LocalDate deadline, int percentage, String category, String subtask) {
         if (isInvalidPercentage(percentage))
             throw new IllegalArgumentException("percentage must be between 0 and 100");
 
@@ -191,14 +191,14 @@ public class Task {
      *
      * @return El estado de la tarea: NOT_STARTED, IN_PROGRESS o COMPLETED.
      */
-    public STATUS getStatus() {
+    public Status getStatus() {
         if (percentage == 0)
-            return STATUS.NOT_STARTED;
+            return Status.NOT_STARTED;
 
         if (percentage == 100)
-            return STATUS.COMPLETED;
+            return Status.COMPLETED;
 
-        return STATUS.IN_PROGRESS;
+        return Status.IN_PROGRESS;
     }
 
     /**

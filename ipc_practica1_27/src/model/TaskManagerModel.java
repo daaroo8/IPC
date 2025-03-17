@@ -1,6 +1,6 @@
 package model;
 
-import model.enums.RANGE_SELECTIONS;
+import model.enums.RangeSelections;
 import view.TaskManagerView;
 
 import java.time.LocalDate;
@@ -193,9 +193,9 @@ public class TaskManagerModel {
     public void filterTasks(
             String searchText,
             String priorityFilterValue,
-            RANGE_SELECTIONS percentageFilterMode, int percentageFilterValue,
-            RANGE_SELECTIONS creationChooserFilterMode, LocalDate creationChooserDate,
-            RANGE_SELECTIONS deadlineChooserFilterMode, LocalDate deadlineChooserDate,
+            RangeSelections percentageFilterMode, int percentageFilterValue,
+            RangeSelections creationChooserFilterMode, LocalDate creationChooserDate,
+            RangeSelections deadlineChooserFilterMode, LocalDate deadlineChooserDate,
             String selectCategoryFilterValue,
             String selectSubTaskFilterValue
     ) {
@@ -222,7 +222,7 @@ public class TaskManagerModel {
      * @param taskPercentage El porcentaje de la tarea a evaluar.
      * @return true si la tarea cumple con el criterio de filtro, de lo contrario false.
      */
-    private boolean filterTaskByPercentage(RANGE_SELECTIONS percentageFilterMode, int percentageFilterValue, int taskPercentage) {
+    private boolean filterTaskByPercentage(RangeSelections percentageFilterMode, int percentageFilterValue, int taskPercentage) {
         return switch (percentageFilterMode) {
             case UNTIL -> percentageFilterValue >= taskPercentage;
             case SINCE -> percentageFilterValue <= taskPercentage;
@@ -238,7 +238,7 @@ public class TaskManagerModel {
      * @param creationDate La fecha de creación de la tarea a evaluar.
      * @return true si la tarea cumple con el criterio de filtro, de lo contrario false.
      */
-    private boolean filterTaskByCreationChooser(RANGE_SELECTIONS creationChooserFilterMode, LocalDate creationChooserDate, LocalDate creationDate) {
+    private boolean filterTaskByCreationChooser(RangeSelections creationChooserFilterMode, LocalDate creationChooserDate, LocalDate creationDate) {
         return switch (creationChooserFilterMode) {
             case UNTIL -> !creationDate.isAfter(creationChooserDate);
             case SINCE -> !creationDate.isBefore(creationChooserDate);
@@ -254,7 +254,7 @@ public class TaskManagerModel {
      * @param deadline La fecha límite de la tarea a evaluar.
      * @return true si la tarea cumple con el criterio de filtro, de lo contrario false.
      */
-    private boolean filterTaskByDeadlineChooser(RANGE_SELECTIONS deadlineChooserFilterMode, LocalDate deadlineChooserDate, LocalDate deadline) {
+    private boolean filterTaskByDeadlineChooser(RangeSelections deadlineChooserFilterMode, LocalDate deadlineChooserDate, LocalDate deadline) {
         return switch (deadlineChooserFilterMode) {
             case UNTIL -> !deadline.isAfter(deadlineChooserDate);
             case SINCE -> !deadline.isBefore(deadlineChooserDate);
