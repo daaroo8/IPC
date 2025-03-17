@@ -13,6 +13,9 @@ import controller.TaskManagerController;
 import model.Task;
 import model.enums.RANGE_SELECTIONS;
 
+
+//TODO: reinciar filtros
+
 public class TaskManagerFilterDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -35,6 +38,7 @@ public class TaskManagerFilterDialog extends JDialog {
     private JRadioButton noPercentageRadioButton;
     private JRadioButton noDateCreationRadioButton;
     private JRadioButton noDeadLineRadioButton;
+    private JButton buttonReset;
     private JDateChooser dateCreationChooser;
     private JDateChooser deadLineChooser;
 
@@ -168,6 +172,13 @@ public class TaskManagerFilterDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
+        buttonReset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                taskManagerController.handleResetFiltersDialog();
+            }
+        });
+
         buttonOK.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -188,7 +199,8 @@ public class TaskManagerFilterDialog extends JDialog {
             dateCreationPanel == null ||
             deadLinePanel == null ||
             buttonOK == null ||
-            buttonCancel == null
+            buttonCancel == null ||
+            buttonReset == null
         );
     }
 }

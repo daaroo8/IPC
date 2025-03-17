@@ -193,4 +193,9 @@ public class TaskManagerController {
     public void handleCancelFiltersDialog() {
         view.closeFilterDialog();
     }
+
+    public void handleResetFiltersDialog() {
+        //TODO: resetear filtros
+        view.closeFilterDialog();
+    }
 }
