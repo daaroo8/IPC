@@ -2,15 +2,7 @@ package controller;
 
 import model.Task;
 import model.TaskManagerModel;
-import view.TaskManagerFilterDialog;
 import view.TaskManagerView;
-
-// TODO: cuando se da a editar una tarea, y sin tocar nada, deberia no hacer nada, y sale el error de que
-// TODO: ya existe
-
-// TODO: no se como poner el mensaje de actionStatusLabel cuando se esta creando por primera vez la tarea
-
-//TODO: quitar el actionStatusLabel cuando se termine de buscar, filtrar...
 
 public class TaskManagerController {
     private final TaskManagerView view;
@@ -22,14 +14,9 @@ public class TaskManagerController {
     }
 
     public void handleOpenFilterDialogEvent(){
-        view.setActionStatusLabel("Filtrando...");
-
-        TaskManagerFilterDialog filterDialog = new TaskManagerFilterDialog();
-        filterDialog.pack();
-        filterDialog.setLocationRelativeTo(null);
-        filterDialog.setVisible(true);
-
+        view.showFilterDialog();
     }
+
     public void handleSelectCheckBoxEvent() {
         if (view.getCheckBoxSelected()) {
             view.setPercentageSliderValue(view.getMaximumPercentageSliderValue());
@@ -49,7 +36,7 @@ public class TaskManagerController {
         String newCategory = view.getAddCategoryTextFieldValue();
 
         if (!model.isValidCategoryToAdd(newCategory)) {
-            view.showErrorModal("La categoría: '" + newCategory + "' ya existe.");
+            view.showErrorModal("La categoría: '" + newCategory + "' ya existe o supera los caracteres máximos (10).");
             return;
         }
 
@@ -82,7 +69,7 @@ public class TaskManagerController {
         view.setActionStatusLabel("Tarea '" + view.getNameTextFieldValue() + "' guardada.");
         Task newTask = new Task(view.getNameTextFieldValue(), view.getDescriptionTextAreaValue(), view.getPriorityValue(), view.getDateValue(), view.getPercentageSliderValue(), view.getSelectedCategory(), view.getSelectedSubTask());
 
-        if (!model.isValidTask(newTask) && model.getTaskEditing() != null) {
+        if (!model.isValidTask(newTask) && model.getTaskEditing() == null) {
             view.showErrorModal("La tarea: '" + view.getNameTextFieldValue() + "' ya existe.");
             return;
         }
@@ -157,13 +144,53 @@ public class TaskManagerController {
     }
 
     public void handleKeyTypedSearchInputEvent(char newCharacter) {
-        if (Character.isLetter(newCharacter)) {
-            model.filterTasks(view.getSearchTextFieldValue() + newCharacter);
-        } else {
-            model.filterTasks(view.getSearchTextFieldValue());
+        view.setActionStatusLabel("Buscando...");
+
+        String newTextFilterValue = view.getSearchTextFieldValue();
+
+        if (Character.isLetter(newCharacter) || Character.isDigit(newCharacter)) {
+            newTextFilterValue += newCharacter;
         }
 
+        model.filterTasks(
+                newTextFilterValue,
+                view.getPriorityFilterValue(),
+                view.getPercentageFilterMode(),
+                view.getPercentageFilterValue(),
+                view.getCreationChooserFilterMode(),
+                view.getCreationChooserDate(),
+                view.getDeadlineChooserFilterMode(),
+                view.getDeadlineChooserDate(),
+                view.getSelectCategoryFilterValue(),
+                view.getSubtaskFilterValue()
+        );
+
         view.updateTaskList(model.getTasksFiltered());
+        view.setActionStatusLabel("");
+    }
+
+    public void handleAcceptFiltersDialog() {
         view.setActionStatusLabel("Buscando...");
+
+        model.filterTasks(
+                view.getSearchTextFieldValue(),
+                view.getPriorityFilterValue(),
+                view.getPercentageFilterMode(),
+                view.getPercentageFilterValue(),
+                view.getCreationChooserFilterMode(),
+                view.getCreationChooserDate(),
+                view.getDeadlineChooserFilterMode(),
+                view.getDeadlineChooserDate(),
+                view.getSelectCategoryFilterValue(),
+                view.getSubtaskFilterValue()
+        );
+
+        view.closeFilterDialog();
+        view.updateTaskList(model.getTasksFiltered());
+        view.setActionStatusLabel("");
+    }
+
+    public void handleCancelFiltersDialog() {
+        view.closeFilterDialog();
     }
 }

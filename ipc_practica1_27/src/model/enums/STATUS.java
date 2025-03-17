@@ -1,4 +1,4 @@
-package model;
+package model.enums;
 
 public enum STATUS {
     NOT_STARTED, IN_PROGRESS, COMPLETED;

@@ -1,7 +1,7 @@
 package view;
 
 import com.toedter.calendar.JDateChooser;
-import model.PRIORITY;
+import model.enums.PRIORITY;
 import model.Task;
 
 import javax.swing.*;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import controller.TaskManagerController;
+import model.enums.RANGE_SELECTIONS;
 
 public class TaskManagerView extends JFrame {
     private JTextField nameTextField;
@@ -72,12 +73,61 @@ public class TaskManagerView extends JFrame {
 
     public static final String SELECT_CATEGORY_PLACEHOLDER = "Seleccionar opción";
     public static final String SELECT_NOT_SUBTASK_PLACEHOLDER = "No es subtarea";
+    public static final int DEFAULT_PERCENTAGE = 50;
 
     private final TaskManagerController taskManagerController;
+    private final TaskManagerFilterDialog filterDialogView;
 
     public TaskManagerView() {
         initComponents();
         taskManagerController = new TaskManagerController(this);
+        filterDialogView = new TaskManagerFilterDialog(taskManagerController);
+    }
+
+    public void showFilterDialog() {
+        filterDialogView.pack();
+        filterDialogView.setLocationRelativeTo(null);
+        filterDialogView.setVisible(true);
+    }
+
+    public void closeFilterDialog() {
+        filterDialogView.setVisible(false);
+    }
+
+    public String getPriorityFilterValue() {
+        return filterDialogView.getPriorityFilterValue();
+    }
+
+    public RANGE_SELECTIONS getPercentageFilterMode() {
+        return filterDialogView.getPercentageFilterMode();
+    }
+
+    public int getPercentageFilterValue() {
+        return filterDialogView.getPercentageFilterValue();
+    }
+
+    public RANGE_SELECTIONS getCreationChooserFilterMode() {
+        return filterDialogView.getCreationChooserFilterMode();
+    }
+
+    public LocalDate getCreationChooserDate() {
+        return filterDialogView.getCreationChooserDate();
+    }
+
+    public RANGE_SELECTIONS getDeadlineChooserFilterMode() {
+        return filterDialogView.getDeadlineChooserFilterMode();
+    }
+
+    public LocalDate getDeadlineChooserDate() {
+        return filterDialogView.getDeadlineChooserDate();
+    }
+
+    public String getSelectCategoryFilterValue() {
+        return filterDialogView.getSelectCategoryFilterValue();
+    }
+
+    public String getSubtaskFilterValue() {
+        return filterDialogView.getSubtaskFilterValue();
     }
 
     public boolean getCheckBoxSelected() {
@@ -132,9 +182,7 @@ public class TaskManagerView extends JFrame {
     }
 
     public PRIORITY getPriorityValue() {
-        // TODO: esto habrá que mirarlo
-        //return Task.PRIORITY.valueOf((String) priorityComboBox.getSelectedItem());
-        return PRIORITY.valueOf("HIGH");
+        return priorityComboBox.getItemAt(priorityComboBox.getSelectedIndex());
     }
 
     public void restartTaskTextFields() {
@@ -142,7 +190,7 @@ public class TaskManagerView extends JFrame {
         descriptionTextArea.setText("");
         dateChooser.setDate(new Date());
         priorityComboBox.setSelectedIndex(0);
-        percentageSlider.setValue(50);
+        percentageSlider.setValue(TaskManagerView.DEFAULT_PERCENTAGE);
         categoryComboBox.setSelectedIndex(0);
         subtaskComboBox.setSelectedIndex(0);
     }
@@ -163,6 +211,8 @@ public class TaskManagerView extends JFrame {
         for (String category : categories) {
             categoryComboBox.addItem(category);
         }
+
+        filterDialogView.updateCategoriesList(categories);
     }
 
     public void updateSubtasksList(ArrayList<Task> subtasks) {
@@ -172,6 +222,16 @@ public class TaskManagerView extends JFrame {
 
         for (Task subtask : subtasks) {
             subtaskComboBox.addItem(subtask.getName());
+        }
+
+        filterDialogView.updateSubtaskList(subtasks);
+    }
+
+    public void updatePriorityList() {
+        priorityComboBox.removeAllItems();
+
+        for (PRIORITY p : PRIORITY.values()) {
+            priorityComboBox.addItem(p);
         }
     }
 
@@ -247,10 +307,6 @@ public class TaskManagerView extends JFrame {
         return searchTextField.getText();
     }
 
-    public void showErrorModal(String title, String message) {
-        JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
-    }
-
     public void showErrorModal(String message) {
         JOptionPane.showMessageDialog(null, message, "¡Error!", JOptionPane.ERROR_MESSAGE);
     }
@@ -259,34 +315,10 @@ public class TaskManagerView extends JFrame {
         actionStatusLabel.setText(str);
     }
 
-    /**
-     * Consulta si la tarea a añadir, ya ha sido añadida previamente
-     *
-     * @return true: en caso de que ya exista
-     * false: en caso de que no
-     */
-    public boolean isRepeatedTask() {
-        for (int i = 0; i < subtaskComboBox.getItemCount(); i++) {
-            if (subtaskComboBox.getItemAt(i).equals(nameTextField.getText())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Gestor de tareas");
-        frame.setContentPane(new TaskManagerView().mainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
     private void initComponents() {
-        if (anyComponentIsNull()) {
-            return;
-        }
+        if (anyComponentIsNull())
+            throw new RuntimeException("No se puede inicializar el componente");
+
 
         dateChooser = new JDateChooser();
         dateChooser.setDateFormatString("dd/MM/yyyy");
@@ -295,11 +327,8 @@ public class TaskManagerView extends JFrame {
         calendarPanel.add(dateChooser, BorderLayout.CENTER);
 
         mainPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
-        mainPanel.setBackground(Color.CYAN);
+        leftPanel.setBorder(new EmptyBorder(0, 0, 0, 30));
         rightTopPanel.setBorder(new EmptyBorder(0, 0, 30, 0));
-        rightTopPanel.setBackground(Color.CYAN);
-
-        leftPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
 
         taskListModel = new DefaultListModel<>();
         taskList.setModel(taskListModel);
@@ -313,6 +342,8 @@ public class TaskManagerView extends JFrame {
         deadLineInfoFormattedTextField.setEditable(false);
         priorityInfoTextField.setEditable(false);
         headerListTextField.setEditable(false);
+
+        updatePriorityList();
 
         completedCheckBox.addActionListener(new ActionListener() {
             @Override
@@ -342,7 +373,6 @@ public class TaskManagerView extends JFrame {
 
             }
         });
-
 
         categoryComboBox.addActionListener(new ActionListener() {
             @Override
@@ -391,29 +421,36 @@ public class TaskManagerView extends JFrame {
 
     private boolean anyComponentIsNull() {
         return (
-                mainPanel == null ||
-                rightTopPanel == null ||
-                leftPanel == null ||
-                calendarPanel == null ||
-                taskList == null ||
-                nameInfoTextField == null ||
-                descriptionInfoTextArea == null ||
-                categoryInfoTextField == null ||
-                subtaskInfoTextField == null ||
-                dateCreationInfoFormattedTextField == null ||
-                deadLineInfoFormattedTextField == null ||
-                priorityInfoTextField == null ||
-                headerListTextField == null ||
-                completedCheckBox == null ||
-                percentageSlider == null ||
-                addCategoryButton == null ||
-                saveButton == null ||
-                categoryComboBox == null ||
-                deleteButton == null ||
-                editButton == null ||
-                searchTextField == null ||
-                filtersButton == null
+            mainPanel == null ||
+            rightTopPanel == null ||
+            leftPanel == null ||
+            calendarPanel == null ||
+            taskList == null ||
+            nameInfoTextField == null ||
+            descriptionInfoTextArea == null ||
+            categoryInfoTextField == null ||
+            subtaskInfoTextField == null ||
+            dateCreationInfoFormattedTextField == null ||
+            deadLineInfoFormattedTextField == null ||
+            priorityInfoTextField == null ||
+            headerListTextField == null ||
+            completedCheckBox == null ||
+            percentageSlider == null ||
+            addCategoryButton == null ||
+            saveButton == null ||
+            categoryComboBox == null ||
+            deleteButton == null ||
+            editButton == null ||
+            searchTextField == null ||
+            filtersButton == null
         );
+    }
 
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Gestor de tareas");
+        frame.setContentPane(new TaskManagerView().mainPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
     }
 }

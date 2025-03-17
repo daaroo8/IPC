@@ -1,5 +1,6 @@
 package model;
 
+import model.enums.RANGE_SELECTIONS;
 import view.TaskManagerView;
 
 import java.time.LocalDate;
@@ -52,7 +53,7 @@ public class TaskManagerModel {
     }
 
     public boolean isValidCategoryToAdd(String category) {
-        return !categories.contains(category) && category.length() <= 10;
+        return !categories.contains(category) && !category.isEmpty() && category.length() <= 10;
     }
 
     public boolean isValidName(String name) {
@@ -95,12 +96,52 @@ public class TaskManagerModel {
         return tasks;
     }
 
-    public void filterTasks(String searchText) {
+    public void filterTasks(
+            String searchText,
+            String priorityFilterValue,
+            RANGE_SELECTIONS percentageFilterMode, int percentageFilterValue,
+            RANGE_SELECTIONS creationChooserFilterMode, LocalDate creationChooserDate,
+            RANGE_SELECTIONS deadlineChooserFilterMode, LocalDate deadlineChooserDate,
+            String selectCategoryFilterValue,
+            String selectSubTaskFilterValue
+    ) {
         tasksFiltered.clear();
         for (Task task : tasks) {
-            if (task.getName().toLowerCase().contains(searchText.toLowerCase()) || task.getDescription().toLowerCase().contains(searchText.toLowerCase()))
+            if ((task.getName().toLowerCase().contains(searchText.toLowerCase()) || task.getDescription().toLowerCase().contains(searchText.toLowerCase())) &&
+                    (priorityFilterValue == null || task.getPriority().toString().equals(priorityFilterValue)) &&
+                    filterTaskByPercentage(percentageFilterMode, percentageFilterValue, task.getPercentage()) &&
+                    filterTaskByCreationChooser(creationChooserFilterMode, creationChooserDate, task.getCreationDate()) &&
+                    filterTaskByDeadlineChooser(deadlineChooserFilterMode, deadlineChooserDate, task.getDeadline()) &&
+                    (selectCategoryFilterValue == null || task.getCategory().equals(selectCategoryFilterValue)) &&
+                    (selectSubTaskFilterValue == null || task.getSubtask().equals(selectSubTaskFilterValue))
+            ) {
                 tasksFiltered.add(task);
+            }
         }
+    }
+
+    private boolean filterTaskByPercentage(RANGE_SELECTIONS percentageFilterMode, int percentageFilterValue, int taskPercentage) {
+        return switch (percentageFilterMode) {
+            case UNTIL -> percentageFilterValue >= taskPercentage;
+            case SINCE -> percentageFilterValue <= taskPercentage;
+            case NO -> true;
+        };
+    }
+
+    private boolean filterTaskByCreationChooser(RANGE_SELECTIONS creationChooserFilterMode, LocalDate creationChooserDate, LocalDate creationDate) {
+        return switch (creationChooserFilterMode) {
+            case UNTIL -> !creationDate.isAfter(creationChooserDate);
+            case SINCE -> !creationDate.isBefore(creationChooserDate);
+            case NO -> true;
+        };
+    }
+
+    private boolean filterTaskByDeadlineChooser(RANGE_SELECTIONS deadlineChooserFilterMode, LocalDate deadlineChooserDate, LocalDate deadline) {
+        return switch (deadlineChooserFilterMode) {
+            case UNTIL -> !deadline.isAfter(deadlineChooserDate);
+            case SINCE -> !deadline.isBefore(deadlineChooserDate);
+            case NO -> true;
+        };
     }
 
     public ArrayList<Task> getTasksFiltered() {
