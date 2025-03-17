@@ -155,6 +155,11 @@ public class TaskManagerController {
      * Maneja el evento de eliminar una tarea.
      */
     public void handleDeleteButtonEvent() {
+        if (view.getTaskSelected() == null) {
+            view.showErrorModal("Selecciona una tarea para eliminar.");
+            return;
+        }
+
         view.setActionStatusLabel("Tarea '" + view.getTaskSelected().getName() + "' borrada.");
 
         model.removeTask(view.getTaskSelected());
@@ -166,6 +171,11 @@ public class TaskManagerController {
      * Maneja el evento de editar una tarea.
      */
     public void handleEditButtonEvent() {
+        if (view.getTaskSelected() == null) {
+            view.showErrorModal("Debes seleccionar una tarea para poder editarla.");
+            return;
+        }
+        
         model.setTaskEditing(view.getTaskSelected());
 
         view.setNameTextFieldValue(model.getTaskEditing().getName());
@@ -244,7 +254,7 @@ public class TaskManagerController {
      * Maneja el evento de resetear los filtros en el diálogo.
      */
     public void handleResetFiltersDialog() {
-        view.setActionStatusLabel("Resetando filtros...");
+        view.setActionStatusLabel("Reiniciando filtros...");
 
         view.setPriorityFilterValue(0);
         view.setPercentageFilterNoButton(true);
