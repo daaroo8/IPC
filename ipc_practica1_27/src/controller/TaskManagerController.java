@@ -67,7 +67,7 @@ public class TaskManagerController {
             return;
         }
         view.setActionStatusLabel("Tarea '" + view.getNameTextFieldValue() + "' guardada.");
-        Task newTask = new Task(view.getNameTextFieldValue(), view.getDescriptionTextAreaValue(), view.getPriorityValue(), view.getDateValue(), view.getPercentageSliderValue(), view.getSelectedCategory(), view.getSelectedSubTask());
+        Task newTask = new Task(view.getNameTextFieldValue().trim(), view.getDescriptionTextAreaValue().trim(), view.getPriorityValue(), view.getDateValue(), view.getPercentageSliderValue(), view.getSelectedCategory(), view.getSelectedSubTask());
 
         if (!model.isValidTask(newTask) && model.getTaskEditing() == null) {
             view.showErrorModal("La tarea: '" + view.getNameTextFieldValue() + "' ya existe.");
