@@ -80,7 +80,7 @@ public class TaskManagerModel {
 
     public boolean isValidTask(Task task) {
         for (Task t : tasks) {
-            if (t.getName().equals(task.getName())) {
+            if (t.getName().equals(task.getName().trim())) {
                 return false;
             }
         }
