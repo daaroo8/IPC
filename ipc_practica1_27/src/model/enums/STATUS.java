@@ -10,6 +10,5 @@ public enum STATUS {
             case IN_PROGRESS -> "En progreso";
             case COMPLETED -> "Completada";
         };
-
     }
 }
