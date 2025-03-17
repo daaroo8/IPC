@@ -47,7 +47,7 @@ public class TaskManagerController {
     }
 
     public void handleSaveButtonEvent() {
-        if (!model.isValidName(view.getNameTextFieldValue())) {
+        if (!model.isValidName(view.getNameTextFieldValue().trim())) {
             view.showErrorModal("El nombre debe tener entre 1 y 10 caracteres.");
             return;
         }
