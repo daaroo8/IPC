@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
 public class PrincipalMenuView {
     private JPanel mainPanel;
@@ -15,9 +16,9 @@ public class PrincipalMenuView {
     private JButton gestionarListasButton;
 
     public PrincipalMenuView() {
-        // Agregar padding (10 píxeles en cada lado)
-        taskManagerPanel.setBorder(new EmptyBorder(50, 50, 50, 50));
-        listManagerPanel.setBorder(new EmptyBorder(50, 50, 50, 50));
+        // Reducir padding para evitar exceso de espacio
+        taskManagerPanel.setBorder(new EmptyBorder(50, 50, 50, 10)); // Padding más pequeño
+        listManagerPanel.setBorder(new EmptyBorder(50, 10, 50, 50)); // Padding más pequeño
     }
 
     public static void main(String[] args) {
@@ -25,6 +26,7 @@ public class PrincipalMenuView {
         frame.setContentPane(new PrincipalMenuView().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }
