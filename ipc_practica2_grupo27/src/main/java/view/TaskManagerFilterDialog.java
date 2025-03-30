@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
@@ -39,6 +40,10 @@ public class TaskManagerFilterDialog extends JDialog {
     private JRadioButton noDateCreationRadioButton;
     private JRadioButton noDeadLineRadioButton;
     private JButton buttonReset;
+    private JPanel mainPanel;
+    private JPanel dialogPanel;
+    private JPanel leftPanel;
+    private JPanel rightPanel;
     private JDateChooser dateCreationChooser;
     private JDateChooser deadLineChooser;
 
@@ -323,6 +328,11 @@ public class TaskManagerFilterDialog extends JDialog {
         deadLinePanel.setLayout(new BorderLayout());
         deadLinePanel.add(deadLineChooser, BorderLayout.CENTER);
 
+        mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        dialogPanel.setBorder(new EmptyBorder(20, 20, 0, 20));
+        leftPanel.setBorder(new EmptyBorder(0, 0, 0, 10));
+        rightPanel.setBorder(new EmptyBorder(0, 10, 0, 0));
+
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -369,6 +379,10 @@ public class TaskManagerFilterDialog extends JDialog {
     private boolean anyComponentIsNull() {
         return (
                 dateCreationPanel == null ||
+                        dialogPanel == null ||
+                        mainPanel == null ||
+                        rightPanel == null ||
+                        leftPanel == null ||
                         deadLinePanel == null ||
                         buttonOK == null ||
                         buttonCancel == null ||

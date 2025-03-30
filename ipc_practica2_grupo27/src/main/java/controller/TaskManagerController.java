@@ -87,10 +87,6 @@ public class TaskManagerController {
             return;
         }
 
-        if (!model.isValidCategory(view.getSelectedCategory())) {
-            view.showErrorModal("Seleccione la categoría.");
-            return;
-        }
         view.setActionStatusLabel("Tarea '" + view.getNameTextFieldValue() + "' guardada.");
         Task newTask = new Task(view.getNameTextFieldValue().trim(), view.getDescriptionTextAreaValue().trim(), view.getPriorityValue(), view.getDateValue(), view.getPercentageSliderValue(), view.getSelectedCategory(), view.getSelectedSubTask());
 

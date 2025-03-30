@@ -133,16 +133,6 @@ public class TaskManagerModel {
     }
 
     /**
-     * Verifica si la categoría seleccionada es válida.
-     *
-     * @param category La categoría a verificar.
-     * @return true si la categoría no es nula y no es el marcador de selección predeterminado, de lo contrario false.
-     */
-    public boolean isValidCategory(String category) {
-        return category != null && !category.equals(TaskManagerView.SELECT_CATEGORY_PLACEHOLDER);
-    }
-
-    /**
      * Verifica si una tarea es válida para ser agregada.
      *
      * @param task La tarea a verificar.

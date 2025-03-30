@@ -74,7 +74,6 @@ public class TaskManagerView extends JFrame {
     private JLabel actionStatusLabel;
     private JDateChooser dateChooser;
 
-    public static final String SELECT_CATEGORY_PLACEHOLDER = "Seleccionar opción";
     public static final String SELECT_NOT_SUBTASK_PLACEHOLDER = "No es subtarea";
     public static final int DEFAULT_PERCENTAGE = 50;
 
@@ -95,6 +94,7 @@ public class TaskManagerView extends JFrame {
      */
     public void showFilterDialog() {
         filterDialogView.pack();
+        filterDialogView.setResizable(false);
         filterDialogView.setLocationRelativeTo(null);
         filterDialogView.setVisible(true);
     }
@@ -338,12 +338,10 @@ public class TaskManagerView extends JFrame {
     public void updateCategoriesList(ArrayList<String> categories) {
         categoryComboBox.removeAllItems();
 
-        categoryComboBox.addItem(TaskManagerView.SELECT_CATEGORY_PLACEHOLDER);
-
         for (String category : categories) {
             categoryComboBox.addItem(category);
         }
-
+        System.out.println(categories.size());
         filterDialogView.updateCategoriesList(categories);
     }
 
@@ -649,9 +647,9 @@ public class TaskManagerView extends JFrame {
         dateChooser = new JDateChooser();
         dateChooser.setDateFormatString("dd/MM/yyyy");
         dateChooser.setDate(new Date());
+        dateChooser.getDateEditor().getUiComponent().setFocusable(false);
         calendarPanel.setLayout(new BorderLayout());
         calendarPanel.add(dateChooser, BorderLayout.CENTER);
-
         mainPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
         leftPanel.setBorder(new EmptyBorder(0, 0, 0, 30));
         rightTopPanel.setBorder(new EmptyBorder(0, 0, 30, 0));
@@ -669,6 +667,11 @@ public class TaskManagerView extends JFrame {
         deadLineInfoFormattedTextField.setEditable(false);
         priorityInfoTextField.setEditable(false);
         headerListTextField.setEditable(false);
+        descriptionTextArea.setLineWrap(true);
+        descriptionTextArea.setWrapStyleWord(true);
+        descriptionTextArea.setPreferredSize(new Dimension(300, 50));
+        descriptionTextArea.setMinimumSize(new Dimension(300, 50));
+        descriptionTextArea.setMaximumSize(new Dimension(300, 50));
 
         updatePriorityList();
 
@@ -808,6 +811,7 @@ public class TaskManagerView extends JFrame {
                         taskList == null ||
                         nameInfoTextField == null ||
                         descriptionInfoTextArea == null ||
+                        descriptionTextArea == null ||
                         categoryInfoTextField == null ||
                         subtaskInfoTextField == null ||
                         dateCreationInfoFormattedTextField == null ||
@@ -830,7 +834,9 @@ public class TaskManagerView extends JFrame {
         JFrame frame = new JFrame("Gestor de tareas");
         frame.setContentPane(new TaskManagerView().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
+        frame.setMinimumSize(new Dimension(1400, 800));
+        frame.setSize(frame.getMinimumSize());
+//        frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
