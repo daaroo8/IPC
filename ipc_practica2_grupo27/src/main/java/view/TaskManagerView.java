@@ -313,7 +313,7 @@ public class TaskManagerView extends JFrame {
         dateChooser.setDate(new Date());
         priorityComboBox.setSelectedIndex(0);
         percentageSlider.setValue(TaskManagerView.DEFAULT_PERCENTAGE);
-        categoryComboBox.setSelectedIndex(0);
+//        categoryComboBox.setSelectedIndex(0);
         subtaskComboBox.setSelectedIndex(0);
     }
 
@@ -339,10 +339,14 @@ public class TaskManagerView extends JFrame {
         categoryComboBox.removeAllItems();
 
         for (String category : categories) {
+
             categoryComboBox.addItem(category);
         }
-        System.out.println(categories.size());
+
         filterDialogView.updateCategoriesList(categories);
+
+        categoryComboBox.revalidate();
+        categoryComboBox.repaint();
     }
 
     /**
