@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
@@ -44,12 +45,28 @@ public class TaskManagerFilterDialog extends JDialog {
     private JPanel dialogPanel;
     private JPanel leftPanel;
     private JPanel rightPanel;
+    private JLabel priorityLabel;
+    private JLabel dateCreationLabel;
+    private JLabel deadLineLabel;
+    private JLabel subtaskLabel;
+    private JLabel categoryLabel;
+    private JLabel percentajeLabel;
+    private JPanel priorityPanel;
+    private JPanel dateCreationPanelBackGround;
+    private JPanel deadLinePanelBackGround;
+    private JPanel percentagePanel;
+    private JPanel categoryPanel;
+    private JPanel subTaskPanel;
+    private JPanel buttonsPanel;
     private JDateChooser dateCreationChooser;
     private JDateChooser deadLineChooser;
 
     public static final String SELECT_CATEGORY_PLACEHOLDER = "Seleccionar opción";
     public static final String SELECT_NOT_SUBTASK_PLACEHOLDER = "No es subtarea";
     public static final String NOT_FILTER_SELECTED_TEXT = "No";
+    private static final Color BACKGROUND_COLOR = new Color(161, 197, 255);
+    private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
+    private static final Color ELEMENTS_COLOR = new Color(231, 240, 253);
 
     private final TaskManagerController taskManagerController;
 
@@ -60,8 +77,79 @@ public class TaskManagerFilterDialog extends JDialog {
      */
     public TaskManagerFilterDialog(TaskManagerController taskManagerController) {
         initComponents();
-
         this.taskManagerController = taskManagerController;
+    }
+
+    public void initColors() {
+        contentPane.setBackground(BACKGROUND_COLOR);
+        buttonOK.setBackground(ELEMENTS_COLOR);
+        buttonCancel.setBackground(ELEMENTS_COLOR);
+        buttonReset.setBackground(ELEMENTS_COLOR);
+        priorityFilterComboBox.setBackground(ELEMENTS_COLOR);
+        percentageFilterSlider.setBackground(BACKGROUND_COLOR);
+        percentageFilterSlider.setForeground(FOREGROUND_COLOR);
+        categoryFilterComboBox.setBackground(ELEMENTS_COLOR);
+        subtaskFilterComboBox.setBackground(ELEMENTS_COLOR);
+        dateCreationPanel.setBackground(BACKGROUND_COLOR);
+        deadLinePanel.setBackground(BACKGROUND_COLOR);
+        sinceDateCreationPanel.setBackground(BACKGROUND_COLOR);
+        sinceDeadLinePanel.setBackground(BACKGROUND_COLOR);
+        fromPercentagePanel.setBackground(BACKGROUND_COLOR);
+        untilPercentageRadioButton.setBackground(BACKGROUND_COLOR);
+        untilPercentageRadioButton.setForeground(FOREGROUND_COLOR);
+        untilPercentageRadioButton.setBorder(new LineBorder(FOREGROUND_COLOR, 2));
+        fromPercentageRadioButton.setBackground(BACKGROUND_COLOR);
+        fromPercentageRadioButton.setForeground(FOREGROUND_COLOR);
+        fromPercentageRadioButton.setBorder(new LineBorder(FOREGROUND_COLOR, 2));
+        untilDateCreationRadioButton.setBackground(BACKGROUND_COLOR);
+        untilDateCreationRadioButton.setForeground(FOREGROUND_COLOR);
+        untilDateCreationRadioButton.setBorder(new LineBorder(FOREGROUND_COLOR, 2));
+        sinceDateCreationRadioButton.setBackground(BACKGROUND_COLOR);
+        sinceDateCreationRadioButton.setForeground(FOREGROUND_COLOR);
+        sinceDateCreationRadioButton.setBorder(new LineBorder(FOREGROUND_COLOR, 2));
+        untilDeadLineRadioButton.setBackground(BACKGROUND_COLOR);
+        untilDeadLineRadioButton.setForeground(FOREGROUND_COLOR);
+        untilDeadLineRadioButton.setBorder(new LineBorder(FOREGROUND_COLOR, 2));
+        sinceDeadLineRadioButton.setBackground(BACKGROUND_COLOR);
+        sinceDeadLineRadioButton.setForeground(FOREGROUND_COLOR);
+        sinceDeadLineRadioButton.setBorder(new LineBorder(FOREGROUND_COLOR, 2));
+        noPercentageRadioButton.setBackground(BACKGROUND_COLOR);
+        noPercentageRadioButton.setForeground(FOREGROUND_COLOR);
+        noPercentageRadioButton.setBorder(new LineBorder(FOREGROUND_COLOR, 2));
+        noDateCreationRadioButton.setBackground(BACKGROUND_COLOR);
+        noDateCreationRadioButton.setForeground(FOREGROUND_COLOR);
+        noDateCreationRadioButton.setBorder(new LineBorder(FOREGROUND_COLOR, 2));
+        noDeadLineRadioButton.setBackground(BACKGROUND_COLOR);
+        noDeadLineRadioButton.setForeground(FOREGROUND_COLOR);
+        mainPanel.setBackground(BACKGROUND_COLOR);
+        dialogPanel.setBackground(BACKGROUND_COLOR);
+        leftPanel.setBackground(BACKGROUND_COLOR);
+        rightPanel.setBackground(BACKGROUND_COLOR);
+        dateCreationChooser.setBackground(ELEMENTS_COLOR);
+        dateCreationChooser.getDateEditor().getUiComponent().setBackground(ELEMENTS_COLOR);
+        dateCreationChooser.getDateEditor().getUiComponent().setForeground(FOREGROUND_COLOR);
+        deadLineChooser.setBackground(ELEMENTS_COLOR);
+        deadLineChooser.getDateEditor().getUiComponent().setBackground(ELEMENTS_COLOR);
+        deadLineChooser.getDateEditor().getUiComponent().setForeground(FOREGROUND_COLOR);
+        priorityLabel.setBackground(BACKGROUND_COLOR);
+        priorityLabel.setForeground(FOREGROUND_COLOR);
+        dateCreationLabel.setBackground(BACKGROUND_COLOR);
+        dateCreationLabel.setForeground(FOREGROUND_COLOR);
+        deadLineLabel.setBackground(BACKGROUND_COLOR);
+        deadLineLabel.setForeground(FOREGROUND_COLOR);
+        subtaskLabel.setBackground(BACKGROUND_COLOR);
+        subtaskLabel.setForeground(FOREGROUND_COLOR);
+        categoryLabel.setBackground(BACKGROUND_COLOR);
+        categoryLabel.setForeground(FOREGROUND_COLOR);
+        percentajeLabel.setBackground(BACKGROUND_COLOR);
+        percentajeLabel.setForeground(FOREGROUND_COLOR);
+        priorityPanel.setBackground(BACKGROUND_COLOR);
+        categoryPanel.setBackground(BACKGROUND_COLOR);
+        dateCreationPanelBackGround.setBackground(BACKGROUND_COLOR);
+        deadLinePanelBackGround.setBackground(BACKGROUND_COLOR);
+        subTaskPanel.setBackground(BACKGROUND_COLOR);
+        percentagePanel.setBackground(BACKGROUND_COLOR);
+        buttonsPanel.setBackground(BACKGROUND_COLOR);
     }
 
     /**
@@ -322,17 +410,22 @@ public class TaskManagerFilterDialog extends JDialog {
         dateCreationChooser.setDate(new Date());
         deadLineChooser.setDate(new Date());
 
+        dateCreationChooser.getDateEditor().getUiComponent().setBorder(new EmptyBorder(5, 10, 5, 10));
+        deadLineChooser.getDateEditor().getUiComponent().setBorder(new EmptyBorder(5, 10, 5, 10));
+
         dateCreationPanel.setLayout(new BorderLayout());
         dateCreationPanel.add(dateCreationChooser, BorderLayout.CENTER);
 
         deadLinePanel.setLayout(new BorderLayout());
         deadLinePanel.add(deadLineChooser, BorderLayout.CENTER);
 
+
         mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
         dialogPanel.setBorder(new EmptyBorder(20, 20, 0, 20));
         leftPanel.setBorder(new EmptyBorder(0, 0, 0, 10));
         rightPanel.setBorder(new EmptyBorder(0, 10, 0, 0));
 
+        initColors();
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);

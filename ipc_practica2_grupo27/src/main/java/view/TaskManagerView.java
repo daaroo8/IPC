@@ -72,10 +72,34 @@ public class TaskManagerView extends JFrame {
     private JPanel rightBottomPanel;
     private JLabel searchLabel;
     private JLabel actionStatusLabel;
+    private JPanel namePanel;
+    private JPanel descriptionPanel;
+    private JPanel datePriorityPanel;
+    private JPanel percentagePanel;
+    private JPanel categoryPanel;
+    private JPanel subTaskPanel;
+    private JPanel buttonsPanel;
+    private JPanel searchFilterPanel;
+    private JPanel listPanel;
+    private JPanel leftRightBottomPanel;
+    private JPanel rightRightPanel;
+    private JPanel nameInfoPanel;
+    private JPanel descriptionInfoPanel;
+    private JPanel categoryInfoPanel;
+    private JPanel subTaskInfoPanel;
+    private JPanel dateCreationInfoPanel;
+    private JPanel deadLineInfoPanel;
+    private JPanel percentageInfoPanel;
+    private JPanel priorityInfoPanel;
+    private JPanel editPanel;
+    private JPanel deletePanel;
     private JDateChooser dateChooser;
 
     public static final String SELECT_NOT_SUBTASK_PLACEHOLDER = "No es subtarea";
     public static final int DEFAULT_PERCENTAGE = 50;
+    private static final Color BACKGROUND_COLOR = new Color(161, 197, 255);
+    private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
+    private static final Color ELEMENTS_COLOR = new Color(231, 240, 253);
 
     private final TaskManagerController taskManagerController;
     private final TaskManagerFilterDialog filterDialogView;
@@ -85,8 +109,108 @@ public class TaskManagerView extends JFrame {
      */
     public TaskManagerView() {
         initComponents();
+
         taskManagerController = new TaskManagerController(this);
         filterDialogView = new TaskManagerFilterDialog(taskManagerController);
+    }
+
+    private void initColors() {
+        mainPanel.setBackground(BACKGROUND_COLOR);
+        leftPanel.setBackground(BACKGROUND_COLOR);
+        rightPanel.setBackground(BACKGROUND_COLOR);
+        calendarPanel.setBackground(BACKGROUND_COLOR);
+        rightTopPanel.setBackground(BACKGROUND_COLOR);
+        rightBottomPanel.setBackground(BACKGROUND_COLOR);
+        namePanel.setBackground(BACKGROUND_COLOR);
+        descriptionPanel.setBackground(BACKGROUND_COLOR);
+        datePriorityPanel.setBackground(BACKGROUND_COLOR);
+        percentagePanel.setBackground(BACKGROUND_COLOR);
+        categoryPanel.setBackground(BACKGROUND_COLOR);
+        subTaskPanel.setBackground(BACKGROUND_COLOR);
+        buttonsPanel.setBackground(BACKGROUND_COLOR);
+        searchFilterPanel.setBackground(BACKGROUND_COLOR);
+        listPanel.setBackground(BACKGROUND_COLOR);
+        leftRightBottomPanel.setBackground(BACKGROUND_COLOR);
+        rightRightPanel.setBackground(BACKGROUND_COLOR);
+        nameInfoPanel.setBackground(BACKGROUND_COLOR);
+        descriptionInfoPanel.setBackground(BACKGROUND_COLOR);
+        categoryInfoPanel.setBackground(BACKGROUND_COLOR);
+        subTaskInfoPanel.setBackground(BACKGROUND_COLOR);
+        dateCreationInfoPanel.setBackground(BACKGROUND_COLOR);
+        deadLineInfoPanel.setBackground(BACKGROUND_COLOR);
+        percentageInfoPanel.setBackground(BACKGROUND_COLOR);
+        priorityInfoPanel.setBackground(BACKGROUND_COLOR);
+        editPanel.setBackground(BACKGROUND_COLOR);
+        deletePanel.setBackground(BACKGROUND_COLOR);
+        saveButton.setBackground(ELEMENTS_COLOR);
+        saveButton.setForeground(FOREGROUND_COLOR);
+        filtersButton.setBackground(ELEMENTS_COLOR);
+        filtersButton.setForeground(FOREGROUND_COLOR);
+        addCategoryButton.setBackground(ELEMENTS_COLOR);
+        addCategoryButton.setForeground(FOREGROUND_COLOR);
+        editButton.setBackground(ELEMENTS_COLOR);
+        editButton.setForeground(FOREGROUND_COLOR);
+        deleteButton.setBackground(ELEMENTS_COLOR);
+        deleteButton.setForeground(FOREGROUND_COLOR);
+        priorityComboBox.setBackground(ELEMENTS_COLOR);
+        priorityComboBox.setForeground(FOREGROUND_COLOR);
+        categoryComboBox.setBackground(ELEMENTS_COLOR);
+        categoryComboBox.setForeground(FOREGROUND_COLOR);
+        subtaskComboBox.setBackground(ELEMENTS_COLOR);
+        subtaskComboBox.setForeground(FOREGROUND_COLOR);
+        nameTextField.setBackground(ELEMENTS_COLOR);
+        nameTextField.setForeground(FOREGROUND_COLOR);
+        searchTextField.setBackground(ELEMENTS_COLOR);
+        searchTextField.setForeground(FOREGROUND_COLOR);
+        nameInfoTextField.setBackground(ELEMENTS_COLOR);
+        nameInfoTextField.setForeground(FOREGROUND_COLOR);
+        categoryInfoTextField.setBackground(ELEMENTS_COLOR);
+        categoryInfoTextField.setForeground(FOREGROUND_COLOR);
+        subtaskInfoTextField.setBackground(ELEMENTS_COLOR);
+        subtaskInfoTextField.setForeground(FOREGROUND_COLOR);
+        headerListTextField.setBackground(ELEMENTS_COLOR);
+        headerListTextField.setForeground(FOREGROUND_COLOR);
+        addCategoryTextField.setBackground(ELEMENTS_COLOR);
+        addCategoryTextField.setForeground(FOREGROUND_COLOR);
+        priorityInfoTextField.setBackground(ELEMENTS_COLOR);
+        priorityInfoTextField.setForeground(FOREGROUND_COLOR);
+        descriptionTextArea.setBackground(ELEMENTS_COLOR);
+        descriptionTextArea.setForeground(FOREGROUND_COLOR);
+        descriptionInfoTextArea.setBackground(ELEMENTS_COLOR);
+        descriptionInfoTextArea.setForeground(FOREGROUND_COLOR);
+        percentageSlider.setBackground(BACKGROUND_COLOR);
+        percentageSlider.setForeground(FOREGROUND_COLOR);
+        completedCheckBox.setBackground(BACKGROUND_COLOR);
+        completedCheckBox.setForeground(FOREGROUND_COLOR);
+        completedProgressBar.setBackground(ELEMENTS_COLOR);
+        completedProgressBar.setForeground(FOREGROUND_COLOR);
+        dateChooser.setBackground(ELEMENTS_COLOR);
+        dateChooser.getDateEditor().getUiComponent().setForeground(FOREGROUND_COLOR);
+        dateChooser.getDateEditor().getUiComponent().setBackground(ELEMENTS_COLOR);
+        dateChooser.setForeground(FOREGROUND_COLOR);
+        dateCreationInfoFormattedTextField.setBackground(ELEMENTS_COLOR);
+        dateCreationInfoFormattedTextField.setForeground(FOREGROUND_COLOR);
+        deadLineInfoFormattedTextField.setBackground(ELEMENTS_COLOR);
+        deadLineInfoFormattedTextField.setForeground(FOREGROUND_COLOR);
+        taskList.setBackground(ELEMENTS_COLOR);
+        taskList.setForeground(FOREGROUND_COLOR);
+        nameLabel.setForeground(FOREGROUND_COLOR);
+        descriptionLabel.setForeground(FOREGROUND_COLOR);
+        priorityLabel.setForeground(FOREGROUND_COLOR);
+        dateLabel.setForeground(FOREGROUND_COLOR);
+        completedPercentageLabel.setForeground(FOREGROUND_COLOR);
+        completedLabel.setForeground(FOREGROUND_COLOR);
+        categoryLabel.setForeground(FOREGROUND_COLOR);
+        subtaskLabel.setForeground(FOREGROUND_COLOR);
+        nameInfoLabel.setForeground(FOREGROUND_COLOR);
+        descriptionInfoLabel.setForeground(FOREGROUND_COLOR);
+        categoryInfoLabel.setForeground(FOREGROUND_COLOR);
+        subtaskInfoLabel.setForeground(FOREGROUND_COLOR);
+        creationDateInfoLabel.setForeground(FOREGROUND_COLOR);
+        deadLineInfoLabel.setForeground(FOREGROUND_COLOR);
+        priorityInfoLabel.setForeground(FOREGROUND_COLOR);
+        searchLabel.setForeground(FOREGROUND_COLOR);
+        actionStatusLabel.setForeground(FOREGROUND_COLOR);
     }
 
     /**
@@ -535,7 +659,7 @@ public class TaskManagerView extends JFrame {
      *
      * @param indexPrior Indice de la prioridad seleccionada.
      */
-    public void setPriorityFilterValue(int indexPrior){
+    public void setPriorityFilterValue(int indexPrior) {
         filterDialogView.setPriorityFilterValue(indexPrior);
     }
 
@@ -544,7 +668,7 @@ public class TaskManagerView extends JFrame {
      *
      * @param indexPrior Indice de la categoría seleccionada.
      */
-    public void setSelectCategoryFilterValue(int indexPrior){
+    public void setSelectCategoryFilterValue(int indexPrior) {
         filterDialogView.setSelectCategoryFilterValue(indexPrior);
     }
 
@@ -553,7 +677,7 @@ public class TaskManagerView extends JFrame {
      *
      * @param indexPrior Indice de la subtarea seleccionada.
      */
-    public void setSubtaskFilterValue(int indexPrior){
+    public void setSubtaskFilterValue(int indexPrior) {
         filterDialogView.setSubtaskFilterValue(indexPrior);
     }
 
@@ -562,7 +686,7 @@ public class TaskManagerView extends JFrame {
      *
      * @param mode true para activar el modo sin botón, false en caso contrario.
      */
-    public void setPercentageFilterNoButton(boolean mode){
+    public void setPercentageFilterNoButton(boolean mode) {
         filterDialogView.setPercentageFilterNoButton(mode);
     }
 
@@ -571,7 +695,7 @@ public class TaskManagerView extends JFrame {
      *
      * @param percentage Valor del porcentaje a filtrar.
      */
-    public void setPercentageFilterValue(int percentage){
+    public void setPercentageFilterValue(int percentage) {
         filterDialogView.setPercentageFilterValue(percentage);
     }
 
@@ -580,7 +704,7 @@ public class TaskManagerView extends JFrame {
      *
      * @param mode true para activar el modo sin botón, false en caso contrario.
      */
-    public void setCreationDateFilterNoButton(boolean mode){
+    public void setCreationDateFilterNoButton(boolean mode) {
         filterDialogView.setCreationDateFilterNoButton(mode);
     }
 
@@ -598,7 +722,7 @@ public class TaskManagerView extends JFrame {
      *
      * @param mode true para activar el modo sin botón, false en caso contrario.
      */
-    public void setDeadLineFilterNoButton(boolean mode){
+    public void setDeadLineFilterNoButton(boolean mode) {
         filterDialogView.setDeadLineFilterNoButton(mode);
     }
 
@@ -677,6 +801,23 @@ public class TaskManagerView extends JFrame {
         descriptionTextArea.setMinimumSize(new Dimension(300, 50));
         descriptionTextArea.setMaximumSize(new Dimension(300, 50));
 
+        nameTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
+        nameInfoTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
+        descriptionTextArea.setBorder(new EmptyBorder(5, 10, 5, 10));
+        descriptionInfoTextArea.setBorder(new EmptyBorder(5, 10, 5, 10));
+        percentageSlider.setBorder(new EmptyBorder(5, 10, 5, 10));
+        dateCreationInfoFormattedTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
+        deadLineInfoFormattedTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
+        categoryInfoTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
+        priorityInfoTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
+        subtaskInfoTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
+        addCategoryTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
+        searchTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
+        taskList.setBorder(new EmptyBorder(5, 10, 5, 10));
+        headerListTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
+        dateChooser.getDateEditor().getUiComponent().setBorder(new EmptyBorder(5, 10, 5, 10));
+
+        initColors();
         updatePriorityList();
 
         completedCheckBox.addActionListener(new ActionListener() {
