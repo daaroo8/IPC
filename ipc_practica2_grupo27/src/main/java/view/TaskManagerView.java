@@ -118,6 +118,10 @@ public class TaskManagerView extends JFrame {
         filterDialogView = new TaskManagerFilterDialog(taskManagerController);
     }
 
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
+
     private void initColors() {
         mainPanel.setBackground(BACKGROUND_COLOR);
         leftPanel.setBackground(BACKGROUND_COLOR);
@@ -464,17 +468,14 @@ public class TaskManagerView extends JFrame {
      * @param categories La lista de categorías a mostrar en el combo box.
      */
     public void updateCategoriesList(ArrayList<String> categories) {
-        categoryComboBox.removeAllItems();
-
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (String category : categories) {
-
-            categoryComboBox.addItem(category);
+            model.addElement(category);
         }
 
-        filterDialogView.updateCategoriesList(categories);
+        categoryComboBox.setModel(model);
 
-        categoryComboBox.revalidate();
-        categoryComboBox.repaint();
+        filterDialogView.updateCategoriesList(categories);
     }
 
     /**
@@ -503,15 +504,6 @@ public class TaskManagerView extends JFrame {
         for (Priority p : Priority.values()) {
             priorityComboBox.addItem(p);
         }
-    }
-
-    /**
-     * Elimina un ítem de la lista de categorías en el combo box.
-     *
-     * @param categoryIndex El índice del ítem a eliminar.
-     */
-    public void removeCategoryItemAt(int categoryIndex) {
-        categoryComboBox.removeItemAt(categoryIndex);
     }
 
     /**
@@ -789,6 +781,7 @@ public class TaskManagerView extends JFrame {
         taskListModel = new DefaultListModel<>();
         taskList.setModel(taskListModel);
         taskList.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        taskList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         headerListTextField.setFont(new Font("Monospaced", Font.PLAIN, 14));
 
         nameInfoTextField.setEditable(false);
@@ -911,18 +904,6 @@ public class TaskManagerView extends JFrame {
             }
         });
 
-        categoryComboBox.addActionListener(new ActionListener() {
-            /**
-             * Maneja el evento de selección de un ítem en el combo box de categorías.
-             * Este evento se dispara cuando el usuario selecciona una categoría del combo box,
-             * y se encarga de llamar al controlador para manejar la selección de la categoría.
-             */
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                taskManagerController.handleSelectComboBoxEvent();
-            }
-        });
-
         taskList.addListSelectionListener(new ListSelectionListener() {
             /**
              * Maneja el evento de selección de un ítem en la lista de tareas.
@@ -993,30 +974,48 @@ public class TaskManagerView extends JFrame {
     private boolean anyComponentIsNull() {
         return (
                 mainPanel == null ||
-                        addCategoryTextField == null ||
-                        nameTextField == null ||
-                        rightTopPanel == null ||
-                        leftPanel == null ||
-                        calendarPanel == null ||
-                        taskList == null ||
-                        nameInfoTextField == null ||
-                        descriptionInfoTextArea == null ||
-                        descriptionTextArea == null ||
-                        categoryInfoTextField == null ||
-                        subtaskInfoTextField == null ||
-                        dateCreationInfoFormattedTextField == null ||
-                        deadLineInfoFormattedTextField == null ||
-                        priorityInfoTextField == null ||
-                        headerListTextField == null ||
-                        completedCheckBox == null ||
-                        percentageSlider == null ||
-                        addCategoryButton == null ||
-                        saveButton == null ||
-                        categoryComboBox == null ||
-                        deleteButton == null ||
-                        editButton == null ||
-                        searchTextField == null ||
-                        filtersButton == null
+                addCategoryTextField == null ||
+                nameTextField == null ||
+                rightTopPanel == null ||
+                leftPanel == null ||
+                calendarPanel == null ||
+                taskList == null ||
+                nameInfoTextField == null ||
+                descriptionInfoTextArea == null ||
+                descriptionTextArea == null ||
+                categoryInfoTextField == null ||
+                subtaskInfoTextField == null ||
+                dateCreationInfoFormattedTextField == null ||
+                deadLineInfoFormattedTextField == null ||
+                priorityInfoTextField == null ||
+                headerListTextField == null ||
+                completedCheckBox == null ||
+                percentageSlider == null ||
+                addCategoryButton == null ||
+                saveButton == null ||
+                categoryComboBox == null ||
+                deleteButton == null ||
+                editButton == null ||
+                searchTextField == null ||
+                filtersButton == null ||
+                nameLabel == null ||
+                descriptionLabel == null ||
+                priorityComboBox == null ||
+                dateLabel == null ||
+                completedPercentageLabel == null ||
+                completedLabel == null ||
+                subtaskLabel == null ||
+                nameInfoLabel == null ||
+                descriptionInfoLabel == null ||
+                categoryInfoLabel == null ||
+                creationDateInfoLabel == null ||
+                deadLineInfoLabel == null ||
+                priorityInfoLabel == null ||
+                searchLabel == null ||
+                actionStatusLabel == null ||
+                categoryLabel == null ||
+                subtaskComboBox == null ||
+                subtaskInfoLabel == null
         );
     }
 
@@ -1026,7 +1025,6 @@ public class TaskManagerView extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(1400, 800));
         frame.setSize(1400, 800);
-//        frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }

@@ -1,17 +1,21 @@
 package view;
 
+import main.Main;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class PrincipalMenuView {
+public class PrincipalMenuView extends JFrame {
     private JPanel mainPanel;
     private JPanel taskManagerPanel;
     private JPanel listManagerPanel;
+    private JList<String> listExampleMenu;
+    private JList<String> taskListInfo;
     private JButton taskManagerButton;
-    private JList listExampleMenu;
     private JButton listManagerButton;
-    private JList taskListInfo;
 
     private static final Color BACKGROUND_COLOR = new Color(161, 197, 255);
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
@@ -20,11 +24,42 @@ public class PrincipalMenuView {
     private static final Font FONT = new Font("Helvetica", Font.BOLD, 14);
 
     public PrincipalMenuView() {
+        initComponents();
+        taskManagerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.getViewManager().showTaskManagerView();
+            }
+        });
 
-        initColors();
+        listManagerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.getViewManager().showListManagerView();
+            }
+        });
+    }
+
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
+
+    public void initComponents() {
         taskManagerPanel.setBorder(new EmptyBorder(50, 50, 50, 10));
         listManagerPanel.setBorder(new EmptyBorder(50, 10, 50, 50));
+        listExampleMenu.setBorder(new EmptyBorder(5, 10, 5, 10));
+        taskListInfo.setBorder(new EmptyBorder(5, 10, 5, 10));
+
+        taskManagerButton.setFont(FONT);
+        listManagerButton.setFont(FONT);
+        taskListInfo.setFont(FONT);
+        listExampleMenu.setFont(FONT);
+
+
+        initColors();
     }
+
+
 
     public void initColors() {
         mainPanel.setBackground(BACKGROUND_COLOR);
@@ -38,15 +73,6 @@ public class PrincipalMenuView {
         listExampleMenu.setForeground(FOREGROUND_COLOR);
         taskListInfo.setBackground(ELEMENTS_COLOR);
         taskListInfo.setForeground(FOREGROUND_COLOR);
-
-        //TODO: INIT COMPONENTS meter esto y llamar a init colors desde ahi
-        listExampleMenu.setBorder(new EmptyBorder(5, 10, 5, 10));
-        taskListInfo.setBorder(new EmptyBorder(5, 10, 5, 10));
-
-        taskManagerButton.setFont(FONT);
-        listManagerButton.setFont(FONT);
-        taskListInfo.setFont(FONT);
-        listExampleMenu.setFont(FONT);
     }
 
     public static void main(String[] args) {

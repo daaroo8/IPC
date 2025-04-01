@@ -1,11 +1,15 @@
 package view;
 
+import controller.ListManagerController;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class AddListView {
+public class AddListView extends JDialog{
     private JLabel nameLabel;
     private JTextField listToAddTextField;
     private JButton addListButton;
@@ -17,12 +21,43 @@ public class AddListView {
 
     private static final Font FONT = new Font("Helvetica", Font.BOLD, 14);
 
-    public AddListView() {
-        initColors();
+    private final ListManagerController listManagerController;
+
+    public AddListView(ListManagerController listManagerController) {
+        initComponents();
 
         mainPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
+        setContentPane(mainPanel);
+        setModal(true);
+
+        this.listManagerController = listManagerController;
+
+        addListButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listManagerController.handleAddListItem();
+            }
+        });
+    }
+
+    public String getNewTaskListTextValue() {
+        return listToAddTextField.getText();
+    }
+
+    public void restartAddTaskListInput() {
+        listToAddTextField.setText("");
+    }
+
+    public void initComponents() {
+        listToAddTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
+
+        nameLabel.setFont(FONT);
+        addListButton.setFont(FONT);
+        listToAddTextField.setFont(FONT);
+
+        initColors();
     }
 
     public void initColors(){
@@ -36,21 +71,5 @@ public class AddListView {
         listToAddTextField.setBackground(ELEMENTS_COLOR);
         listToAddTextField.setForeground(FOREGROUND_COLOR);
         listToAddTextField.setBorder(new LineBorder(ELEMENTS_COLOR));
-
-        //TODO: INIT COMPONENTS meter esto y llamar a init colors desde ahi
-        listToAddTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
-
-        nameLabel.setFont(FONT);
-        addListButton.setFont(FONT);
-        listToAddTextField.setFont(FONT);
-    }
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Añadir lista");
-        frame.setContentPane(new AddListView().mainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
     }
 }

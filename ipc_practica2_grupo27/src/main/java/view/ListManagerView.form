@@ -32,7 +32,8 @@
                 </constraints>
                 <properties>
                   <horizontalAlignment value="10"/>
-                  <text value="Buscar..."/>
+                  <text value=""/>
+                  <toolTipText value=""/>
                 </properties>
               </component>
               <component id="b257d" class="javax.swing.JButton" binding="addListButton">

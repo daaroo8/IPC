@@ -55,11 +55,13 @@
               </grid>
             </constraints>
             <properties>
+              <focusable value="true"/>
               <model>
                 <item value="🏋 | Gimnasio"/>
                 <item value="🛍️ | Compras"/>
                 <item value="🎓 | Universidad"/>
               </model>
+              <requestFocusEnabled value="true"/>
             </properties>
           </component>
           <component id="f5f41" class="javax.swing.JButton" binding="listManagerButton">

@@ -119,16 +119,6 @@ public class TaskManagerController {
     }
 
     /**
-     * Maneja el evento de selección en el combo box de categorías.
-     */
-    public void handleSelectComboBoxEvent() {
-        if (view.getSelectedCategory() == null || view.getSelectedCategory().equals("Seleccionar opción"))
-            return;
-
-        view.removeCategoryItemAt(0);
-    }
-
-    /**
      * Maneja el evento de selección de una tarea.
      */
     public void handleSelectTaskEvent() {
