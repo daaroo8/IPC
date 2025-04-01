@@ -16,6 +16,7 @@ public class PrincipalMenuView {
     private static final Color BACKGROUND_COLOR = new Color(161, 197, 255);
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
     private static final Color ELEMENTS_COLOR = new Color(231, 240, 253);
+    private static final Font FONT = new Font("Helvetica", Font.BOLD, 14);
 
     public PrincipalMenuView() {
 
@@ -41,12 +42,10 @@ public class PrincipalMenuView {
         listExampleMenu.setBorder(new EmptyBorder(5, 10, 5, 10));
         taskListInfo.setBorder(new EmptyBorder(5, 10, 5, 10));
 
-        Font font = new Font("Helvetica", Font.BOLD, 14);
-
-        taskManagerButton.setFont(font);
-        listManagerButton.setFont(font);
-        taskListInfo.setFont(font);
-        listExampleMenu.setFont(font);
+        taskManagerButton.setFont(FONT);
+        listManagerButton.setFont(FONT);
+        taskListInfo.setFont(FONT);
+        listExampleMenu.setFont(FONT);
     }
 
     public static void main(String[] args) {

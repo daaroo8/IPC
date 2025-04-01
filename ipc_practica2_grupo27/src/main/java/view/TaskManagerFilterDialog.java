@@ -67,6 +67,7 @@ public class TaskManagerFilterDialog extends JDialog {
     private static final Color BACKGROUND_COLOR = new Color(161, 197, 255);
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
     private static final Color ELEMENTS_COLOR = new Color(231, 240, 253);
+    private static final Font FONT = new Font("Helvetica", Font.BOLD, 14);
 
     private final TaskManagerController taskManagerController;
 
@@ -425,34 +426,32 @@ public class TaskManagerFilterDialog extends JDialog {
         leftPanel.setBorder(new EmptyBorder(0, 0, 0, 10));
         rightPanel.setBorder(new EmptyBorder(0, 10, 0, 0));
 
-        Font font = new Font("Helvetica", Font.BOLD, 14);
-
-        dateCreationChooser.getDateEditor().getUiComponent().setFont(font);
-        deadLineChooser.getDateEditor().getUiComponent().setFont(font);
-        buttonOK.setFont(font);
-        buttonCancel.setFont(font);
-        priorityFilterComboBox.setFont(font);
-        percentageFilterSlider.setFont(font);
-        categoryFilterComboBox.setFont(font);
-        subtaskFilterComboBox.setFont(font);
-        untilPercentageRadioButton.setFont(font);
-        fromPercentageRadioButton.setFont(font);
-        untilDateCreationRadioButton.setFont(font);
-        sinceDateCreationRadioButton.setFont(font);
-        untilDeadLineRadioButton.setFont(font);
-        sinceDeadLineRadioButton.setFont(font);
-        noPercentageRadioButton.setFont(font);
-        noDateCreationRadioButton.setFont(font);
-        noDeadLineRadioButton.setFont(font);
-        buttonReset.setFont(font);
-        priorityLabel.setFont(font);
-        dateCreationLabel.setFont(font);
-        deadLineLabel.setFont(font);
-        subtaskLabel.setFont(font);
-        categoryLabel.setFont(font);
-        percentajeLabel.setFont(font);
-        dateCreationChooser.setFont(font);
-        deadLineChooser.setFont(font);
+        dateCreationChooser.getDateEditor().getUiComponent().setFont(FONT);
+        deadLineChooser.getDateEditor().getUiComponent().setFont(FONT);
+        buttonOK.setFont(FONT);
+        buttonCancel.setFont(FONT);
+        priorityFilterComboBox.setFont(FONT);
+        percentageFilterSlider.setFont(FONT);
+        categoryFilterComboBox.setFont(FONT);
+        subtaskFilterComboBox.setFont(FONT);
+        untilPercentageRadioButton.setFont(FONT);
+        fromPercentageRadioButton.setFont(FONT);
+        untilDateCreationRadioButton.setFont(FONT);
+        sinceDateCreationRadioButton.setFont(FONT);
+        untilDeadLineRadioButton.setFont(FONT);
+        sinceDeadLineRadioButton.setFont(FONT);
+        noPercentageRadioButton.setFont(FONT);
+        noDateCreationRadioButton.setFont(FONT);
+        noDeadLineRadioButton.setFont(FONT);
+        buttonReset.setFont(FONT);
+        priorityLabel.setFont(FONT);
+        dateCreationLabel.setFont(FONT);
+        deadLineLabel.setFont(FONT);
+        subtaskLabel.setFont(FONT);
+        categoryLabel.setFont(FONT);
+        percentajeLabel.setFont(FONT);
+        dateCreationChooser.setFont(FONT);
+        deadLineChooser.setFont(FONT);
 
 
         initColors();

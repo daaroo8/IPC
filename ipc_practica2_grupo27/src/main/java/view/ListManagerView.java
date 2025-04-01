@@ -27,6 +27,7 @@ public class ListManagerView {
     private static final Color BACKGROUND_COLOR = new Color(161, 197, 255);
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
     private static final Color ELEMENTS_COLOR = new Color(231, 240, 253);
+    private static final Font FONT = new Font("Helvetica", Font.BOLD, 14);
 
     public ListManagerView() {
         initColors();
@@ -59,14 +60,11 @@ public class ListManagerView {
         searchTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
         listOfLists.setBorder(new EmptyBorder(5, 10, 5, 10));
 
-
-        Font font = new Font("Helvetica", Font.BOLD, 14);
-
-        listOfLists.setFont(font);
-        searchTextField.setFont(font);
-        addListButton.setFont(font);
-        pendingLabel.setFont(font);
-        completedLabel.setFont(font);
+        listOfLists.setFont(FONT);
+        searchTextField.setFont(FONT);
+        addListButton.setFont(FONT);
+        pendingLabel.setFont(FONT);
+        completedLabel.setFont(FONT);
     }
 
     public static void main(String[] args) {
