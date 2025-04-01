@@ -817,6 +817,48 @@ public class TaskManagerView extends JFrame {
         headerListTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
         dateChooser.getDateEditor().getUiComponent().setBorder(new EmptyBorder(5, 10, 5, 10));
 
+        Font font = new Font("Helvetica", Font.BOLD, 14);
+
+
+        dateChooser.getDateEditor().getUiComponent().setFont(font);
+        nameTextField.setFont(font);
+        nameLabel.setFont(font);
+        descriptionTextArea.setFont(font);
+        descriptionLabel.setFont(font);
+        priorityComboBox.setFont(font);
+        dateLabel.setFont(font);
+        percentageSlider.setFont(font);
+        completedCheckBox.setFont(font);
+        completedPercentageLabel.setFont(font);
+        completedLabel.setFont(font);
+        categoryComboBox.setFont(font);
+        categoryLabel.setFont(font);
+        subtaskComboBox.setFont(font);
+        subtaskLabel.setFont(font);
+        saveButton.setFont(font);
+        searchTextField.setFont(font);
+        filtersButton.setFont(font);
+        nameInfoTextField.setFont(font);
+        nameInfoLabel.setFont(font);
+        descriptionInfoTextArea.setFont(font);
+        descriptionInfoLabel.setFont(font);
+        categoryInfoTextField.setFont(font);
+        categoryInfoLabel.setFont(font);
+        subtaskInfoTextField.setFont(font);
+        subtaskInfoLabel.setFont(font);
+        creationDateInfoLabel.setFont(font);
+        dateCreationInfoFormattedTextField.setFont(font);
+        deadLineInfoFormattedTextField.setFont(font);
+        deadLineInfoLabel.setFont(font);
+        priorityInfoTextField.setFont(font);
+        priorityInfoLabel.setFont(font);
+        editButton.setFont(font);
+        deleteButton.setFont(font);
+        addCategoryTextField.setFont(font);
+        addCategoryButton.setFont(font);
+        searchLabel.setFont(font);
+        actionStatusLabel.setFont(font);
+
         initColors();
         updatePriorityList();
 
@@ -950,6 +992,8 @@ public class TaskManagerView extends JFrame {
     private boolean anyComponentIsNull() {
         return (
                 mainPanel == null ||
+                        addCategoryTextField == null ||
+                        nameTextField == null ||
                         rightTopPanel == null ||
                         leftPanel == null ||
                         calendarPanel == null ||
@@ -980,7 +1024,7 @@ public class TaskManagerView extends JFrame {
         frame.setContentPane(new TaskManagerView().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(1400, 800));
-        frame.setSize(frame.getMinimumSize());
+        frame.setSize(1400, 800);
 //        frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

@@ -56,15 +56,24 @@ public class ListManagerView {
         addListButton.setForeground(FOREGROUND_COLOR);
 
         //TODO: INIT COMPONENTS meter esto y llamar a init colors desde ahi
-
         searchTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
         listOfLists.setBorder(new EmptyBorder(5, 10, 5, 10));
+
+
+        Font font = new Font("Helvetica", Font.BOLD, 14);
+
+        listOfLists.setFont(font);
+        searchTextField.setFont(font);
+        addListButton.setFont(font);
+        pendingLabel.setFont(font);
+        completedLabel.setFont(font);
     }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Menú Principal");
         frame.setContentPane(new ListManagerView().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setMinimumSize(new Dimension(700, 600));
         frame.pack();
         frame.setSize(frame.getWidth(), 600); // Cambiar '600' al alto deseado
         frame.setLocationRelativeTo(null);

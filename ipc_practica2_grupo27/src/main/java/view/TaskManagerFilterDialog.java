@@ -425,6 +425,36 @@ public class TaskManagerFilterDialog extends JDialog {
         leftPanel.setBorder(new EmptyBorder(0, 0, 0, 10));
         rightPanel.setBorder(new EmptyBorder(0, 10, 0, 0));
 
+        Font font = new Font("Helvetica", Font.BOLD, 14);
+
+        dateCreationChooser.getDateEditor().getUiComponent().setFont(font);
+        deadLineChooser.getDateEditor().getUiComponent().setFont(font);
+        buttonOK.setFont(font);
+        buttonCancel.setFont(font);
+        priorityFilterComboBox.setFont(font);
+        percentageFilterSlider.setFont(font);
+        categoryFilterComboBox.setFont(font);
+        subtaskFilterComboBox.setFont(font);
+        untilPercentageRadioButton.setFont(font);
+        fromPercentageRadioButton.setFont(font);
+        untilDateCreationRadioButton.setFont(font);
+        sinceDateCreationRadioButton.setFont(font);
+        untilDeadLineRadioButton.setFont(font);
+        sinceDeadLineRadioButton.setFont(font);
+        noPercentageRadioButton.setFont(font);
+        noDateCreationRadioButton.setFont(font);
+        noDeadLineRadioButton.setFont(font);
+        buttonReset.setFont(font);
+        priorityLabel.setFont(font);
+        dateCreationLabel.setFont(font);
+        deadLineLabel.setFont(font);
+        subtaskLabel.setFont(font);
+        categoryLabel.setFont(font);
+        percentajeLabel.setFont(font);
+        dateCreationChooser.setFont(font);
+        deadLineChooser.setFont(font);
+
+
         initColors();
         setContentPane(contentPane);
         setModal(true);

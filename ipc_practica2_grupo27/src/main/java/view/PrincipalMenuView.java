@@ -10,7 +10,7 @@ public class PrincipalMenuView {
     private JPanel listManagerPanel;
     private JButton taskManagerButton;
     private JList listExampleMenu;
-    private JButton gestionarListasButton;
+    private JButton listManagerButton;
     private JList taskListInfo;
 
     private static final Color BACKGROUND_COLOR = new Color(161, 197, 255);
@@ -30,8 +30,8 @@ public class PrincipalMenuView {
         listManagerPanel.setBackground(BACKGROUND_COLOR);
         taskManagerButton.setBackground(ELEMENTS_COLOR);
         taskManagerButton.setForeground(FOREGROUND_COLOR);
-        gestionarListasButton.setBackground(ELEMENTS_COLOR);
-        gestionarListasButton.setForeground(FOREGROUND_COLOR);
+        listManagerButton.setBackground(ELEMENTS_COLOR);
+        listManagerButton.setForeground(FOREGROUND_COLOR);
         listExampleMenu.setBackground(ELEMENTS_COLOR);
         listExampleMenu.setForeground(FOREGROUND_COLOR);
         taskListInfo.setBackground(ELEMENTS_COLOR);
@@ -40,6 +40,13 @@ public class PrincipalMenuView {
         //TODO: INIT COMPONENTS meter esto y llamar a init colors desde ahi
         listExampleMenu.setBorder(new EmptyBorder(5, 10, 5, 10));
         taskListInfo.setBorder(new EmptyBorder(5, 10, 5, 10));
+
+        Font font = new Font("Helvetica", Font.BOLD, 14);
+
+        taskManagerButton.setFont(font);
+        listManagerButton.setFont(font);
+        taskListInfo.setFont(font);
+        listExampleMenu.setFont(font);
     }
 
     public static void main(String[] args) {

@@ -37,6 +37,12 @@ public class AddListView {
 
         //TODO: INIT COMPONENTS meter esto y llamar a init colors desde ahi
         listToAddTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
+
+        Font font = new Font("Helvetica", Font.BOLD, 14);
+
+        nameLabel.setFont(font);
+        addListButton.setFont(font);
+        listToAddTextField.setFont(font);
     }
     public static void main(String[] args) {
         JFrame frame = new JFrame("Añadir lista");
