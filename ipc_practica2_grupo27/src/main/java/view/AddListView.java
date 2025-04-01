@@ -14,6 +14,7 @@ public class AddListView {
     private static final Color BACKGROUND_COLOR = new Color(161, 197, 255);
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
     private static final Color ELEMENTS_COLOR = new Color(231, 240, 253);
+
     private static final Font FONT = new Font("Helvetica", Font.BOLD, 14);
 
     public AddListView() {
