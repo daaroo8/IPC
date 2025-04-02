@@ -1,6 +1,7 @@
 package view;
 
 import com.toedter.calendar.JDateChooser;
+import main.Main;
 import model.enums.Priority;
 import model.Task;
 
@@ -37,8 +38,8 @@ public class TaskManagerView extends JFrame {
     private JLabel completedLabel;
     private JComboBox<String> categoryComboBox;
     private JLabel categoryLabel;
-    private JComboBox<String> subtaskComboBox;
-    private JLabel subtaskLabel;
+    private JComboBox<String> listComboBox;
+    private JLabel listLabel;
     private JButton saveButton;
     private JTextField searchTextField;
     private JButton filtersButton;
@@ -50,8 +51,8 @@ public class TaskManagerView extends JFrame {
     private JLabel descriptionInfoLabel;
     private JTextField categoryInfoTextField;
     private JLabel categoryInfoLabel;
-    private JTextField subtaskInfoTextField;
-    private JLabel subtaskInfoLabel;
+    private JTextField listInfoTextField;
+    private JLabel listInfoLabel;
     private JLabel creationDateInfoLabel;
     private JFormattedTextField dateCreationInfoFormattedTextField;
     private JFormattedTextField deadLineInfoFormattedTextField;
@@ -77,22 +78,23 @@ public class TaskManagerView extends JFrame {
     private JPanel datePriorityPanel;
     private JPanel percentagePanel;
     private JPanel categoryPanel;
-    private JPanel subTaskPanel;
+    private JPanel listPanel;
     private JPanel buttonsPanel;
     private JPanel searchFilterPanel;
-    private JPanel listPanel;
+    private JPanel listOfTasksPanel;
     private JPanel leftRightBottomPanel;
     private JPanel rightRightPanel;
     private JPanel nameInfoPanel;
     private JPanel descriptionInfoPanel;
     private JPanel categoryInfoPanel;
-    private JPanel subTaskInfoPanel;
+    private JPanel listInfoPanel;
     private JPanel dateCreationInfoPanel;
     private JPanel deadLineInfoPanel;
     private JPanel percentageInfoPanel;
     private JPanel priorityInfoPanel;
     private JPanel editPanel;
     private JPanel deletePanel;
+    private JButton returnButton;
     private JDateChooser dateChooser;
 
     public static final String SELECT_NOT_SUBTASK_PLACEHOLDER = "No es subtarea";
@@ -116,6 +118,13 @@ public class TaskManagerView extends JFrame {
 
         taskManagerController = new TaskManagerController(this);
         filterDialogView = new TaskManagerFilterDialog(taskManagerController);
+        returnButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.getPrincipalMenuView().showPrincipalMenuView();
+            }
+        });
     }
 
     public JPanel getMainPanel() {
@@ -134,16 +143,16 @@ public class TaskManagerView extends JFrame {
         datePriorityPanel.setBackground(BACKGROUND_COLOR);
         percentagePanel.setBackground(BACKGROUND_COLOR);
         categoryPanel.setBackground(BACKGROUND_COLOR);
-        subTaskPanel.setBackground(BACKGROUND_COLOR);
+        listPanel.setBackground(BACKGROUND_COLOR);
         buttonsPanel.setBackground(BACKGROUND_COLOR);
         searchFilterPanel.setBackground(BACKGROUND_COLOR);
-        listPanel.setBackground(BACKGROUND_COLOR);
+        listOfTasksPanel.setBackground(BACKGROUND_COLOR);
         leftRightBottomPanel.setBackground(BACKGROUND_COLOR);
         rightRightPanel.setBackground(BACKGROUND_COLOR);
         nameInfoPanel.setBackground(BACKGROUND_COLOR);
         descriptionInfoPanel.setBackground(BACKGROUND_COLOR);
         categoryInfoPanel.setBackground(BACKGROUND_COLOR);
-        subTaskInfoPanel.setBackground(BACKGROUND_COLOR);
+        listInfoPanel.setBackground(BACKGROUND_COLOR);
         dateCreationInfoPanel.setBackground(BACKGROUND_COLOR);
         deadLineInfoPanel.setBackground(BACKGROUND_COLOR);
         percentageInfoPanel.setBackground(BACKGROUND_COLOR);
@@ -154,6 +163,8 @@ public class TaskManagerView extends JFrame {
         saveButton.setForeground(FOREGROUND_COLOR);
         filtersButton.setBackground(ELEMENTS_COLOR);
         filtersButton.setForeground(FOREGROUND_COLOR);
+        returnButton.setBackground(ELEMENTS_COLOR);
+        returnButton.setForeground(FOREGROUND_COLOR);
         addCategoryButton.setBackground(ELEMENTS_COLOR);
         addCategoryButton.setForeground(FOREGROUND_COLOR);
         editButton.setBackground(ELEMENTS_COLOR);
@@ -164,8 +175,8 @@ public class TaskManagerView extends JFrame {
         priorityComboBox.setForeground(FOREGROUND_COLOR);
         categoryComboBox.setBackground(ELEMENTS_COLOR);
         categoryComboBox.setForeground(FOREGROUND_COLOR);
-        subtaskComboBox.setBackground(ELEMENTS_COLOR);
-        subtaskComboBox.setForeground(FOREGROUND_COLOR);
+        listComboBox.setBackground(ELEMENTS_COLOR);
+        listComboBox.setForeground(FOREGROUND_COLOR);
         nameTextField.setBackground(ELEMENTS_COLOR);
         nameTextField.setForeground(FOREGROUND_COLOR);
         searchTextField.setBackground(ELEMENTS_COLOR);
@@ -174,8 +185,8 @@ public class TaskManagerView extends JFrame {
         nameInfoTextField.setForeground(FOREGROUND_COLOR);
         categoryInfoTextField.setBackground(ELEMENTS_COLOR);
         categoryInfoTextField.setForeground(FOREGROUND_COLOR);
-        subtaskInfoTextField.setBackground(ELEMENTS_COLOR);
-        subtaskInfoTextField.setForeground(FOREGROUND_COLOR);
+        listInfoTextField.setBackground(ELEMENTS_COLOR);
+        listInfoTextField.setForeground(FOREGROUND_COLOR);
         headerListTextField.setBackground(ELEMENTS_COLOR);
         headerListTextField.setForeground(FOREGROUND_COLOR);
         addCategoryTextField.setBackground(ELEMENTS_COLOR);
@@ -195,6 +206,8 @@ public class TaskManagerView extends JFrame {
         dateChooser.setBackground(ELEMENTS_COLOR);
         dateChooser.getDateEditor().getUiComponent().setForeground(FOREGROUND_COLOR);
         dateChooser.getDateEditor().getUiComponent().setBackground(ELEMENTS_COLOR);
+        dateChooser.getCalendarButton().setBackground(ELEMENTS_COLOR);
+        dateChooser.getCalendarButton().setForeground(FOREGROUND_COLOR);
         dateChooser.setForeground(FOREGROUND_COLOR);
         dateCreationInfoFormattedTextField.setBackground(ELEMENTS_COLOR);
         dateCreationInfoFormattedTextField.setForeground(FOREGROUND_COLOR);
@@ -209,11 +222,11 @@ public class TaskManagerView extends JFrame {
         completedPercentageLabel.setForeground(FOREGROUND_COLOR);
         completedLabel.setForeground(FOREGROUND_COLOR);
         categoryLabel.setForeground(FOREGROUND_COLOR);
-        subtaskLabel.setForeground(FOREGROUND_COLOR);
+        listLabel.setForeground(FOREGROUND_COLOR);
         nameInfoLabel.setForeground(FOREGROUND_COLOR);
         descriptionInfoLabel.setForeground(FOREGROUND_COLOR);
         categoryInfoLabel.setForeground(FOREGROUND_COLOR);
-        subtaskInfoLabel.setForeground(FOREGROUND_COLOR);
+        listInfoLabel.setForeground(FOREGROUND_COLOR);
         creationDateInfoLabel.setForeground(FOREGROUND_COLOR);
         deadLineInfoLabel.setForeground(FOREGROUND_COLOR);
         priorityInfoLabel.setForeground(FOREGROUND_COLOR);
@@ -424,7 +437,7 @@ public class TaskManagerView extends JFrame {
      * @return La subtarea seleccionada.
      */
     public String getSelectedSubTask() {
-        return (String) subtaskComboBox.getSelectedItem();
+        return (String) listComboBox.getSelectedItem();
     }
 
     /**
@@ -446,7 +459,7 @@ public class TaskManagerView extends JFrame {
         priorityComboBox.setSelectedIndex(0);
         percentageSlider.setValue(TaskManagerView.DEFAULT_PERCENTAGE);
 //        categoryComboBox.setSelectedIndex(0);
-        subtaskComboBox.setSelectedIndex(0);
+        listComboBox.setSelectedIndex(0);
     }
 
     /**
@@ -484,12 +497,12 @@ public class TaskManagerView extends JFrame {
      * @param subtasks La lista de subtareas a mostrar en el combo box.
      */
     public void updateSubtasksList(ArrayList<Task> subtasks) {
-        subtaskComboBox.removeAllItems();
+        listComboBox.removeAllItems();
 
-        subtaskComboBox.addItem(TaskManagerView.SELECT_NOT_SUBTASK_PLACEHOLDER);
+        listComboBox.addItem(TaskManagerView.SELECT_NOT_SUBTASK_PLACEHOLDER);
 
         for (Task subtask : subtasks) {
-            subtaskComboBox.addItem(subtask.getName());
+            listComboBox.addItem(subtask.getName());
         }
 
         filterDialogView.updateSubtaskList(subtasks);
@@ -575,7 +588,7 @@ public class TaskManagerView extends JFrame {
      * @param subtask La subtarea a establecer en el combo box.
      */
     public void setSubtaskComboBoxValue(String subtask) {
-        subtaskComboBox.setSelectedItem(subtask);
+        listComboBox.setSelectedItem(subtask);
     }
 
     /**
@@ -629,7 +642,7 @@ public class TaskManagerView extends JFrame {
      * @param text El texto a establecer en el campo de texto.
      */
     public void setSubtaskInfoTextFieldValue(String text) {
-        subtaskInfoTextField.setText(text);
+        listInfoTextField.setText(text);
     }
 
     /**
@@ -787,7 +800,7 @@ public class TaskManagerView extends JFrame {
         nameInfoTextField.setEditable(false);
         descriptionInfoTextArea.setEditable(false);
         categoryInfoTextField.setEditable(false);
-        subtaskInfoTextField.setEditable(false);
+        listInfoTextField.setEditable(false);
         dateCreationInfoFormattedTextField.setEditable(false);
         deadLineInfoFormattedTextField.setEditable(false);
         priorityInfoTextField.setEditable(false);
@@ -807,7 +820,7 @@ public class TaskManagerView extends JFrame {
         deadLineInfoFormattedTextField.setBorder(EMPTY_BORDER);
         categoryInfoTextField.setBorder(EMPTY_BORDER);
         priorityInfoTextField.setBorder(EMPTY_BORDER);
-        subtaskInfoTextField.setBorder(EMPTY_BORDER);
+        listInfoTextField.setBorder(EMPTY_BORDER);
         addCategoryTextField.setBorder(EMPTY_BORDER);
         searchTextField.setBorder(EMPTY_BORDER);
         taskList.setBorder(EMPTY_BORDER);
@@ -827,19 +840,20 @@ public class TaskManagerView extends JFrame {
         completedLabel.setFont(FONT);
         categoryComboBox.setFont(FONT);
         categoryLabel.setFont(FONT);
-        subtaskComboBox.setFont(FONT);
-        subtaskLabel.setFont(FONT);
+        listComboBox.setFont(FONT);
+        listLabel.setFont(FONT);
         saveButton.setFont(FONT);
         searchTextField.setFont(FONT);
         filtersButton.setFont(FONT);
+        returnButton.setFont(FONT);
         nameInfoTextField.setFont(FONT);
         nameInfoLabel.setFont(FONT);
         descriptionInfoTextArea.setFont(FONT);
         descriptionInfoLabel.setFont(FONT);
         categoryInfoTextField.setFont(FONT);
         categoryInfoLabel.setFont(FONT);
-        subtaskInfoTextField.setFont(FONT);
-        subtaskInfoLabel.setFont(FONT);
+        listInfoTextField.setFont(FONT);
+        listInfoLabel.setFont(FONT);
         creationDateInfoLabel.setFont(FONT);
         dateCreationInfoFormattedTextField.setFont(FONT);
         deadLineInfoFormattedTextField.setFont(FONT);
@@ -984,7 +998,7 @@ public class TaskManagerView extends JFrame {
                 descriptionInfoTextArea == null ||
                 descriptionTextArea == null ||
                 categoryInfoTextField == null ||
-                subtaskInfoTextField == null ||
+                listInfoTextField == null ||
                 dateCreationInfoFormattedTextField == null ||
                 deadLineInfoFormattedTextField == null ||
                 priorityInfoTextField == null ||
@@ -1004,7 +1018,7 @@ public class TaskManagerView extends JFrame {
                 dateLabel == null ||
                 completedPercentageLabel == null ||
                 completedLabel == null ||
-                subtaskLabel == null ||
+                listLabel == null ||
                 nameInfoLabel == null ||
                 descriptionInfoLabel == null ||
                 categoryInfoLabel == null ||
@@ -1014,8 +1028,8 @@ public class TaskManagerView extends JFrame {
                 searchLabel == null ||
                 actionStatusLabel == null ||
                 categoryLabel == null ||
-                subtaskComboBox == null ||
-                subtaskInfoLabel == null
+                listComboBox == null ||
+                listInfoLabel == null
         );
     }
 

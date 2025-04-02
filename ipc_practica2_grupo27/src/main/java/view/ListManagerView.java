@@ -1,18 +1,14 @@
 package view;
 
 import controller.ListManagerController;
-import model.Task;
+import main.Main;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ListManagerView extends JFrame {
@@ -31,9 +27,13 @@ public class ListManagerView extends JFrame {
     private JLabel numberCompletedTaskLabel;
     private JPanel labelPendingPanel;
     private JPanel labelCompletedPanel;
-    private JPanel listSearchPanel;
+    private JPanel listSearchAddPanel;
     private JScrollPane pendingScrollpane;
     private JScrollPane completedScrollpane;
+    private JButton returnButton;
+    private JPanel returnPanel;
+    private JPanel addListPanel;
+    private JPanel listSearchPanel;
 
     private static final Color BACKGROUND_COLOR = new Color(161, 197, 255);
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
@@ -58,6 +58,12 @@ public class ListManagerView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showAddListDialog();
+            }
+        });
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.getPrincipalMenuView().showPrincipalMenuView();
             }
         });
     }
@@ -102,6 +108,7 @@ public class ListManagerView extends JFrame {
         addListButton.setFont(FONT);
         pendingLabel.setFont(FONT);
         completedLabel.setFont(FONT);
+        returnButton.setFont(FONT);
 
         String placeholder = "Ingrese su nombre";
 
@@ -128,7 +135,10 @@ public class ListManagerView extends JFrame {
         labelCompletedPanel.setBackground(BACKGROUND_COLOR);
         pendingTasksPanel.setBackground(BACKGROUND_COLOR);
         completedTasksPanel.setBackground(BACKGROUND_COLOR);
+        listSearchAddPanel.setBackground(BACKGROUND_COLOR);
+        addListPanel.setBackground(BACKGROUND_COLOR);
         listSearchPanel.setBackground(BACKGROUND_COLOR);
+        returnPanel.setBackground(BACKGROUND_COLOR);
         pendingScrollpane.setBackground(ELEMENTS_COLOR);
         completedScrollpane.setBackground(ELEMENTS_COLOR);
         listOfLists.setBackground(ELEMENTS_COLOR);
@@ -137,6 +147,8 @@ public class ListManagerView extends JFrame {
         searchTextField.setForeground(FOREGROUND_COLOR);
         addListButton.setBackground(ELEMENTS_COLOR);
         addListButton.setForeground(FOREGROUND_COLOR);
+        returnButton.setBackground(ELEMENTS_COLOR);
+        returnButton.setForeground(FOREGROUND_COLOR);
     }
 
     public static void main(String[] args) {

@@ -26,7 +26,7 @@ public class TaskManagerFilterDialog extends JDialog {
     private JComboBox<String> priorityFilterComboBox;
     private JSlider percentageFilterSlider;
     private JComboBox<String> categoryFilterComboBox;
-    private JComboBox<String> subtaskFilterComboBox;
+    private JComboBox<String> listFilterComboBox;
     private JPanel dateCreationPanel;
     private JPanel deadLinePanel;
     private JPanel sinceDateCreationPanel;
@@ -49,7 +49,7 @@ public class TaskManagerFilterDialog extends JDialog {
     private JLabel priorityLabel;
     private JLabel dateCreationLabel;
     private JLabel deadLineLabel;
-    private JLabel subtaskLabel;
+    private JLabel listLabel;
     private JLabel categoryLabel;
     private JLabel percentajeLabel;
     private JPanel priorityPanel;
@@ -57,7 +57,7 @@ public class TaskManagerFilterDialog extends JDialog {
     private JPanel deadLinePanelBackGround;
     private JPanel percentagePanel;
     private JPanel categoryPanel;
-    private JPanel subTaskPanel;
+    private JPanel listPanel;
     private JPanel buttonsPanel;
     private JDateChooser dateCreationChooser;
     private JDateChooser deadLineChooser;
@@ -92,7 +92,7 @@ public class TaskManagerFilterDialog extends JDialog {
         percentageFilterSlider.setBackground(BACKGROUND_COLOR);
         percentageFilterSlider.setForeground(FOREGROUND_COLOR);
         categoryFilterComboBox.setBackground(ELEMENTS_COLOR);
-        subtaskFilterComboBox.setBackground(ELEMENTS_COLOR);
+        listFilterComboBox.setBackground(ELEMENTS_COLOR);
         dateCreationPanel.setBackground(BACKGROUND_COLOR);
         deadLinePanel.setBackground(BACKGROUND_COLOR);
         sinceDateCreationPanel.setBackground(BACKGROUND_COLOR);
@@ -131,17 +131,21 @@ public class TaskManagerFilterDialog extends JDialog {
         dateCreationChooser.setBackground(ELEMENTS_COLOR);
         dateCreationChooser.getDateEditor().getUiComponent().setBackground(ELEMENTS_COLOR);
         dateCreationChooser.getDateEditor().getUiComponent().setForeground(FOREGROUND_COLOR);
+        dateCreationChooser.getCalendarButton().setBackground(ELEMENTS_COLOR);
+        dateCreationChooser.getCalendarButton().setForeground(FOREGROUND_COLOR);
         deadLineChooser.setBackground(ELEMENTS_COLOR);
         deadLineChooser.getDateEditor().getUiComponent().setBackground(ELEMENTS_COLOR);
         deadLineChooser.getDateEditor().getUiComponent().setForeground(FOREGROUND_COLOR);
+        deadLineChooser.getCalendarButton().setBackground(ELEMENTS_COLOR);
+        deadLineChooser.getCalendarButton().setForeground(FOREGROUND_COLOR);
         priorityLabel.setBackground(BACKGROUND_COLOR);
         priorityLabel.setForeground(FOREGROUND_COLOR);
         dateCreationLabel.setBackground(BACKGROUND_COLOR);
         dateCreationLabel.setForeground(FOREGROUND_COLOR);
         deadLineLabel.setBackground(BACKGROUND_COLOR);
         deadLineLabel.setForeground(FOREGROUND_COLOR);
-        subtaskLabel.setBackground(BACKGROUND_COLOR);
-        subtaskLabel.setForeground(FOREGROUND_COLOR);
+        listLabel.setBackground(BACKGROUND_COLOR);
+        listLabel.setForeground(FOREGROUND_COLOR);
         categoryLabel.setBackground(BACKGROUND_COLOR);
         categoryLabel.setForeground(FOREGROUND_COLOR);
         percentajeLabel.setBackground(BACKGROUND_COLOR);
@@ -150,7 +154,7 @@ public class TaskManagerFilterDialog extends JDialog {
         categoryPanel.setBackground(BACKGROUND_COLOR);
         dateCreationPanelBackGround.setBackground(BACKGROUND_COLOR);
         deadLinePanelBackGround.setBackground(BACKGROUND_COLOR);
-        subTaskPanel.setBackground(BACKGROUND_COLOR);
+        listPanel.setBackground(BACKGROUND_COLOR);
         percentagePanel.setBackground(BACKGROUND_COLOR);
         buttonsPanel.setBackground(BACKGROUND_COLOR);
     }
@@ -175,13 +179,13 @@ public class TaskManagerFilterDialog extends JDialog {
      * @param subtasks La lista de subtareas a mostrar en el filtro.
      */
     public void updateSubtaskList(ArrayList<Task> subtasks) {
-        subtaskFilterComboBox.removeAllItems();
+        listFilterComboBox.removeAllItems();
 
-        subtaskFilterComboBox.addItem(NOT_FILTER_SELECTED_TEXT);
-        subtaskFilterComboBox.addItem(SELECT_NOT_SUBTASK_PLACEHOLDER);
+        listFilterComboBox.addItem(NOT_FILTER_SELECTED_TEXT);
+        listFilterComboBox.addItem(SELECT_NOT_SUBTASK_PLACEHOLDER);
 
         for (Task subtask : subtasks) {
-            subtaskFilterComboBox.addItem(subtask.getName());
+            listFilterComboBox.addItem(subtask.getName());
         }
     }
 
@@ -298,10 +302,10 @@ public class TaskManagerFilterDialog extends JDialog {
      * @return El valor de la subtarea seleccionada o null si no se ha seleccionado ninguna opción.
      */
     public String getSubtaskFilterValue() {
-        if (subtaskFilterComboBox.getSelectedItem() == null || subtaskFilterComboBox.getSelectedItem().equals(NOT_FILTER_SELECTED_TEXT))
+        if (listFilterComboBox.getSelectedItem() == null || listFilterComboBox.getSelectedItem().equals(NOT_FILTER_SELECTED_TEXT))
             return null;
 
-        return subtaskFilterComboBox.getSelectedItem().toString();
+        return listFilterComboBox.getSelectedItem().toString();
     }
 
     /**
@@ -328,7 +332,7 @@ public class TaskManagerFilterDialog extends JDialog {
      * @param indexPrior El índice de la subtarea que se debe seleccionar en el combo box.
      */
     public void setSubtaskFilterValue(int indexPrior) {
-        subtaskFilterComboBox.setSelectedIndex(indexPrior);
+        listFilterComboBox.setSelectedIndex(indexPrior);
     }
 
     /**
@@ -435,7 +439,7 @@ public class TaskManagerFilterDialog extends JDialog {
         priorityFilterComboBox.setFont(FONT);
         percentageFilterSlider.setFont(FONT);
         categoryFilterComboBox.setFont(FONT);
-        subtaskFilterComboBox.setFont(FONT);
+        listFilterComboBox.setFont(FONT);
         untilPercentageRadioButton.setFont(FONT);
         fromPercentageRadioButton.setFont(FONT);
         untilDateCreationRadioButton.setFont(FONT);
@@ -449,7 +453,7 @@ public class TaskManagerFilterDialog extends JDialog {
         priorityLabel.setFont(FONT);
         dateCreationLabel.setFont(FONT);
         deadLineLabel.setFont(FONT);
-        subtaskLabel.setFont(FONT);
+        listLabel.setFont(FONT);
         categoryLabel.setFont(FONT);
         percentajeLabel.setFont(FONT);
         dateCreationChooser.setFont(FONT);

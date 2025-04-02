@@ -13,8 +13,8 @@ public class ViewManager {
 
     public void showPrincipalMenuView() {
         if (actualState != null) {
-            actualState.setVisible(false);
             actualState.dispose();
+            actualState.setVisible(false);
         }
 
         actualState.setContentPane(new PrincipalMenuView().getMainPanel());
@@ -33,7 +33,7 @@ public class ViewManager {
 
         actualState.setContentPane(new TaskManagerView().getMainPanel());
         actualState.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        actualState.setMinimumSize(new Dimension(1000, 600));
+        actualState.setMinimumSize(new Dimension(1400, 800));
         actualState.setSize(1400, 800);
         actualState.setResizable(true);
         actualState.setLocationRelativeTo(null);
