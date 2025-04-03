@@ -69,7 +69,8 @@ public class TaskManagerFilterDialog extends JDialog {
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
     private static final Color ELEMENTS_COLOR = new Color(231, 240, 253);
 
-    private static final Font FONT = new Font("Helvetica", Font.BOLD, 14);
+    private static final Font FONT = new Font("Helvetica", Font.BOLD, 16);
+    private static final Font FONT_ELEMENTS = new Font("Helvetica", Font.BOLD, 14);
 
     private final TaskManagerController taskManagerController;
 
@@ -411,6 +412,19 @@ public class TaskManagerFilterDialog extends JDialog {
         dateCreationChooser = new JDateChooser();
         deadLineChooser = new JDateChooser();
 
+        ImageIcon calendarIcon = new ImageIcon(getClass().getResource("/calendar.png"));
+        Image calendarImg = calendarIcon.getImage();
+        Image resizedCalendarImg = calendarImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon resizedCalendarIcon = new ImageIcon(resizedCalendarImg);
+
+        dateCreationChooser.getCalendarButton().setIcon(resizedCalendarIcon);
+        dateCreationChooser.getCalendarButton().revalidate();
+        dateCreationChooser.getCalendarButton().repaint();
+
+        deadLineChooser.getCalendarButton().setIcon(resizedCalendarIcon);
+        deadLineChooser.getCalendarButton().revalidate();
+        deadLineChooser.getCalendarButton().repaint();
+
         dateCreationChooser.setDateFormatString("dd/MM/yyyy");
         deadLineChooser.setDateFormatString("dd/MM/yyyy");
 
@@ -432,32 +446,32 @@ public class TaskManagerFilterDialog extends JDialog {
         leftPanel.setBorder(new EmptyBorder(0, 0, 0, 10));
         rightPanel.setBorder(new EmptyBorder(0, 10, 0, 0));
 
-        dateCreationChooser.getDateEditor().getUiComponent().setFont(FONT);
-        deadLineChooser.getDateEditor().getUiComponent().setFont(FONT);
-        buttonOK.setFont(FONT);
-        buttonCancel.setFont(FONT);
-        priorityFilterComboBox.setFont(FONT);
-        percentageFilterSlider.setFont(FONT);
-        categoryFilterComboBox.setFont(FONT);
-        listFilterComboBox.setFont(FONT);
-        untilPercentageRadioButton.setFont(FONT);
-        fromPercentageRadioButton.setFont(FONT);
-        untilDateCreationRadioButton.setFont(FONT);
-        sinceDateCreationRadioButton.setFont(FONT);
-        untilDeadLineRadioButton.setFont(FONT);
-        sinceDeadLineRadioButton.setFont(FONT);
-        noPercentageRadioButton.setFont(FONT);
-        noDateCreationRadioButton.setFont(FONT);
-        noDeadLineRadioButton.setFont(FONT);
-        buttonReset.setFont(FONT);
+        dateCreationChooser.getDateEditor().getUiComponent().setFont(FONT_ELEMENTS);
+        deadLineChooser.getDateEditor().getUiComponent().setFont(FONT_ELEMENTS);
+        buttonOK.setFont(FONT_ELEMENTS);
+        buttonCancel.setFont(FONT_ELEMENTS);
+        priorityFilterComboBox.setFont(FONT_ELEMENTS);
+        percentageFilterSlider.setFont(FONT_ELEMENTS);
+        categoryFilterComboBox.setFont(FONT_ELEMENTS);
+        listFilterComboBox.setFont(FONT_ELEMENTS);
+        untilPercentageRadioButton.setFont(FONT_ELEMENTS);
+        fromPercentageRadioButton.setFont(FONT_ELEMENTS);
+        untilDateCreationRadioButton.setFont(FONT_ELEMENTS);
+        sinceDateCreationRadioButton.setFont(FONT_ELEMENTS);
+        untilDeadLineRadioButton.setFont(FONT_ELEMENTS);
+        sinceDeadLineRadioButton.setFont(FONT_ELEMENTS);
+        noPercentageRadioButton.setFont(FONT_ELEMENTS);
+        noDateCreationRadioButton.setFont(FONT_ELEMENTS);
+        noDeadLineRadioButton.setFont(FONT_ELEMENTS);
+        buttonReset.setFont(FONT_ELEMENTS);
         priorityLabel.setFont(FONT);
         dateCreationLabel.setFont(FONT);
         deadLineLabel.setFont(FONT);
         listLabel.setFont(FONT);
         categoryLabel.setFont(FONT);
         percentajeLabel.setFont(FONT);
-        dateCreationChooser.setFont(FONT);
-        deadLineChooser.setFont(FONT);
+        dateCreationChooser.setFont(FONT_ELEMENTS);
+        deadLineChooser.setFont(FONT_ELEMENTS);
 
 
         initColors();

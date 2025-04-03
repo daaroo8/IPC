@@ -34,12 +34,14 @@ public class ListManagerView extends JFrame {
     private JPanel returnPanel;
     private JPanel addListPanel;
     private JPanel listSearchPanel;
+    private JButton deleteListButton;
 
     private static final Color BACKGROUND_COLOR = new Color(161, 197, 255);
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
     private static final Color ELEMENTS_COLOR = new Color(231, 240, 253);
 
-    private static final Font FONT = new Font("Helvetica", Font.BOLD, 14);
+    private static final Font FONT = new Font("Helvetica", Font.BOLD, 18);
+    private static final Font FONT_ELEMENTS = new Font("Helvetica", Font.BOLD, 16);
 
     private final AddListView addListView;
 
@@ -103,12 +105,14 @@ public class ListManagerView extends JFrame {
         searchTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
         listOfLists.setBorder(new EmptyBorder(5, 10, 5, 10));
 
-        listOfLists.setFont(FONT);
-        searchTextField.setFont(FONT);
-        addListButton.setFont(FONT);
+        listOfLists.setFont(FONT_ELEMENTS);
+        searchTextField.setFont(FONT_ELEMENTS);
+        addListButton.setFont(FONT_ELEMENTS);
         pendingLabel.setFont(FONT);
+        numberPendingTaskLabel.setFont(FONT);
         completedLabel.setFont(FONT);
-        returnButton.setFont(FONT);
+        numberCompletedTaskLabel.setFont(FONT);
+        returnButton.setFont(FONT_ELEMENTS);
 
         String placeholder = "Ingrese su nombre";
 
@@ -133,6 +137,10 @@ public class ListManagerView extends JFrame {
         rightListManagerPanel.setBackground(BACKGROUND_COLOR);
         labelPendingPanel.setBackground(BACKGROUND_COLOR);
         labelCompletedPanel.setBackground(BACKGROUND_COLOR);
+        completedLabel.setForeground(FOREGROUND_COLOR);
+        pendingLabel.setForeground(FOREGROUND_COLOR);
+        numberPendingTaskLabel.setForeground(FOREGROUND_COLOR);
+        numberCompletedTaskLabel.setForeground(FOREGROUND_COLOR);
         pendingTasksPanel.setBackground(BACKGROUND_COLOR);
         completedTasksPanel.setBackground(BACKGROUND_COLOR);
         listSearchAddPanel.setBackground(BACKGROUND_COLOR);
@@ -147,6 +155,8 @@ public class ListManagerView extends JFrame {
         searchTextField.setForeground(FOREGROUND_COLOR);
         addListButton.setBackground(ELEMENTS_COLOR);
         addListButton.setForeground(FOREGROUND_COLOR);
+        deleteListButton.setBackground(ELEMENTS_COLOR);
+        deleteListButton.setForeground(FOREGROUND_COLOR);
         returnButton.setBackground(ELEMENTS_COLOR);
         returnButton.setForeground(FOREGROUND_COLOR);
     }
@@ -160,5 +170,26 @@ public class ListManagerView extends JFrame {
         frame.setSize(frame.getWidth(), 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    private void createUIComponents() {
+        addListButton = new JButton();
+
+        ImageIcon addIcon = new ImageIcon(getClass().getResource("/add.png"));
+        Image addImg = addIcon.getImage();
+        Image resizedAddImg = addImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon resizedAddIcon = new ImageIcon(resizedAddImg);
+
+        addListButton.setIcon(resizedAddIcon);
+
+        deleteListButton = new JButton();
+
+        ImageIcon deleteIcon = new ImageIcon(getClass().getResource("/delete.png"));
+        Image deleteImg = deleteIcon.getImage();
+        Image resizedDeleteImg = deleteImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon resizedDeleteIcon = new ImageIcon(resizedDeleteImg);
+
+        deleteListButton.setIcon(resizedDeleteIcon);
+
     }
 }

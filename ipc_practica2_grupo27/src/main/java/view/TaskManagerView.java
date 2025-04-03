@@ -97,13 +97,13 @@ public class TaskManagerView extends JFrame {
     private JButton returnButton;
     private JDateChooser dateChooser;
 
-    public static final String SELECT_NOT_SUBTASK_PLACEHOLDER = "No es subtarea";
     public static final int DEFAULT_PERCENTAGE = 50;
     private static final Color BACKGROUND_COLOR = new Color(161, 197, 255);
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
     private static final Color ELEMENTS_COLOR = new Color(231, 240, 253);
 
-    private static final Font FONT = new Font("Helvetica", Font.BOLD, 14);
+    private static final Font FONT = new Font("Helvetica", Font.BOLD, 18);
+    private static final Font FONT_ELEMENTS = new Font("Helvetica", Font.BOLD, 16);
 
     private static final EmptyBorder EMPTY_BORDER = new EmptyBorder(5, 10, 5, 10);
 
@@ -499,8 +499,6 @@ public class TaskManagerView extends JFrame {
     public void updateSubtasksList(ArrayList<Task> subtasks) {
         listComboBox.removeAllItems();
 
-        listComboBox.addItem(TaskManagerView.SELECT_NOT_SUBTASK_PLACEHOLDER);
-
         for (Task subtask : subtasks) {
             listComboBox.addItem(subtask.getName());
         }
@@ -780,8 +778,17 @@ public class TaskManagerView extends JFrame {
         if (anyComponentIsNull())
             throw new RuntimeException("No se puede inicializar el componente");
 
-
         dateChooser = new JDateChooser();
+
+        ImageIcon calendarIcon = new ImageIcon(getClass().getResource("/calendar.png"));
+        Image calendarImg = calendarIcon.getImage();
+        Image resizedCalendarImg = calendarImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon resizedCalendarIcon = new ImageIcon(resizedCalendarImg);
+
+        dateChooser.getCalendarButton().setIcon(resizedCalendarIcon);
+        dateChooser.getCalendarButton().revalidate();
+        dateChooser.getCalendarButton().repaint();
+
         dateChooser.setDateFormatString("dd/MM/yyyy");
         dateChooser.setDate(new Date());
         dateChooser.getDateEditor().getUiComponent().setFocusable(false);
@@ -789,13 +796,14 @@ public class TaskManagerView extends JFrame {
         calendarPanel.add(dateChooser, BorderLayout.CENTER);
         mainPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
         leftPanel.setBorder(new EmptyBorder(0, 0, 0, 30));
+        rightPanel.setBorder(new EmptyBorder(0, 30, 0, 0));
         rightTopPanel.setBorder(new EmptyBorder(0, 0, 30, 0));
 
         taskListModel = new DefaultListModel<>();
         taskList.setModel(taskListModel);
-        taskList.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        taskList.setFont(new Font("Monospaced", Font.PLAIN, 16));
         taskList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        headerListTextField.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        headerListTextField.setFont(new Font("Monospaced", Font.PLAIN, 16));
 
         nameInfoTextField.setEditable(false);
         descriptionInfoTextArea.setEditable(false);
@@ -827,43 +835,44 @@ public class TaskManagerView extends JFrame {
         headerListTextField.setBorder(EMPTY_BORDER);
         dateChooser.getDateEditor().getUiComponent().setBorder(EMPTY_BORDER);
 
-        dateChooser.getDateEditor().getUiComponent().setFont(FONT);
-        nameTextField.setFont(FONT);
+        dateChooser.getDateEditor().getUiComponent().setFont(FONT_ELEMENTS);
+        nameTextField.setFont(FONT_ELEMENTS);
         nameLabel.setFont(FONT);
-        descriptionTextArea.setFont(FONT);
+        descriptionTextArea.setFont(FONT_ELEMENTS);
         descriptionLabel.setFont(FONT);
-        priorityComboBox.setFont(FONT);
+        priorityComboBox.setFont(FONT_ELEMENTS);
         dateLabel.setFont(FONT);
-        percentageSlider.setFont(FONT);
+        percentageSlider.setFont(FONT_ELEMENTS);
         completedCheckBox.setFont(FONT);
         completedPercentageLabel.setFont(FONT);
         completedLabel.setFont(FONT);
-        categoryComboBox.setFont(FONT);
+        categoryComboBox.setFont(FONT_ELEMENTS);
         categoryLabel.setFont(FONT);
-        listComboBox.setFont(FONT);
+        listComboBox.setFont(FONT_ELEMENTS);
         listLabel.setFont(FONT);
-        saveButton.setFont(FONT);
-        searchTextField.setFont(FONT);
-        filtersButton.setFont(FONT);
-        returnButton.setFont(FONT);
-        nameInfoTextField.setFont(FONT);
+        priorityLabel.setFont(FONT);
+        saveButton.setFont(FONT_ELEMENTS);
+        searchTextField.setFont(FONT_ELEMENTS);
+        filtersButton.setFont(FONT_ELEMENTS);
+        returnButton.setFont(FONT_ELEMENTS);
+        nameInfoTextField.setFont(FONT_ELEMENTS);
         nameInfoLabel.setFont(FONT);
-        descriptionInfoTextArea.setFont(FONT);
+        descriptionInfoTextArea.setFont(FONT_ELEMENTS);
         descriptionInfoLabel.setFont(FONT);
-        categoryInfoTextField.setFont(FONT);
+        categoryInfoTextField.setFont(FONT_ELEMENTS);
         categoryInfoLabel.setFont(FONT);
-        listInfoTextField.setFont(FONT);
+        listInfoTextField.setFont(FONT_ELEMENTS);
         listInfoLabel.setFont(FONT);
         creationDateInfoLabel.setFont(FONT);
-        dateCreationInfoFormattedTextField.setFont(FONT);
-        deadLineInfoFormattedTextField.setFont(FONT);
+        dateCreationInfoFormattedTextField.setFont(FONT_ELEMENTS);
+        deadLineInfoFormattedTextField.setFont(FONT_ELEMENTS);
         deadLineInfoLabel.setFont(FONT);
-        priorityInfoTextField.setFont(FONT);
+        priorityInfoTextField.setFont(FONT_ELEMENTS);
         priorityInfoLabel.setFont(FONT);
-        editButton.setFont(FONT);
-        deleteButton.setFont(FONT);
-        addCategoryTextField.setFont(FONT);
-        addCategoryButton.setFont(FONT);
+        editButton.setFont(FONT_ELEMENTS);
+        deleteButton.setFont(FONT_ELEMENTS);
+        addCategoryTextField.setFont(FONT_ELEMENTS);
+        addCategoryButton.setFont(FONT_ELEMENTS);
         searchLabel.setFont(FONT);
         actionStatusLabel.setFont(FONT);
 
@@ -1037,9 +1046,47 @@ public class TaskManagerView extends JFrame {
         JFrame frame = new JFrame("Gestor de tareas");
         frame.setContentPane(new TaskManagerView().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(1400, 800));
+        frame.setMinimumSize(new Dimension(1600, 1100));
         frame.setSize(1400, 800);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    private void createUIComponents() {
+        filtersButton = new JButton();
+
+        ImageIcon filtersIcon = new ImageIcon(getClass().getResource("/filter.png"));
+        Image filtersImg = filtersIcon.getImage();
+        Image resizedFiltersImg = filtersImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon resizedFiltersIcon = new ImageIcon(resizedFiltersImg);
+
+        filtersButton.setIcon(resizedFiltersIcon);
+
+        saveButton = new JButton();
+
+        ImageIcon saveIcon = new ImageIcon(getClass().getResource("/save.png"));
+        Image saveImg = saveIcon.getImage();
+        Image resizedSaveImg = saveImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon resizedSaveIcon = new ImageIcon(resizedSaveImg);
+
+        saveButton.setIcon(resizedSaveIcon);
+
+        editButton = new JButton();
+
+        ImageIcon editIcon = new ImageIcon(getClass().getResource("/edit.png"));
+        Image editImg = editIcon.getImage();
+        Image resizedEditImg = editImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon resizedEditIcon = new ImageIcon(resizedEditImg);
+
+        editButton.setIcon(resizedEditIcon);
+
+        deleteButton = new JButton();
+
+        ImageIcon deleteIcon = new ImageIcon(getClass().getResource("/delete.png"));
+        Image deleteImg = deleteIcon.getImage();
+        Image resizedDeleteImg = deleteImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon resizedDeleteIcon = new ImageIcon(resizedDeleteImg);
+
+        deleteButton.setIcon(resizedDeleteIcon);
     }
 }

@@ -19,7 +19,8 @@ public class AddListView extends JDialog{
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
     private static final Color ELEMENTS_COLOR = new Color(231, 240, 253);
 
-    private static final Font FONT = new Font("Helvetica", Font.BOLD, 14);
+    private static final Font FONT = new Font("Helvetica", Font.BOLD, 18);
+    private static final Font FONT_ELEMENTS = new Font("Helvetica", Font.BOLD, 16);
 
     private final ListManagerController listManagerController;
 
@@ -54,8 +55,8 @@ public class AddListView extends JDialog{
         listToAddTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
 
         nameLabel.setFont(FONT);
-        addListButton.setFont(FONT);
-        listToAddTextField.setFont(FONT);
+        addListButton.setFont(FONT_ELEMENTS);
+        listToAddTextField.setFont(FONT_ELEMENTS);
 
         initColors();
     }

@@ -21,7 +21,8 @@ public class PrincipalMenuView extends JFrame {
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
     private static final Color ELEMENTS_COLOR = new Color(231, 240, 253);
 
-    private static final Font FONT = new Font("Helvetica", Font.BOLD, 14);
+    private static final Font FONT = new Font("Helvetica", Font.BOLD, 18);
+    private static final Font FONT_ELEMENTS = new Font("Helvetica", Font.BOLD, 16);
 
     public PrincipalMenuView() {
         initComponents();
@@ -52,9 +53,8 @@ public class PrincipalMenuView extends JFrame {
 
         taskManagerButton.setFont(FONT);
         listManagerButton.setFont(FONT);
-        taskListInfo.setFont(FONT);
-        listExampleMenu.setFont(FONT);
-
+        taskListInfo.setFont(FONT_ELEMENTS);
+        listExampleMenu.setFont(FONT_ELEMENTS);
 
         initColors();
     }
