@@ -1,7 +1,6 @@
 package view;
 
 import controller.ListManagerController;
-import model.ListElement;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

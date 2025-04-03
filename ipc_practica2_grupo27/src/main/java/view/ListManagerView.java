@@ -2,7 +2,6 @@ package view;
 
 import controller.ListManagerController;
 import main.Main;
-import model.ListElement;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,8 +17,8 @@ public class ListManagerView extends JFrame {
     private JPanel rightListManagerPanel;
     private JTextField searchTextField;
     private JButton addListButton;
-    private JList<ListElement> listOfLists;
-    private DefaultListModel<ListElement> listOfListsModel;
+    private JList<String> listOfLists;
+    private DefaultListModel<String> listOfListsModel;
     private JPanel pendingTasksPanel;
     private JPanel completedTasksPanel;
     private JLabel pendingLabel;
@@ -81,10 +80,10 @@ public class ListManagerView extends JFrame {
         return addListView.getNewTaskListTextValue();
     }
 
-    public void updateTasksList(ArrayList<ListElement> taskLists) {
+    public void updateTasksList(ArrayList<String> taskLists) {
         listOfListsModel.clear();
 
-        for (ListElement taskList : taskLists) {
+        for (String taskList : taskLists) {
             listOfListsModel.addElement(taskList);
         }
     }
@@ -121,9 +120,7 @@ public class ListManagerView extends JFrame {
 
         listOfLists.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // TEMPORAL
-        ListElement listElement = new ListElement("IPC");
-        updateTasksList(new ArrayList<>(List.of(listElement)));
+        updateTasksList(new ArrayList<>(List.of("IPC")));
 
         initColors();
     }
