@@ -46,6 +46,10 @@ public class PrincipalMenuView extends JFrame {
     }
 
     public void initComponents() {
+
+        if (anyComponentIsNull())
+            throw new RuntimeException("No se puede inicializar el componente");
+
         taskManagerPanel.setBorder(new EmptyBorder(50, 50, 50, 10));
         listManagerPanel.setBorder(new EmptyBorder(50, 10, 50, 50));
         listExampleMenu.setBorder(new EmptyBorder(5, 10, 5, 10));
@@ -60,7 +64,6 @@ public class PrincipalMenuView extends JFrame {
     }
 
 
-
     public void initColors() {
         mainPanel.setBackground(BACKGROUND_COLOR);
         taskManagerPanel.setBackground(BACKGROUND_COLOR);
@@ -73,6 +76,17 @@ public class PrincipalMenuView extends JFrame {
         listExampleMenu.setForeground(FOREGROUND_COLOR);
         taskListInfo.setBackground(ELEMENTS_COLOR);
         taskListInfo.setForeground(FOREGROUND_COLOR);
+    }
+
+    public boolean anyComponentIsNull() {
+        return (mainPanel == null ||
+                taskManagerPanel == null ||
+                listManagerPanel == null ||
+                listExampleMenu == null ||
+                taskListInfo == null ||
+                taskManagerButton == null ||
+                listManagerButton == null);
+
     }
 
     public static void main(String[] args) {

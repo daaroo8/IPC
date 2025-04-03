@@ -51,7 +51,7 @@ public class TaskManagerFilterDialog extends JDialog {
     private JLabel deadLineLabel;
     private JLabel listLabel;
     private JLabel categoryLabel;
-    private JLabel percentajeLabel;
+    private JLabel percentageLabel;
     private JPanel priorityPanel;
     private JPanel dateCreationPanelBackGround;
     private JPanel deadLinePanelBackGround;
@@ -149,8 +149,8 @@ public class TaskManagerFilterDialog extends JDialog {
         listLabel.setForeground(FOREGROUND_COLOR);
         categoryLabel.setBackground(BACKGROUND_COLOR);
         categoryLabel.setForeground(FOREGROUND_COLOR);
-        percentajeLabel.setBackground(BACKGROUND_COLOR);
-        percentajeLabel.setForeground(FOREGROUND_COLOR);
+        percentageLabel.setBackground(BACKGROUND_COLOR);
+        percentageLabel.setForeground(FOREGROUND_COLOR);
         priorityPanel.setBackground(BACKGROUND_COLOR);
         categoryPanel.setBackground(BACKGROUND_COLOR);
         dateCreationPanelBackGround.setBackground(BACKGROUND_COLOR);
@@ -469,7 +469,7 @@ public class TaskManagerFilterDialog extends JDialog {
         deadLineLabel.setFont(FONT);
         listLabel.setFont(FONT);
         categoryLabel.setFont(FONT);
-        percentajeLabel.setFont(FONT);
+        percentageLabel.setFont(FONT);
         dateCreationChooser.setFont(FONT_ELEMENTS);
         deadLineChooser.setFont(FONT_ELEMENTS);
 
@@ -521,14 +521,35 @@ public class TaskManagerFilterDialog extends JDialog {
     private boolean anyComponentIsNull() {
         return (
                 dateCreationPanel == null ||
+                        deadLinePanel == null ||
+                        dateCreationChooser == null ||
+                        deadLineChooser == null ||
                         dialogPanel == null ||
                         mainPanel == null ||
                         rightPanel == null ||
                         leftPanel == null ||
-                        deadLinePanel == null ||
                         buttonOK == null ||
                         buttonCancel == null ||
-                        buttonReset == null
+                        buttonReset == null ||
+                        percentageFilterSlider == null ||
+                        categoryFilterComboBox == null ||
+                        listFilterComboBox == null ||
+                        percentageLabel == null ||
+                        untilPercentageRadioButton == null ||
+                        fromPercentageRadioButton == null ||
+                        untilDateCreationRadioButton == null ||
+                        sinceDateCreationRadioButton == null ||
+                        untilDeadLineRadioButton == null ||
+                        sinceDeadLineRadioButton == null ||
+                        noPercentageRadioButton == null ||
+                        noDateCreationRadioButton == null ||
+                        noDeadLineRadioButton == null ||
+                        priorityLabel == null ||
+                        dateCreationLabel == null ||
+                        deadLineLabel == null ||
+                        listLabel == null ||
+                        categoryLabel == null ||
+                        priorityFilterComboBox == null
         );
     }
 }
