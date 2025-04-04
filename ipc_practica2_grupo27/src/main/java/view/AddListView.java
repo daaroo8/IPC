@@ -30,6 +30,8 @@ public class AddListView extends JDialog{
         mainPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
+        listToAddTextField.setBorder(new EmptyBorder(5, 10, 5, 10));
+
         setContentPane(mainPanel);
         setModal(true);
 
