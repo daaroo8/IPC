@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddListView extends JDialog{
+public class AddListView extends JDialog {
     private JLabel nameLabel;
     private JTextField listToAddTextField;
     private JButton addListButton;

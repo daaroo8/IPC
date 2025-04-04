@@ -7,12 +7,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Clase que representa el modelo del Gestor de tareas
  */
 public class TaskManagerModel {
-    private final ArrayList<Task> tasks;
+    private final ArrayList<TaskList> taskLists;
     private final ArrayList<Task> tasksFiltered;
     private final ArrayList<String> categories;
     private int lastPercentage = 50;
@@ -24,7 +25,7 @@ public class TaskManagerModel {
      * Constructor para inicializar el modelo de gestión de tareas.
      */
     public TaskManagerModel() {
-        tasks = new ArrayList<>();
+        taskLists = new ArrayList<>(List.of(new TaskList("IPC")));
         tasksFiltered = new ArrayList<>();
         categories = new ArrayList<>(Arrays.asList("Escuela", "Trabajo", "Personal"));
     }
@@ -80,7 +81,11 @@ public class TaskManagerModel {
      * @param task La tarea a eliminar.
      */
     public void removeTask(Task task) {
-        tasks.remove(task);
+        for (TaskList taskList : taskLists) {
+            for (Task t : taskList.getTasks()) {
+                taskList.removeTaskFromTaskList(task);
+            }
+        }
     }
 
     /**
@@ -139,9 +144,11 @@ public class TaskManagerModel {
      * @return true si no existe otra tarea con el mismo nombre, de lo contrario false.
      */
     public boolean isValidTask(Task task) {
-        for (Task t : tasks) {
-            if (t.getName().equals(task.getName().trim())) {
-                return false;
+        for (TaskList taskList : taskLists) {
+            for (Task t : taskList.getTasks()) {
+                if (t.getName().equals(task.getName().trim())) {
+                    return false;
+                }
             }
         }
 
@@ -154,7 +161,11 @@ public class TaskManagerModel {
      * @param task La tarea a agregar.
      */
     public void addTask(Task task) {
-        tasks.add(task);
+        for (TaskList taskList : taskLists) {
+            if (taskList.getName().equals(task.getSubtask())) {
+                taskList.addTaskToTaskList(task);
+            }
+        }
     }
 
     /**
@@ -163,22 +174,35 @@ public class TaskManagerModel {
      * @return La lista de tareas.
      */
     public ArrayList<Task> getTasks() {
-        return tasks;
+        ArrayList<Task> allTasks = new ArrayList<>();
+        for (TaskList taskList : taskLists) {
+            allTasks.addAll(taskList.getTasks());
+        }
+
+        return allTasks;
+    }
+
+    public ArrayList<TaskList> getTaskLists() {
+        return taskLists;
+    }
+
+    public void addTaskList(TaskList taskList) {
+        taskLists.add(taskList);
     }
 
     /**
      * Filtra las tareas según los criterios especificados.
      *
-     * @param searchText Texto de búsqueda en el nombre o descripción.
-     * @param priorityFilterValue Valor del filtro de prioridad.
-     * @param percentageFilterMode Modo de filtro de porcentaje.
-     * @param percentageFilterValue Valor del filtro de porcentaje.
+     * @param searchText                Texto de búsqueda en el nombre o descripción.
+     * @param priorityFilterValue       Valor del filtro de prioridad.
+     * @param percentageFilterMode      Modo de filtro de porcentaje.
+     * @param percentageFilterValue     Valor del filtro de porcentaje.
      * @param creationChooserFilterMode Modo de filtro de fecha de creación.
-     * @param creationChooserDate Fecha seleccionada para el filtro de creación.
+     * @param creationChooserDate       Fecha seleccionada para el filtro de creación.
      * @param deadlineChooserFilterMode Modo de filtro de fecha límite.
-     * @param deadlineChooserDate Fecha seleccionada para el filtro de fecha límite.
+     * @param deadlineChooserDate       Fecha seleccionada para el filtro de fecha límite.
      * @param selectCategoryFilterValue Categoría seleccionada para filtrar.
-     * @param selectSubTaskFilterValue Subtarea seleccionada para filtrar.
+     * @param selectSubTaskFilterValue  Subtarea seleccionada para filtrar.
      */
     public void filterTasks(
             String searchText,
@@ -190,16 +214,18 @@ public class TaskManagerModel {
             String selectSubTaskFilterValue
     ) {
         tasksFiltered.clear();
-        for (Task task : tasks) {
-            if ((task.getName().toLowerCase().contains(searchText.toLowerCase()) || task.getDescription().toLowerCase().contains(searchText.toLowerCase())) &&
-                    (priorityFilterValue == null || task.getPriority().toString().equals(priorityFilterValue)) &&
-                    filterTaskByPercentage(percentageFilterMode, percentageFilterValue, task.getPercentage()) &&
-                    filterTaskByCreationChooser(creationChooserFilterMode, creationChooserDate, task.getCreationDate()) &&
-                    filterTaskByDeadlineChooser(deadlineChooserFilterMode, deadlineChooserDate, task.getDeadline()) &&
-                    (selectCategoryFilterValue == null || task.getCategory().equals(selectCategoryFilterValue)) &&
-                    (selectSubTaskFilterValue == null || task.getSubtask().equals(selectSubTaskFilterValue))
-            ) {
-                tasksFiltered.add(task);
+        for (TaskList taskList : taskLists) {
+            for (Task task : taskList.getTasks()) {
+                if ((task.getName().toLowerCase().contains(searchText.toLowerCase()) || task.getDescription().toLowerCase().contains(searchText.toLowerCase())) &&
+                        (priorityFilterValue == null || task.getPriority().toString().equals(priorityFilterValue)) &&
+                        filterTaskByPercentage(percentageFilterMode, percentageFilterValue, task.getPercentage()) &&
+                        filterTaskByCreationChooser(creationChooserFilterMode, creationChooserDate, task.getCreationDate()) &&
+                        filterTaskByDeadlineChooser(deadlineChooserFilterMode, deadlineChooserDate, task.getDeadline()) &&
+                        (selectCategoryFilterValue == null || task.getCategory().equals(selectCategoryFilterValue)) &&
+                        (selectSubTaskFilterValue == null || task.getSubtask().equals(selectSubTaskFilterValue))
+                ) {
+                    tasksFiltered.add(task);
+                }
             }
         }
     }
@@ -207,9 +233,9 @@ public class TaskManagerModel {
     /**
      * Filtra una tarea según el porcentaje y el modo de filtro seleccionado.
      *
-     * @param percentageFilterMode El modo de filtro de porcentaje (hasta, desde, ninguno).
+     * @param percentageFilterMode  El modo de filtro de porcentaje (hasta, desde, ninguno).
      * @param percentageFilterValue El valor de porcentaje para filtrar.
-     * @param taskPercentage El porcentaje de la tarea a evaluar.
+     * @param taskPercentage        El porcentaje de la tarea a evaluar.
      * @return true si la tarea cumple con el criterio de filtro, de lo contrario false.
      */
     private boolean filterTaskByPercentage(RangeSelections percentageFilterMode, int percentageFilterValue, int taskPercentage) {
@@ -224,8 +250,8 @@ public class TaskManagerModel {
      * Filtra una tarea según la fecha de creación y el modo de filtro seleccionado.
      *
      * @param creationChooserFilterMode El modo de filtro de fecha de creación (hasta, desde, ninguno).
-     * @param creationChooserDate La fecha de referencia para filtrar.
-     * @param creationDate La fecha de creación de la tarea a evaluar.
+     * @param creationChooserDate       La fecha de referencia para filtrar.
+     * @param creationDate              La fecha de creación de la tarea a evaluar.
      * @return true si la tarea cumple con el criterio de filtro, de lo contrario false.
      */
     private boolean filterTaskByCreationChooser(RangeSelections creationChooserFilterMode, LocalDate creationChooserDate, LocalDate creationDate) {
@@ -240,8 +266,8 @@ public class TaskManagerModel {
      * Filtra una tarea según la fecha límite y el modo de filtro seleccionado.
      *
      * @param deadlineChooserFilterMode El modo de filtro de fecha límite (hasta, desde, ninguno).
-     * @param deadlineChooserDate La fecha de referencia para filtrar.
-     * @param deadline La fecha límite de la tarea a evaluar.
+     * @param deadlineChooserDate       La fecha de referencia para filtrar.
+     * @param deadline                  La fecha límite de la tarea a evaluar.
      * @return true si la tarea cumple con el criterio de filtro, de lo contrario false.
      */
     private boolean filterTaskByDeadlineChooser(RangeSelections deadlineChooserFilterMode, LocalDate deadlineChooserDate, LocalDate deadline) {

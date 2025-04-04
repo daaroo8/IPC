@@ -2,18 +2,19 @@ package model;
 
 import java.util.ArrayList;
 
-public class ListElement {
+public class TaskList {
 
     public String name;
     public ArrayList<Task> tasks;
 
-    public ListElement(String name) {
+    public TaskList(String name) {
         if (name == null)
             throw new IllegalArgumentException("name cannot be null");
         this.name = name;
+        tasks = new ArrayList<>();
     }
 
-    public ListElement(String name, ArrayList<Task> tasks) {
+    public TaskList(String name, ArrayList<Task> tasks) {
         if (name == null)
             throw new IllegalArgumentException("name cannot be null");
         if (tasks == null)
@@ -23,16 +24,13 @@ public class ListElement {
         this.tasks = tasks;
     }
 
-    public void addTaskToListElement(Task task) {
-        if (tasks == null)
-            tasks = new ArrayList<>();
-
+    public void addTaskToTaskList(Task task) {
         tasks.add(task);
     }
 
-    public void removeTaskFromListElement(Task task) {
-        if (tasks == null)
-            throw new IllegalArgumentException("tasks cannot be null");
+    public void removeTaskFromTaskList(Task task) {
+        if (task == null)
+            throw new IllegalArgumentException("task cannot be null");
 
         tasks.remove(task);
     }
@@ -41,9 +39,13 @@ public class ListElement {
         return tasks;
     }
 
-    public Task getTaskFromListElement(int index) {
+    public Task getTaskFromTaskList(int index) {
 
         return tasks.get(index);
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

@@ -1,10 +1,7 @@
 package main;
 
 import model.TaskManagerModel;
-import view.PrincipalMenuView;
 import view.ViewManager;
-
-import java.security.Principal;
 
 public class Main {
     private static ViewManager manager;

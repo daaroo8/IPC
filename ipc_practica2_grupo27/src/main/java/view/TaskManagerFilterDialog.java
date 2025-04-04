@@ -13,7 +13,7 @@ import java.util.Date;
 
 import com.toedter.calendar.JDateChooser;
 import controller.TaskManagerController;
-import model.Task;
+import model.TaskList;
 import model.enums.RangeSelections;
 
 /**
@@ -177,16 +177,16 @@ public class TaskManagerFilterDialog extends JDialog {
     /**
      * Actualiza la lista de subtareas en el filtro de tareas.
      *
-     * @param subtasks La lista de subtareas a mostrar en el filtro.
+     * @param taskLists La lista de subtareas a mostrar en el filtro.
      */
-    public void updateSubtaskList(ArrayList<Task> subtasks) {
+    public void updateTaskLists(ArrayList<TaskList> taskLists) {
         listFilterComboBox.removeAllItems();
 
         listFilterComboBox.addItem(NOT_FILTER_SELECTED_TEXT);
         listFilterComboBox.addItem(SELECT_NOT_SUBTASK_PLACEHOLDER);
 
-        for (Task subtask : subtasks) {
-            listFilterComboBox.addItem(subtask.getName());
+        for (TaskList taskList : taskLists) {
+            listFilterComboBox.addItem(taskList.getName());
         }
     }
 
@@ -406,8 +406,8 @@ public class TaskManagerFilterDialog extends JDialog {
      * @throws RuntimeException Si algún componente es nulo al intentar inicializar.
      */
     private void initComponents() {
-        if (anyComponentIsNull())
-            throw new RuntimeException("No se puede inicializar el componente");
+//        if (anyComponentIsNull())
+//            throw new RuntimeException("No se puede inicializar el componente");
 
         dateCreationChooser = new JDateChooser();
         deadLineChooser = new JDateChooser();

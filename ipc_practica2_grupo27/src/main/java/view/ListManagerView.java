@@ -2,6 +2,7 @@ package view;
 
 import controller.ListManagerController;
 import main.Main;
+import model.TaskList;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -17,8 +18,8 @@ public class ListManagerView extends JFrame {
     private JPanel rightListManagerPanel;
     private JTextField searchTextField;
     private JButton addListButton;
-    private JList<String> listOfLists;
-    private DefaultListModel<String> listOfListsModel;
+    private JList<TaskList> listOfLists;
+    private DefaultListModel<TaskList> listOfListsModel;
     private JPanel pendingTasksPanel;
     private JPanel completedTasksPanel;
     private JLabel pendingLabel;
@@ -48,13 +49,12 @@ public class ListManagerView extends JFrame {
     private final ListManagerController listManagerController;
 
     public ListManagerView() {
-        initComponents();
-
-        mainPanel.setLayout(new GridLayout(1, 2));
-
         listManagerController = new ListManagerController(this);
         addListView = new AddListView(listManagerController);
 
+        initComponents();
+
+        mainPanel.setLayout(new GridLayout(1, 2));
 
         addListButton.addActionListener(new ActionListener() {
             @Override
@@ -65,7 +65,7 @@ public class ListManagerView extends JFrame {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.getPrincipalMenuView().showPrincipalMenuView();
+                Main.getViewManager().showPrincipalMenuView();
             }
         });
     }
@@ -82,10 +82,10 @@ public class ListManagerView extends JFrame {
         return addListView.getNewTaskListTextValue();
     }
 
-    public void updateTasksList(ArrayList<String> taskLists) {
+    public void updateTasksList(ArrayList<TaskList> taskLists) {
         listOfListsModel.clear();
 
-        for (String taskList : taskLists) {
+        for (TaskList taskList : taskLists) {
             listOfListsModel.addElement(taskList);
         }
     }
@@ -124,7 +124,7 @@ public class ListManagerView extends JFrame {
 
         listOfLists.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        updateTasksList(new ArrayList<>(List.of("IPC")));
+        updateTasksList(listManagerController.getTaskLists());
 
         initColors();
     }

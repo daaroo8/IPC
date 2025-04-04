@@ -221,5 +221,4 @@ public class Task {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return String.format("%-10s | %-10s | %-11s", name, deadline.format(formatter), getStatus());
     }
-
 }
