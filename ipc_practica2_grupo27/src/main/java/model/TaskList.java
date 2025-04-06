@@ -39,9 +39,24 @@ public class TaskList {
         return tasks;
     }
 
-    public Task getTaskFromTaskList(int index) {
+    public ArrayList<Task> getPendingTasks() {
+        ArrayList<Task> pendingTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getPercentage() != 100)
+                pendingTasks.add(task);
+        }
 
-        return tasks.get(index);
+        return pendingTasks;
+    }
+
+    public ArrayList<Task> getCompletedTasks() {
+        ArrayList<Task> completedTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getPercentage() == 100)
+                completedTasks.add(task);
+        }
+
+        return completedTasks;
     }
 
     public String getName() {

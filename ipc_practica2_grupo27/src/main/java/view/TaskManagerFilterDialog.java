@@ -62,8 +62,6 @@ public class TaskManagerFilterDialog extends JDialog {
     private JDateChooser dateCreationChooser;
     private JDateChooser deadLineChooser;
 
-    public static final String SELECT_CATEGORY_PLACEHOLDER = "Seleccionar opción";
-    public static final String SELECT_NOT_SUBTASK_PLACEHOLDER = "No es subtarea";
     public static final String NOT_FILTER_SELECTED_TEXT = "No";
     private static final Color BACKGROUND_COLOR = new Color(161, 197, 255);
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
@@ -183,7 +181,6 @@ public class TaskManagerFilterDialog extends JDialog {
         listFilterComboBox.removeAllItems();
 
         listFilterComboBox.addItem(NOT_FILTER_SELECTED_TEXT);
-        listFilterComboBox.addItem(SELECT_NOT_SUBTASK_PLACEHOLDER);
 
         for (TaskList taskList : taskLists) {
             listFilterComboBox.addItem(taskList.getName());

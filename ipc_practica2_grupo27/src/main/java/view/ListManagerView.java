@@ -2,15 +2,16 @@ package view;
 
 import controller.ListManagerController;
 import main.Main;
+import model.Task;
 import model.TaskList;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListManagerView extends JFrame {
     private JPanel mainPanel;
@@ -29,13 +30,15 @@ public class ListManagerView extends JFrame {
     private JPanel labelPendingPanel;
     private JPanel labelCompletedPanel;
     private JPanel listSearchAddPanel;
-    private JScrollPane pendingScrollpane;
-    private JScrollPane completedScrollpane;
+    private JScrollPane pendingScrollPanel;
+    private JScrollPane completedScrollPanel;
     private JButton returnButton;
     private JPanel returnPanel;
     private JPanel addListPanel;
     private JPanel listSearchPanel;
     private JButton deleteListButton;
+    private JPanel pendingInsidePanel;
+    private JPanel completedInsidePanel;
 
     private static final Color BACKGROUND_COLOR = new Color(161, 197, 255);
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
@@ -62,12 +65,96 @@ public class ListManagerView extends JFrame {
                 showAddListDialog();
             }
         });
+
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Main.getViewManager().showPrincipalMenuView();
             }
         });
+
+        searchTextField.addKeyListener(new KeyAdapter() {
+            /**
+             * Maneja el evento de escritura en el campo de texto de búsqueda.
+             * Este evento se dispara cuando el usuario escribe un carácter en el campo de texto de búsqueda,
+             * y se encarga de llamar al controlador para manejar la entrada de búsqueda y filtrar los resultados.
+             */
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                listManagerController.handleKeyTypedSearchInputEvent(e.getKeyChar());
+            }
+        });
+        deleteListButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listManagerController.handleDeleteList();
+            }
+        });
+        listOfLists.addListSelectionListener(new ListSelectionListener() {
+            /**
+             * Maneja el evento de selección de un ítem en la lista de tareas.
+             * Este evento se dispara cuando el usuario selecciona una tarea de la lista,
+             * y se encarga de llamar al controlador para manejar la selección de la tarea.
+             */
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                listManagerController.handleSelectListEvent();
+            }
+        });
+    }
+
+    public TaskList getSelectedTaskList() {
+        return listOfLists.getSelectedValue();
+    }
+
+    public void setPendingCount(int count) {
+        numberPendingTaskLabel.setText(String.valueOf(count));
+    }
+
+    public void setCompletedCount(int count) {
+        numberCompletedTaskLabel.setText(String.valueOf(count));
+    }
+
+    public void updateTaskListInformation(TaskList taskList) {
+        ArrayList<Task> pendingTasks = taskList.getPendingTasks();
+        ArrayList<Task> completedTasks = taskList.getCompletedTasks();
+
+        setPendingCount(pendingTasks.size());
+        setCompletedCount(completedTasks.size());
+
+        updatePendingPanel(pendingTasks);
+        updateCompletedPanel(completedTasks);
+    }
+
+    public void updatePendingPanel(ArrayList<Task> pendingTasks) {
+        pendingInsidePanel.removeAll();
+        pendingInsidePanel.setLayout(new BoxLayout(pendingInsidePanel, BoxLayout.Y_AXIS));
+        for (Task task : pendingTasks) {
+            JPanel taskPanel = new JPanel();
+            taskPanel.setLayout(new BorderLayout());
+            taskPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+            taskPanel.setBackground(new Color(0, 0, 100));
+            taskPanel.setPreferredSize(new Dimension(0, 100));
+            taskPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
+
+            JLabel taskLabel = new JLabel(task.getName());
+            taskLabel.setFont(FONT_ELEMENTS);
+            taskLabel.setForeground(FOREGROUND_COLOR);
+            taskPanel.add(taskLabel, BorderLayout.CENTER);
+
+            pendingInsidePanel.add(taskPanel);
+        }
+
+        pendingInsidePanel.revalidate();
+        pendingInsidePanel.repaint();
+
+        pendingScrollPanel.setViewportView(pendingInsidePanel);
+    }
+
+    public void updateCompletedPanel(ArrayList<Task> completedTasks) {
+
     }
 
     public void closeAddListDialog() {
@@ -80,6 +167,10 @@ public class ListManagerView extends JFrame {
 
     public String getNewTaskListTextValue() {
         return addListView.getNewTaskListTextValue();
+    }
+
+    public String getSearchTextFieldValue() {
+        return searchTextField.getText();
     }
 
     public void updateTasksList(ArrayList<TaskList> taskLists) {
@@ -147,8 +238,8 @@ public class ListManagerView extends JFrame {
         addListPanel.setBackground(BACKGROUND_COLOR);
         listSearchPanel.setBackground(BACKGROUND_COLOR);
         returnPanel.setBackground(BACKGROUND_COLOR);
-        pendingScrollpane.setBackground(ELEMENTS_COLOR);
-        completedScrollpane.setBackground(ELEMENTS_COLOR);
+        pendingScrollPanel.setBackground(ELEMENTS_COLOR);
+        completedScrollPanel.setBackground(ELEMENTS_COLOR);
         listOfLists.setBackground(ELEMENTS_COLOR);
         listOfLists.setForeground(FOREGROUND_COLOR);
         searchTextField.setBackground(ELEMENTS_COLOR);

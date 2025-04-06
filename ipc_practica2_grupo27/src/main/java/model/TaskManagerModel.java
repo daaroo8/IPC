@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class TaskManagerModel {
     private final ArrayList<TaskList> taskLists;
+    private final ArrayList<TaskList> taskListsFiltered;
     private final ArrayList<Task> tasksFiltered;
     private final ArrayList<String> categories;
     private int lastPercentage = 50;
@@ -26,6 +27,7 @@ public class TaskManagerModel {
      */
     public TaskManagerModel() {
         taskLists = new ArrayList<>(List.of(new TaskList("IPC")));
+        taskListsFiltered = new ArrayList<>();
         tasksFiltered = new ArrayList<>();
         categories = new ArrayList<>(Arrays.asList("Escuela", "Trabajo", "Personal"));
     }
@@ -186,6 +188,10 @@ public class TaskManagerModel {
         return taskLists;
     }
 
+    public void deleteTaskList(TaskList taskList) {
+        taskLists.remove(taskList);
+    }
+
     public void addTaskList(TaskList taskList) {
         taskLists.add(taskList);
     }
@@ -228,6 +234,19 @@ public class TaskManagerModel {
                 }
             }
         }
+    }
+
+    public void filterLists(String searchText) {
+        taskListsFiltered.clear();
+        for (TaskList taskList : taskLists) {
+            if ((taskList.getName().toLowerCase().contains(searchText.toLowerCase()))) {
+                taskListsFiltered.add(taskList);
+            }
+        }
+    }
+
+    public ArrayList<TaskList> getTaskListsFiltered() {
+        return taskListsFiltered;
     }
 
     /**

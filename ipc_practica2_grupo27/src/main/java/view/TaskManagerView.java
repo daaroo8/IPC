@@ -871,6 +871,7 @@ public class TaskManagerView extends JFrame {
         actionStatusLabel.setFont(FONT);
 
         updateTaskLists(taskManagerController.getTaskLists());
+        updateTaskList(taskManagerController.getTasks());
         initColors();
         updatePriorityList();
 

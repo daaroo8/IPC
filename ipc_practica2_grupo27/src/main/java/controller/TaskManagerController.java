@@ -274,4 +274,8 @@ public class TaskManagerController {
     public ArrayList<TaskList> getTaskLists() {
         return model.getTaskLists();
     }
+
+    public ArrayList<Task> getTasks() {
+        return model.getTasks();
+    }
 }

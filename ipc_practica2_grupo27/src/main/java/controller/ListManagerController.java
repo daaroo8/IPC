@@ -30,4 +30,35 @@ public class ListManagerController {
     public ArrayList<TaskList> getTaskLists() {
         return model.getTaskLists();
     }
+
+    /**
+     * Maneja el evento de escritura en el campo de búsqueda.
+     */
+    public void handleKeyTypedSearchInputEvent(char newCharacter) {
+        String newTextFilterValue = view.getSearchTextFieldValue();
+
+        if (Character.isLetter(newCharacter) || Character.isDigit(newCharacter)) {
+            newTextFilterValue += newCharacter;
+        }
+
+        model.filterLists(newTextFilterValue);
+        view.updateTasksList(model.getTaskListsFiltered());
+    }
+
+    public void handleDeleteList() {
+        TaskList taskListToDelete = view.getSelectedTaskList();
+
+        if (taskListToDelete == null) return;
+
+        model.deleteTaskList(taskListToDelete);
+        view.updateTasksList(model.getTaskLists());
+    }
+
+    public void handleSelectListEvent() {
+        TaskList taskListToSelect = view.getSelectedTaskList();
+
+        if (taskListToSelect == null) return;
+
+        view.updateTaskListInformation(taskListToSelect);
+    }
 }
