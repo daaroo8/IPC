@@ -406,8 +406,8 @@ public class TaskManagerFilterDialog extends JDialog {
      * @throws RuntimeException Si algún componente es nulo al intentar inicializar.
      */
     private void initComponents() {
-        if (anyComponentIsNull())
-            throw new RuntimeException("No se puede inicializar el componente");
+//        if (anyComponentIsNull())
+//            throw new RuntimeException("No se puede inicializar el componente");
 
         dateCreationChooser = new JDateChooser();
         deadLineChooser = new JDateChooser();

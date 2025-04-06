@@ -775,8 +775,8 @@ public class TaskManagerView extends JFrame {
      * @throws RuntimeException Si alguno de los componentes no puede ser inicializado correctamente.
      */
     private void initComponents() {
-        if (anyComponentIsNull())
-            throw new RuntimeException("No se puede inicializar el componente");
+//        if (anyComponentIsNull())
+//            throw new RuntimeException("No se puede inicializar el componente");
 
         dateChooser = new JDateChooser();
 
