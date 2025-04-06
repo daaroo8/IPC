@@ -1,21 +1,21 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class ListManagerModel {
 
-    private final ArrayList<String> taskLists;
+    private final ArrayList<TaskList> taskLists;
 
     public ListManagerModel() {
-        taskLists = new ArrayList<>(Arrays.asList("IPC"));
+        taskLists = new ArrayList<>(List.of(new TaskList("IPC")));
     }
 
-    public void addTaskList(String task) {
-        taskLists.add(task);
+    public void addTaskList(TaskList taskList) {
+        taskLists.add(taskList);
     }
 
-    public ArrayList<String> getTaskLists() {
+    public ArrayList<TaskList> getTaskLists() {
         return taskLists;
     }
 }

@@ -1,9 +1,12 @@
 package controller;
 
+import main.Main;
 import model.Task;
+import model.TaskList;
 import model.TaskManagerModel;
 import view.TaskManagerView;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -20,7 +23,7 @@ public class TaskManagerController {
      */
     public TaskManagerController(TaskManagerView view) {
         this.view = view;
-        this.model = new TaskManagerModel();
+        this.model = Main.getTaskManagerModel();
     }
 
     /**
@@ -112,7 +115,6 @@ public class TaskManagerController {
 
 
         view.updateCategoriesList(model.getCategories());
-        view.updateSubtasksList(model.getTasks());
         view.updateTaskList(model.getTasks());
 
         view.restartTaskTextFields();
@@ -150,7 +152,6 @@ public class TaskManagerController {
 
         model.removeTask(view.getTaskSelected());
         view.updateTaskList(model.getTasks());
-        view.updateSubtasksList(model.getTasks());
     }
 
     /**
@@ -268,5 +269,13 @@ public class TaskManagerController {
         view.closeFilterDialog();
         view.updateTaskList(model.getTasksFiltered());
         view.setActionStatusLabel("");
+    }
+
+    public ArrayList<TaskList> getTaskLists() {
+        return model.getTaskLists();
+    }
+
+    public ArrayList<Task> getTasks() {
+        return model.getTasks();
     }
 }

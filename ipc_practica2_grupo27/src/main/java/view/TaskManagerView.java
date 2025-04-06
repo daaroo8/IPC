@@ -2,6 +2,7 @@ package view;
 
 import com.toedter.calendar.JDateChooser;
 import main.Main;
+import model.TaskList;
 import model.enums.Priority;
 import model.Task;
 
@@ -114,17 +115,10 @@ public class TaskManagerView extends JFrame {
      * Constructor de la vista del gestor de tareas.
      */
     public TaskManagerView() {
-        initComponents();
-
         taskManagerController = new TaskManagerController(this);
         filterDialogView = new TaskManagerFilterDialog(taskManagerController);
-        returnButton.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Main.getPrincipalMenuView().showPrincipalMenuView();
-            }
-        });
+        initComponents();
     }
 
     public JPanel getMainPanel() {
@@ -494,16 +488,16 @@ public class TaskManagerView extends JFrame {
     /**
      * Actualiza la lista de subtareas en el combo box de subtareas.
      *
-     * @param subtasks La lista de subtareas a mostrar en el combo box.
+     * @param taskLists La lista de subtareas a mostrar en el combo box.
      */
-    public void updateSubtasksList(ArrayList<Task> subtasks) {
+    public void updateTaskLists(ArrayList<TaskList> taskLists) {
         listComboBox.removeAllItems();
 
-        for (Task subtask : subtasks) {
-            listComboBox.addItem(subtask.getName());
+        for (TaskList taskList : taskLists) {
+            listComboBox.addItem(taskList.getName());
         }
 
-        filterDialogView.updateSubtaskList(subtasks);
+        filterDialogView.updateTaskLists(taskLists);
     }
 
     /**
@@ -876,6 +870,8 @@ public class TaskManagerView extends JFrame {
         searchLabel.setFont(FONT);
         actionStatusLabel.setFont(FONT);
 
+        updateTaskLists(taskManagerController.getTaskLists());
+        updateTaskList(taskManagerController.getTasks());
         initColors();
         updatePriorityList();
 
@@ -985,6 +981,13 @@ public class TaskManagerView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 taskManagerController.handleOpenFilterDialogEvent();
+            }
+        });
+
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.getViewManager().showPrincipalMenuView();;
             }
         });
     }
