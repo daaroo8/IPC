@@ -452,8 +452,18 @@ public class TaskManagerView extends JFrame {
         dateChooser.setDate(new Date());
         priorityComboBox.setSelectedIndex(0);
         percentageSlider.setValue(TaskManagerView.DEFAULT_PERCENTAGE);
-//        categoryComboBox.setSelectedIndex(0);
         listComboBox.setSelectedIndex(0);
+    }
+
+    public void restartTaskInfoTextFields() {
+        nameInfoTextField.setText("");
+        descriptionInfoTextArea.setText("");
+        categoryInfoTextField.setText("");
+        listInfoTextField.setText("");
+        dateCreationInfoFormattedTextField.setText("");
+        deadLineInfoFormattedTextField.setText("");
+        completedProgressBar.setValue(0);
+        priorityInfoTextField.setText("");
     }
 
     /**
@@ -527,6 +537,10 @@ public class TaskManagerView extends JFrame {
      */
     public void setEditButtonEnabled(boolean enabled) {
         editButton.setEnabled(enabled);
+    }
+
+    public void setDeleteButtonEnabled(boolean enabled) {
+        deleteButton.setEnabled(enabled);
     }
 
     /**

@@ -150,10 +150,13 @@
               </grid>
               <scrollpane id="f1fee" binding="pendingScrollPanel">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="250"/>
+                  </grid>
                 </constraints>
                 <properties>
-                  <verticalScrollBarPolicy value="22"/>
+                  <horizontalScrollBarPolicy value="31"/>
+                  <verticalScrollBarPolicy value="20"/>
                 </properties>
                 <border type="none"/>
                 <children>
@@ -161,8 +164,10 @@
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints/>
                     <properties>
-                      <maximumSize width="-1" height="210"/>
-                      <preferredSize width="-1" height="210"/>
+                      <autoscrolls value="false"/>
+                      <enabled value="true"/>
+                      <maximumSize width="-1" height="-1"/>
+                      <preferredSize width="-1" height="-1"/>
                     </properties>
                     <border type="none"/>
                     <children/>
@@ -171,7 +176,7 @@
               </scrollpane>
               <grid id="43ac8" binding="returnPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="2">
                 <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -179,6 +184,7 @@
                   <component id="404f2" class="javax.swing.JButton" binding="returnButton">
                     <constraints/>
                     <properties>
+                      <horizontalAlignment value="0"/>
                       <label value="Volver"/>
                       <text value="Volver"/>
                     </properties>
@@ -197,7 +203,7 @@
             <children>
               <grid id="f7a93" binding="labelCompletedPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -218,11 +224,13 @@
               </grid>
               <scrollpane id="f578b" binding="completedScrollPanel">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="250"/>
+                  </grid>
                 </constraints>
                 <properties>
                   <horizontalScrollBarPolicy value="31"/>
-                  <verticalScrollBarPolicy value="22"/>
+                  <verticalScrollBarPolicy value="20"/>
                   <wheelScrollingEnabled value="true"/>
                 </properties>
                 <border type="none"/>
@@ -231,8 +239,8 @@
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints/>
                     <properties>
-                      <maximumSize width="-1" height="210"/>
-                      <preferredSize width="-1" height="210"/>
+                      <maximumSize width="-1" height="-1"/>
+                      <preferredSize width="-1" height="-1"/>
                     </properties>
                     <border type="none"/>
                     <children/>

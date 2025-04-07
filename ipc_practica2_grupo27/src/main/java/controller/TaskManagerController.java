@@ -110,16 +110,14 @@ public class TaskManagerController {
             model.getTaskEditing().setPercentage(view.getPercentageSliderValue());
             model.getTaskEditing().setCategory(view.getSelectedCategory());
             model.getTaskEditing().setSubtask(view.getSelectedSubTask());
-
             model.setTaskEditing(null);
             view.setEditButtonEnabled(true);
+            view.setDeleteButtonEnabled(true);
         }
 
 
         view.updateCategoriesList(model.getCategories());
         view.updateTaskList(model.getTasks());
-
-        view.restartTaskTextFields();
     }
 
     /**
@@ -154,6 +152,7 @@ public class TaskManagerController {
 
         model.removeTask(view.getTaskSelected());
         view.updateTaskList(model.getTasks());
+        view.restartTaskInfoTextFields();
     }
 
     /**
@@ -177,6 +176,8 @@ public class TaskManagerController {
 
         view.setActionStatusLabel("Editando '" + view.getTaskSelected().getName() + "'.");
         view.setEditButtonEnabled(false);
+        view.setDeleteButtonEnabled(false);
+        view.restartTaskInfoTextFields();
     }
 
     /**

@@ -48,9 +48,9 @@ public class ViewManager {
 
         actualState.setContentPane(new ListManagerView().getMainPanel());
         actualState.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        actualState.setMinimumSize(new Dimension(700, 600));
+        actualState.setMinimumSize(new Dimension(1000, 700));
         actualState.pack();
-        actualState.setResizable(false);
+        actualState.setResizable(true);
         actualState.setSize(actualState.getWidth(), 600);
         actualState.setLocationRelativeTo(null);
         actualState.setVisible(true);

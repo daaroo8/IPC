@@ -1,10 +1,12 @@
 package controller;
 
 import main.Main;
+import model.Task;
 import model.TaskList;
 import model.TaskManagerModel;
 import view.ListManagerView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ListManagerController {
@@ -60,5 +62,20 @@ public class ListManagerController {
         if (taskListToSelect == null) return;
 
         view.updateTaskListInformation(taskListToSelect);
+    }
+
+    public void handleToCompleteTaskEvent(Task task) {
+        task.setPercentage(100);
+
+        TaskList taskList = model.getTaskListByName(task.getSubtask());
+
+        ArrayList<Task> pendingTasks = taskList.getPendingTasks();
+        ArrayList<Task> completedTasks = taskList.getCompletedTasks();
+
+        view.setPendingCount(pendingTasks.size());
+        view.setCompletedCount(completedTasks.size());
+
+        view.updatePendingPanel(pendingTasks);
+        view.updateCompletedPanel(completedTasks);
     }
 }

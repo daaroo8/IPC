@@ -85,8 +85,9 @@ public class TaskManagerModel {
      */
     public void removeTask(Task task) {
         for (TaskList taskList : taskLists) {
-            for (Task t : taskList.getTasks()) {
+            if (taskList.getTasks().contains(task)) {
                 taskList.removeTaskFromTaskList(task);
+                return;
             }
         }
     }
@@ -187,6 +188,16 @@ public class TaskManagerModel {
 
     public ArrayList<TaskList> getTaskLists() {
         return taskLists;
+    }
+
+    public TaskList getTaskListByName(String name) {
+        for (TaskList taskList : taskLists) {
+            if (taskList.getName().equals(name)) {
+                return taskList;
+            }
+        }
+
+        return null;
     }
 
     public void deleteTaskList(TaskList taskList) {
@@ -309,7 +320,6 @@ public class TaskManagerModel {
         tasks.add(new Task("Lectura", "Leer un artículo sobre el uso de deshacer para el tratamiento de errores.", Priority.LOW, LocalDate.of(2025,3,11), 100, "Escuela", "IPC"));
         tasks.add(new Task("Boceto", "Realizar un boceto de la práctica 2.", Priority.HIGH, LocalDate.of(2025,3,30), 25, "Escuela", "IPC"));
         tasks.add(new Task("TE 2", "Realizar una aplicación web.", Priority.MEDIUM, LocalDate.of(2025,4,28), 100, "Escuela", "IPC"));
-
 
         return new ArrayList<>(List.of(new TaskList("IPC", tasks)));
     }

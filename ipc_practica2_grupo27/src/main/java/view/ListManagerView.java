@@ -110,13 +110,6 @@ public class ListManagerView extends JFrame {
                 listManagerController.handleSelectListEvent();
             }
         });
-
-        pendingScrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        pendingScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        completedScrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        completedScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);//sin misterio
-        pendingInsidePanel.setAutoscrolls(true);
-        completedInsidePanel.setAutoscrolls(true);
     }
 
     public TaskList getSelectedTaskList() {
@@ -143,19 +136,19 @@ public class ListManagerView extends JFrame {
     }
 
     public void updatePendingPanel(ArrayList<Task> pendingTasks) {
+        pendingScrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         pendingInsidePanel.removeAll();
         pendingInsidePanel.setLayout(new BoxLayout(pendingInsidePanel, BoxLayout.Y_AXIS));
-
+        pendingInsidePanel.setPreferredSize(null);
 
         int i = 0;
         for (Task task : pendingTasks) {
             JPanel taskPanel = new JPanel();
-            taskPanel.setLayout(new GridLayout(3,2, 5, 5));
+            taskPanel.setLayout(new GridLayout(3, 2, 5, 5));
             taskPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
             Color color = (i % 2 == 0) ? EVEN_TASK_PANEL : ODD_TASK_PANEL;
             taskPanel.setBackground(color);
-            taskPanel.setPreferredSize(new Dimension(0, 100));
             taskPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
 
             JLabel taskLabel = new JLabel(task.getName());
@@ -169,7 +162,7 @@ public class ListManagerView extends JFrame {
             daysRemainingLabel.setFont(FONT_ELEMENTS);
             daysRemainingLabel.setForeground(FOREGROUND_COLOR);
 
-            JLabel descriptionLabel = new JLabel(task.getDescription());
+            JLabel descriptionLabel = new JLabel(parseDescription(task.getDescription()));
             descriptionLabel.setFont(FONT_MINI_ELEMENTS);
             descriptionLabel.setForeground(FOREGROUND_COLOR);
 
@@ -186,6 +179,13 @@ public class ListManagerView extends JFrame {
             completedCheckBox.setBackground(color);
             completedCheckBox.setForeground(FOREGROUND_COLOR);
 
+            completedCheckBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    listManagerController.handleToCompleteTaskEvent(task);
+                }
+            });
+
             taskPanel.add(taskLabel);
             taskPanel.add(daysRemainingLabel);
             taskPanel.add(descriptionLabel);
@@ -200,24 +200,23 @@ public class ListManagerView extends JFrame {
 
         pendingInsidePanel.revalidate();
         pendingInsidePanel.repaint();
-        pendingScrollPanel.revalidate();
-        pendingScrollPanel.repaint();
     }
 
     public void updateCompletedPanel(ArrayList<Task> completedTasks) {
+        completedScrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         completedInsidePanel.removeAll();
         completedInsidePanel.setLayout(new BoxLayout(completedInsidePanel, BoxLayout.Y_AXIS));
-
+        completedInsidePanel.setPreferredSize(null);
 
         int i = 0;
         for (Task task : completedTasks) {
             JPanel taskPanel = new JPanel();
-            taskPanel.setLayout(new GridLayout(3,2, 5, 5));
+
+            taskPanel.setLayout(new GridLayout(3, 2, 5, 5));
             taskPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
             Color color = (i % 2 == 0) ? EVEN_TASK_PANEL : ODD_TASK_PANEL;
             taskPanel.setBackground(color);
-            taskPanel.setPreferredSize(new Dimension(0, 100));
             taskPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
 
             JLabel taskLabel = new JLabel(task.getName());
@@ -231,7 +230,7 @@ public class ListManagerView extends JFrame {
             daysRemainingLabel.setFont(FONT_ELEMENTS);
             daysRemainingLabel.setForeground(FOREGROUND_COLOR);
 
-            JLabel descriptionLabel = new JLabel(task.getDescription());
+            JLabel descriptionLabel = new JLabel(parseDescription(task.getDescription()));
             descriptionLabel.setFont(FONT_MINI_ELEMENTS);
             descriptionLabel.setForeground(FOREGROUND_COLOR);
 
@@ -257,8 +256,13 @@ public class ListManagerView extends JFrame {
 
         completedInsidePanel.revalidate();
         completedInsidePanel.repaint();
-        completedScrollPanel.revalidate();
-        completedScrollPanel.repaint();
+    }
+
+    private String parseDescription(String description) {
+        if (description.length() < 40)
+            return description;
+
+        return description.substring(0, 37) + "...";
     }
 
     public void closeAddListDialog() {
@@ -324,7 +328,7 @@ public class ListManagerView extends JFrame {
         initColors();
     }
 
-    public void initColors(){
+    public void initColors() {
         leftListManagerPanel.setBorder(new EmptyBorder(20, 20, 20, 10));
         rightListManagerPanel.setBorder(new EmptyBorder(20, 10, 20, 20));
         mainPanel.setBackground(BACKGROUND_COLOR);
