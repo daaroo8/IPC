@@ -35,7 +35,7 @@ public class ViewManager {
         actualState.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         actualState.setMinimumSize(new Dimension(1400, 800));
         actualState.setSize(1400, 800);
-        actualState.setResizable(true);
+        actualState.setResizable(false);
         actualState.setLocationRelativeTo(null);
         actualState.setVisible(true);
     }
@@ -50,6 +50,7 @@ public class ViewManager {
         actualState.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         actualState.setMinimumSize(new Dimension(700, 600));
         actualState.pack();
+        actualState.setResizable(false);
         actualState.setSize(actualState.getWidth(), 600);
         actualState.setLocationRelativeTo(null);
         actualState.setVisible(true);

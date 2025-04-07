@@ -11,7 +11,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class ListManagerView extends JFrame {
     private JPanel mainPanel;
@@ -44,8 +48,12 @@ public class ListManagerView extends JFrame {
     private static final Color FOREGROUND_COLOR = new Color(51, 51, 51);
     private static final Color ELEMENTS_COLOR = new Color(231, 240, 253);
 
+    private static final Color EVEN_TASK_PANEL = new Color(203, 224, 255);
+    private static final Color ODD_TASK_PANEL = new Color(185, 213, 255);
+
     private static final Font FONT = new Font("Helvetica", Font.BOLD, 18);
     private static final Font FONT_ELEMENTS = new Font("Helvetica", Font.BOLD, 16);
+    private static final Font FONT_MINI_ELEMENTS = new Font("Helvetica", Font.BOLD, 12);
 
     private final AddListView addListView;
 
@@ -102,6 +110,13 @@ public class ListManagerView extends JFrame {
                 listManagerController.handleSelectListEvent();
             }
         });
+
+        pendingScrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        pendingScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        completedScrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        completedScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);//sin misterio
+        pendingInsidePanel.setAutoscrolls(true);
+        completedInsidePanel.setAutoscrolls(true);
     }
 
     public TaskList getSelectedTaskList() {
@@ -130,31 +145,120 @@ public class ListManagerView extends JFrame {
     public void updatePendingPanel(ArrayList<Task> pendingTasks) {
         pendingInsidePanel.removeAll();
         pendingInsidePanel.setLayout(new BoxLayout(pendingInsidePanel, BoxLayout.Y_AXIS));
+
+
+        int i = 0;
         for (Task task : pendingTasks) {
             JPanel taskPanel = new JPanel();
-            taskPanel.setLayout(new BorderLayout());
+            taskPanel.setLayout(new GridLayout(3,2, 5, 5));
             taskPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-            taskPanel.setBackground(new Color(0, 0, 100));
+            Color color = (i % 2 == 0) ? EVEN_TASK_PANEL : ODD_TASK_PANEL;
+            taskPanel.setBackground(color);
             taskPanel.setPreferredSize(new Dimension(0, 100));
             taskPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
 
             JLabel taskLabel = new JLabel(task.getName());
             taskLabel.setFont(FONT_ELEMENTS);
             taskLabel.setForeground(FOREGROUND_COLOR);
-            taskPanel.add(taskLabel, BorderLayout.CENTER);
+
+            LocalDate today = LocalDate.now();
+
+            JLabel daysRemainingLabel = new JLabel("Quedan: " +
+                    ChronoUnit.DAYS.between(today, task.getDeadline()) + " días");
+            daysRemainingLabel.setFont(FONT_ELEMENTS);
+            daysRemainingLabel.setForeground(FOREGROUND_COLOR);
+
+            JLabel descriptionLabel = new JLabel(task.getDescription());
+            descriptionLabel.setFont(FONT_MINI_ELEMENTS);
+            descriptionLabel.setForeground(FOREGROUND_COLOR);
+
+            JLabel priorityLabel = new JLabel(task.getPriority().toString());
+            priorityLabel.setFont(FONT_ELEMENTS);
+            priorityLabel.setForeground(FOREGROUND_COLOR);
+
+            JProgressBar progressBar = new JProgressBar();
+            progressBar.setValue(task.getPercentage());
+            progressBar.setForeground(FOREGROUND_COLOR);
+
+            JCheckBox completedCheckBox = new JCheckBox("Completada");
+            completedCheckBox.setFont(FONT_ELEMENTS);
+            completedCheckBox.setBackground(color);
+            completedCheckBox.setForeground(FOREGROUND_COLOR);
+
+            taskPanel.add(taskLabel);
+            taskPanel.add(daysRemainingLabel);
+            taskPanel.add(descriptionLabel);
+            taskPanel.add(priorityLabel);
+            taskPanel.add(progressBar);
+            taskPanel.add(completedCheckBox);
 
             pendingInsidePanel.add(taskPanel);
+
+            i++;
         }
 
         pendingInsidePanel.revalidate();
         pendingInsidePanel.repaint();
-
-        pendingScrollPanel.setViewportView(pendingInsidePanel);
+        pendingScrollPanel.revalidate();
+        pendingScrollPanel.repaint();
     }
 
     public void updateCompletedPanel(ArrayList<Task> completedTasks) {
+        completedInsidePanel.removeAll();
+        completedInsidePanel.setLayout(new BoxLayout(completedInsidePanel, BoxLayout.Y_AXIS));
 
+
+        int i = 0;
+        for (Task task : completedTasks) {
+            JPanel taskPanel = new JPanel();
+            taskPanel.setLayout(new GridLayout(3,2, 5, 5));
+            taskPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+            Color color = (i % 2 == 0) ? EVEN_TASK_PANEL : ODD_TASK_PANEL;
+            taskPanel.setBackground(color);
+            taskPanel.setPreferredSize(new Dimension(0, 100));
+            taskPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
+
+            JLabel taskLabel = new JLabel(task.getName());
+            taskLabel.setFont(FONT_ELEMENTS);
+            taskLabel.setForeground(FOREGROUND_COLOR);
+
+            LocalDate today = LocalDate.now();
+
+            JLabel daysRemainingLabel = new JLabel("Quedan: " +
+                    ChronoUnit.DAYS.between(today, task.getDeadline()) + " días");
+            daysRemainingLabel.setFont(FONT_ELEMENTS);
+            daysRemainingLabel.setForeground(FOREGROUND_COLOR);
+
+            JLabel descriptionLabel = new JLabel(task.getDescription());
+            descriptionLabel.setFont(FONT_MINI_ELEMENTS);
+            descriptionLabel.setForeground(FOREGROUND_COLOR);
+
+            JLabel priorityLabel = new JLabel(task.getPriority().toString());
+            priorityLabel.setFont(FONT_ELEMENTS);
+            priorityLabel.setForeground(FOREGROUND_COLOR);
+
+            JProgressBar progressBar = new JProgressBar();
+            progressBar.setValue(task.getPercentage());
+            progressBar.setForeground(FOREGROUND_COLOR);
+
+            taskPanel.add(taskLabel);
+            taskPanel.add(daysRemainingLabel);
+            taskPanel.add(descriptionLabel);
+            taskPanel.add(priorityLabel);
+            taskPanel.add(progressBar);
+            taskPanel.add(new JLabel("Completada!"));
+
+            completedInsidePanel.add(taskPanel);
+
+            i++;
+        }
+
+        completedInsidePanel.revalidate();
+        completedInsidePanel.repaint();
+        completedScrollPanel.revalidate();
+        completedScrollPanel.repaint();
     }
 
     public void closeAddListDialog() {

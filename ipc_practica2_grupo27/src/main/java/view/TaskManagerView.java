@@ -812,6 +812,8 @@ public class TaskManagerView extends JFrame {
         descriptionTextArea.setPreferredSize(new Dimension(300, 50));
         descriptionTextArea.setMinimumSize(new Dimension(300, 50));
         descriptionTextArea.setMaximumSize(new Dimension(300, 50));
+        descriptionInfoTextArea.setLineWrap(true);
+        descriptionInfoTextArea.setWrapStyleWord(true);
 
         nameTextField.setBorder(EMPTY_BORDER);
         nameInfoTextField.setBorder(EMPTY_BORDER);

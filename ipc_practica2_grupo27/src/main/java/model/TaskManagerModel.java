@@ -1,5 +1,6 @@
 package model;
 
+import model.enums.Priority;
 import model.enums.RangeSelections;
 import view.TaskManagerView;
 
@@ -26,7 +27,7 @@ public class TaskManagerModel {
      * Constructor para inicializar el modelo de gestión de tareas.
      */
     public TaskManagerModel() {
-        taskLists = new ArrayList<>(List.of(new TaskList("IPC")));
+        taskLists = initTasks();
         taskListsFiltered = new ArrayList<>();
         tasksFiltered = new ArrayList<>();
         categories = new ArrayList<>(Arrays.asList("Escuela", "Trabajo", "Personal"));
@@ -299,5 +300,17 @@ public class TaskManagerModel {
 
     public ArrayList<Task> getTasksFiltered() {
         return tasksFiltered;
+    }
+
+    public ArrayList<TaskList> initTasks() {
+        ArrayList<Task> tasks = new ArrayList<>();
+
+        tasks.add(new Task("TE 1", "Realizar un análisis de una aplicación.", Priority.HIGH, LocalDate.of(2025,3,5), 50, "Escuela", "IPC"));
+        tasks.add(new Task("Lectura", "Leer un artículo sobre el uso de deshacer para el tratamiento de errores.", Priority.LOW, LocalDate.of(2025,3,11), 100, "Escuela", "IPC"));
+        tasks.add(new Task("Boceto", "Realizar un boceto de la práctica 2.", Priority.HIGH, LocalDate.of(2025,3,30), 25, "Escuela", "IPC"));
+        tasks.add(new Task("TE 2", "Realizar una aplicación web.", Priority.MEDIUM, LocalDate.of(2025,4,28), 100, "Escuela", "IPC"));
+
+
+        return new ArrayList<>(List.of(new TaskList("IPC", tasks)));
     }
 }
